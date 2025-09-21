@@ -9,16 +9,19 @@ class Sucursales
 {
 private:
 	int cod;
+	int telef;
 	string provi;
 	string canton;
 	string correo;
-	int telef;
+	
 	Clientes** cliSucur_;
 	int numClientes_;
 	int capClientes_;
+
 	Instructores** insSucur_;
 	int numInstructores_;
 	int capInstruc_;
+
 	ClasesGrupales** ClassGrupSucur_;
 	int numClasesGrups_;
 	int capClasesGrups_;
@@ -26,19 +29,19 @@ private:
 
 public:
 	Sucursales();
-	Sucursales(int, int, string, string, string, int, int, int, int, int, int, int);
+	Sucursales(int, int, string, string, string, int, int, int);
 	~Sucursales();
-	void setCod();
-	void setProvi();
-	void setCanton();
-	void setCorreo();
-	void setTelef();
-	void setNumClientes();
-	void setCapClientes();
-	void setNumInstructores();
-	void setCapInstructores();
-	void setNumClasesGrups();
-	void setCapClasesGrups();
+	void setCod(int codi);
+	void setProvi(string prov);
+	void setCanton(string can);
+	void setCorreo(string corr);
+	void setTelef(int tel);
+	void setNumClientes(int nC);
+	void setCapClientes(int cC);
+	void setNumInstructores(int nI);
+	void setCapInstructores(int cI);
+	void setNumClasesGrups(int nCG);
+	void setCapClasesGrups(int cCG);
 	int getTelef();
 	string getProvi();
 	string getCanton();
@@ -48,7 +51,16 @@ public:
 	int getNumInstructores();
 	int getCapInstructores();
 	int getNumClasesGrups();
-	int getNumClasesGrups();
+	int getCapClasesGrups();
 	int getCod();
+	void agregarCliente(const Clientes& cliente);
+	void agregarInstructor(const Instructores& instructor);
+	void agregarClaseGrupal(const ClasesGrupales& clase);
+	void eliminarCliente(int cedula);
+	void eliminarInstructor(int cedula);
+	void eliminarClaseGrupal(int idClase);
+	void listarInstructores();
+
+	string toString();
 };
 

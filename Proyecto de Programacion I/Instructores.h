@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include "Especialidades.h"
 using namespace std;
 class Instructores
 {
@@ -10,8 +9,25 @@ private:
 	int telef_;
 	string correo;
 	int fechaNac;
-	Especialidades** x[7];
+	string espeIns[8];
+	int numEspecialidades;
 public:
+	Instructores();
+	Instructores(int nC, string nom, int tel, string corr, int fN, int nE);
+	~Instructores();
+	string toString();
+	void setEspecialidad(string es);
+	void setNumCed(int nC);
+	void setNombre(string nom);
+	void setTelef(int tel);
+	void setCorreo(string corr);	
+	void setFechaNac(int fN);
+	int getNumCed();
+	string getNombre();
+	int getTelef();
+	string getCorreo();	
+	int getFechaNac();
+	int getNumEspecialidades();
 
 };
 

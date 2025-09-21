@@ -4,8 +4,8 @@ using namespace std;
 class Clientes
 {
 private:
-	int ced_;
 	string name_;
+	int ced_;
 	int telf_;
 	string correo;
 	string fechaNac_;
@@ -14,8 +14,7 @@ private:
 	int inscritos_;
 public:
 	Clientes();
-	Clientes(int, string, int, string, string, char, int, int);
-
-
+	Clientes(string, int,  int, string, string, char, int, int);
+	string toString();
 };
 

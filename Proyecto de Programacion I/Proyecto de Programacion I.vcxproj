@@ -137,7 +137,6 @@
     <ClInclude Include="ClasesGrupales.h" />
     <ClInclude Include="Clientes.h" />
     <ClInclude Include="Ejercicios.h" />
-    <ClInclude Include="Especialidades.h" />
     <ClInclude Include="IMC.h" />
     <ClInclude Include="Instructores.h" />
     <ClInclude Include="Menu.h" />

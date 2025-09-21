@@ -59,9 +59,6 @@
     <ClInclude Include="ClasesGrupales.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Especialidades.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="IMC.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
