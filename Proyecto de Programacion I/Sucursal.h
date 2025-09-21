@@ -5,7 +5,7 @@
 #include "ClasesGrupales.h"
 using namespace std;
 
-class Sucursales
+class Sucursal
 {
 private:
 	int cod;
@@ -28,9 +28,9 @@ private:
 	
 
 public:
-	Sucursales();
-	Sucursales(int, int, string, string, string, int, int, int);
-	~Sucursales();
+	Sucursal();
+	Sucursal(int, int, string, string, string, int, int, int);
+	~Sucursal();
 	void setCod(int codi);
 	void setProvi(string prov);
 	void setCanton(string can);

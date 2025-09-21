@@ -125,22 +125,24 @@
   <ItemGroup>
     <ClCompile Include="ClasesGrupales.cpp" />
     <ClCompile Include="Clientes.cpp" />
+    <ClCompile Include="Control.cpp" />
     <ClCompile Include="Ejercicios.cpp" />
     <ClCompile Include="Especialidades.cpp" />
     <ClCompile Include="IMC.cpp" />
     <ClCompile Include="Instructores.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
-    <ClCompile Include="Sucursales.cpp" />
+    <ClCompile Include="Sucursal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClasesGrupales.h" />
     <ClInclude Include="Clientes.h" />
+    <ClInclude Include="Control.h" />
     <ClInclude Include="Ejercicios.h" />
     <ClInclude Include="IMC.h" />
     <ClInclude Include="Instructores.h" />
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="Sucursales.h" />
+    <ClInclude Include="Sucursal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

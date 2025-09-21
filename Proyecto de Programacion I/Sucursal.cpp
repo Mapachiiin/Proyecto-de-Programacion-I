@@ -1,9 +1,9 @@
-#include "Sucursales.h"
+#include "Sucursal.h"
 #include <sstream>
 #include <iostream>
 using namespace std;
 
-Sucursales::Sucursales() {
+Sucursal::Sucursal() {
 	cod= 0;
 	provi= " ";
 	canton= " ";
@@ -20,7 +20,7 @@ Sucursales::Sucursales() {
 	numClasesGrups_= 0;
 }
 
-Sucursales::Sucursales(int codi, int tel, string prov, string cant, string corr, int capCli, int capIns, int capCG) {
+Sucursal::Sucursal(int codi, int tel, string prov, string cant, string corr, int capCli, int capIns, int capCG) {
 	cod = codi;
 	telef = tel;
 	this->provi = prov;
@@ -51,7 +51,7 @@ Sucursales::Sucursales(int codi, int tel, string prov, string cant, string corr,
 	
 
 }
-Sucursales::~Sucursales(){
+Sucursal::~Sucursal(){
 	for(int i = 0; i < capClientes_; i++) {
 		if (cliSucur_[i] != nullptr) {
 			delete cliSucur_[i];
@@ -72,7 +72,7 @@ Sucursales::~Sucursales(){
 	delete[] ClassGrupSucur_;
 }
 
-void Sucursales::agregarCliente(const Clientes& cliente){
+void Sucursal::agregarCliente(const Clientes& cliente){
 	if (numClientes_ < capClientes_) {
 		cliSucur_[numClientes_] = new Clientes(cliente);
 		numClientes_++;
@@ -81,7 +81,7 @@ void Sucursales::agregarCliente(const Clientes& cliente){
 		cout << "Capacidad de clientes alcanzada en la sucursal " << cod << endl;
 	}
 }
-void Sucursales::agregarInstructor(const Instructores& instructor) {
+void Sucursal::agregarInstructor(const Instructores& instructor) {
 		if (numInstructores_ < capInstruc_) {
 		insSucur_[numInstructores_] = new Instructores(instructor);
 		numInstructores_++;
@@ -89,7 +89,7 @@ void Sucursales::agregarInstructor(const Instructores& instructor) {
 		cout << "Capacidad de instructores alcanzada en la sucursal " << cod << endl;
 		}
 }
-void Sucursales::agregarClaseGrupal(const ClasesGrupales& clase){
+void Sucursal::agregarClaseGrupal(const ClasesGrupales& clase){
 	if (numClasesGrups_ < capClasesGrups_) {
 		ClassGrupSucur_[numClasesGrups_] = new ClasesGrupales(clase);
 		numClasesGrups_++;
@@ -97,7 +97,7 @@ void Sucursales::agregarClaseGrupal(const ClasesGrupales& clase){
 		cout << "Capacidad de clases grupales alcanzada en la sucursal " << cod << endl;
 	}
 }
-void Sucursales::eliminarCliente(int cedula){
+void Sucursal::eliminarCliente(int cedula){
 	for (int i = 0; i < numClientes_; i++) {
 		if (cliSucur_[i] != nullptr && cliSucur_[i]->getCed() == cedula) {
 			delete cliSucur_[i];
@@ -110,7 +110,7 @@ void Sucursales::eliminarCliente(int cedula){
 	}
 	cout << "Cliente con cédula " << cedula << " no encontrado en la sucursal " << cod << endl;
 }
-void Sucursales::eliminarInstructor(int cedula) {
+void Sucursal::eliminarInstructor(int cedula) {
 		for (int i = 0; i < numInstructores_; i++) {
 		if (insSucur_[i] != nullptr && insSucur_[i]->getNumCed() == cedula) {
 			delete insSucur_[i];
@@ -123,7 +123,7 @@ void Sucursales::eliminarInstructor(int cedula) {
 	}
 		cout << "Instructor con cédula " << cedula << " no encontrado en la sucursal " << cod << endl;
 }
-void Sucursales::eliminarClaseGrupal(int idClase) {
+void Sucursal::eliminarClaseGrupal(int idClase) {
 			for (int i = 0; i < numClasesGrups_; i++) {
 		// Assuming ClasesGrupales has a method getId() to get the class ID
 		if (ClassGrupSucur_[i] != nullptr && ClassGrupSucur_[i]->getId() == idClase) {
@@ -137,7 +137,7 @@ void Sucursales::eliminarClaseGrupal(int idClase) {
 	}
 			cout << "Clase grupal con ID " << idClase << " no encontrada en la sucursal " << cod << endl;
 }
-void Sucursales::listarInstructores(){
+void Sucursal::listarInstructores(){
 	cout << "Instructores en la sucursal " << cod << ":\n";
 	for (int i = 0; i < numInstructores_; i++) {
 		if (insSucur_[i] != nullptr) {
@@ -146,73 +146,73 @@ void Sucursales::listarInstructores(){
 	}
 }
 
-void Sucursales::setCod(int codi) {
+void Sucursal::setCod(int codi) {
 	cod = codi;
 }
-void Sucursales::setProvi(string prov) {
+void Sucursal::setProvi(string prov) {
 	provi = prov;
 }
-void Sucursales::setCanton(string can) {
+void Sucursal::setCanton(string can) {
 	canton = can;	
 }
-void Sucursales::setCorreo(string corr) {
+void Sucursal::setCorreo(string corr) {
 	correo = corr;
 }
-void Sucursales::setTelef(int tel) {
+void Sucursal::setTelef(int tel) {
 	telef = tel;	
 }
-void Sucursales::setNumClientes(int nC){
+void Sucursal::setNumClientes(int nC){
 	numClientes_ = nC;
 }	
-void Sucursales::setCapClientes(int cC) {
+void Sucursal::setCapClientes(int cC) {
 	capClientes_ = cC;	
 }
-void Sucursales::setNumInstructores(int nI) {
+void Sucursal::setNumInstructores(int nI) {
 	numInstructores_ = nI;	
 }
-void Sucursales::setCapInstructores(int cI) {
+void Sucursal::setCapInstructores(int cI) {
 	capInstruc_ = cI;	
 }
-void Sucursales::setNumClasesGrups(int nCG) {
+void Sucursal::setNumClasesGrups(int nCG) {
 	numClasesGrups_ = nCG;	
 }
-void Sucursales::setCapClasesGrups(int cCG) {
+void Sucursal::setCapClasesGrups(int cCG) {
 	capClasesGrups_ = cCG;	
 }
-int Sucursales::getTelef() {
+int Sucursal::getTelef() {
 	return telef;	
 }
-string Sucursales::getProvi() {
+string Sucursal::getProvi() {
 	return provi;	
 }
-string Sucursales::getCanton(){
+string Sucursal::getCanton(){
 	return canton;	
 }	
-string Sucursales::getCorreo() {
+string Sucursal::getCorreo() {
 	return correo;	
 }
-int Sucursales::getNumClientes(){
+int Sucursal::getNumClientes(){
 	return numClientes_;	
 }
-int Sucursales::getCapClientes() {
+int Sucursal::getCapClientes() {
 	return capClientes_;	
 }
-int Sucursales::getNumInstructores() {
+int Sucursal::getNumInstructores() {
 	return numInstructores_;	
 }
-int Sucursales::getCapInstructores() {
+int Sucursal::getCapInstructores() {
 	return capInstruc_;		
 }
-int Sucursales::getNumClasesGrups() {
+int Sucursal::getNumClasesGrups() {
 	return numClasesGrups_;	
 }
-int Sucursales::getCapClasesGrups() {
+int Sucursal::getCapClasesGrups() {
 	return capClasesGrups_;	
 }
-int Sucursales::getCod() {
+int Sucursal::getCod() {
 	return cod;	
 }
 
-string Sucursales::toString() {
+string Sucursal::toString() {
 	stringstream ss;
 }

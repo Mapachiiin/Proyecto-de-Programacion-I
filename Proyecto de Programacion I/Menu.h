@@ -1,9 +1,9 @@
 #pragma once
-#include "Sucursales.h"
+
 class Menu
 {
 private:
-	Sucursales** sucursales_;
+	
 	int numSucursales_;
 public:
 	Menu();
