@@ -22,7 +22,7 @@ public:
 	Cliente();
 	Cliente(string, int,  int, string, string, char, int, int);
 	~Cliente();
-	string getName();
+	string getNombre();
 	int getCed();
 	int getTelf();
 	string getCorreo();

@@ -128,7 +128,6 @@
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="Ejercicios.cpp" />
     <ClCompile Include="Especialidades.cpp" />
-    <ClCompile Include="IMC.cpp" />
     <ClCompile Include="Instructor.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -140,7 +139,6 @@
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="Control.h" />
     <ClInclude Include="Ejercicios.h" />
-    <ClInclude Include="IMC.h" />
     <ClInclude Include="Instructor.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="ReporteMedicion.h" />
