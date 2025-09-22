@@ -11,6 +11,7 @@ private:
 	int fechaNac;
 	string espeIns[8];
 	int numEspecialidades;
+
 public:
 	Instructor();
 	Instructor(int nC, string nom, int tel, string corr, int fN, int nE);
