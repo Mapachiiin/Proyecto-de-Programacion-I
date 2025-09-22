@@ -46,7 +46,7 @@ void Instructor::setCorreo(string corr) {
 void Instructor::setFechaNac(int fN){
 	fechaNac=fN;
 }
-int Instructor::getNumCed(){
+int Instructor::getCed(){
 	return numCed_;
 }
 string Instructor::getNombre(){

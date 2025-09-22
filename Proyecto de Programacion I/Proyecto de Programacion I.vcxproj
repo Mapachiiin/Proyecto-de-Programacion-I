@@ -132,6 +132,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="ReporteMedicion.cpp" />
+    <ClCompile Include="Rutina.cpp" />
     <ClCompile Include="Sucursal.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="Instructor.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="ReporteMedicion.h" />
+    <ClInclude Include="Rutina.h" />
     <ClInclude Include="Sucursal.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

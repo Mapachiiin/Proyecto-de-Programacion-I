@@ -29,7 +29,7 @@ private:
 
 public:
 	Sucursal();
-	Sucursal(int, int, string, string, string, int, int, int);
+	Sucursal(int, int, string, string, string, int, int);
 	~Sucursal();
 	void setCod(int codi);
 	void setProvi(string prov);
@@ -60,6 +60,8 @@ public:
 	void eliminarInstructor(int cedula);
 	void eliminarClaseGrupal(int codClase);
 	void listarInstructores();
+	void listarClientes();
+	void listarClasesGrupales();
 
 	string toString();
 };

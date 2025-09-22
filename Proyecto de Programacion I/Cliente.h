@@ -38,7 +38,7 @@ public:
 	void setCorreo(string corr);
 	void setFechaNac(string fN);
 	void setSexo(char mf);
-	void setFechaIns(int fI);
+	void setFechaIns(string fI);
 	void setInscritos(int ins);
 	void setIntructor(Instructor* ins);
 	void agregarReporte(const ReporteMedicion& rep);
