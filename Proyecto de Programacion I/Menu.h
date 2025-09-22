@@ -1,4 +1,5 @@
 #pragma once
+#include "Sucursal.h"
 
 class Menu
 {
@@ -12,6 +13,6 @@ public:
 	void agregarSucursal();
 	void eliminarSucursal();
 	void listarSucursales();
-	void gestionarSucursal(Sucursales* sucursal);
+	void gestionarSucursal(Sucursal* sucursal);
 };
 

@@ -1,9 +1,9 @@
-#include "Instructores.h"
+#include "Instructor.h"
 #include <iostream>
 #include <sstream>
 using namespace std;
 
-Instructores::Instructores() {
+Instructor::Instructor() {
 	numCed_ = 0;
 	nombre_ = " ";
 	telef_ = 0;
@@ -11,7 +11,7 @@ Instructores::Instructores() {
 	fechaNac = 0;
 	numEspecialidades = 0;
 }
-Instructores::Instructores(int nC, string nom, int tel, string corr, int fN, int nE){
+Instructor::Instructor(int nC, string nom, int tel, string corr, int fN, int nE){
 	numCed_ = nC;
 	nombre_ = nom;
 	telef_ = tel;
@@ -19,52 +19,53 @@ Instructores::Instructores(int nC, string nom, int tel, string corr, int fN, int
 	fechaNac = fN;
 	numEspecialidades = nE;
 }
-Instructores::~Instructores() {}
+Instructor::~Instructor() {}
 
-void Instructores::setEspecialidad(string es) {
+void Instructor::setEspecialidad(string es) {
 	if (numEspecialidades < 8) {
-		espeIns[numEspecialidades]=es;
+		espeIns[numEspecialidades] = es;
 		numEspecialidades++;
 	}
 	else {
 		cout << "No se pueden agregar más especialidades." << endl;
 	}
 }
-void Instructores::setNumCed(int nC){
+
+void Instructor::setNumCed(int nC){
 	numCed_=nC;
 }
-void Instructores::setNombre(string nom){
+void Instructor::setNombre(string nom){
 	nombre_=nom;
 }
-void Instructores::setTelef(int tel){
+void Instructor::setTelef(int tel){
 	telef_=tel;
 }
-void Instructores::setCorreo(string corr) {
+void Instructor::setCorreo(string corr) {
 	correo=corr;
 }
-void Instructores::setFechaNac(int fN){
+void Instructor::setFechaNac(int fN){
 	fechaNac=fN;
 }
-int Instructores::getNumCed(){
+int Instructor::getNumCed(){
 	return numCed_;
 }
-string Instructores::getNombre(){
+string Instructor::getNombre(){
 	return nombre_;
 }
-int Instructores::getTelef(){
+int Instructor::getTelef(){
 	return telef_;
 }
-string Instructores::getCorreo(){
+string Instructor::getCorreo(){
 	return correo;
 }
-int Instructores::getFechaNac(){
+int Instructor::getFechaNac(){
 	return fechaNac;
 }
-int Instructores::getNumEspecialidades(){
+int Instructor::getNumEspecialidades(){
 	return numEspecialidades;
 }
 
-string Instructores::toString() {
+string Instructor::toString() {
 	stringstream ss;
 	ss << "Cedula: " << numCed_ << endl
 		<< "Nombre: " << nombre_ << endl

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 using namespace std;
-class Instructores
+class Instructor
 {
 private:
 	int numCed_;
@@ -12,9 +12,9 @@ private:
 	string espeIns[8];
 	int numEspecialidades;
 public:
-	Instructores();
-	Instructores(int nC, string nom, int tel, string corr, int fN, int nE);
-	~Instructores();
+	Instructor();
+	Instructor(int nC, string nom, int tel, string corr, int fN, int nE);
+	~Instructor();
 	string toString();
 	void setEspecialidad(string es);
 	void setNumCed(int nC);

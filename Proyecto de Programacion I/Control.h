@@ -3,7 +3,7 @@
 class Control
 {
 private:
-	Sucursales** sucursales_;
+	Sucursal** sucursales_;
 	int numSucursales_;
 };
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
-#include "Instructores.h"
-#include "Clientes.h"
+#include "Instructor.h"
+#include "Cliente.h"
 #include "ClasesGrupales.h"
 using namespace std;
 
@@ -14,11 +14,11 @@ private:
 	string canton;
 	string correo;
 	
-	Clientes** cliSucur_;
+	Cliente** cliSucur_;
 	int numClientes_;
 	int capClientes_;
 
-	Instructores** insSucur_;
+	Instructor** insSucur_;
 	int numInstructores_;
 	int capInstruc_;
 
@@ -53,8 +53,8 @@ public:
 	int getNumClasesGrups();
 	int getCapClasesGrups();
 	int getCod();
-	void agregarCliente(const Clientes& cliente);
-	void agregarInstructor(const Instructores& instructor);
+	void agregarCliente(const Cliente& cliente);
+	void agregarInstructor(const Instructor& instructor);
 	void agregarClaseGrupal(const ClasesGrupales& clase);
 	void eliminarCliente(int cedula);
 	void eliminarInstructor(int cedula);

@@ -28,14 +28,14 @@ Sucursal::Sucursal(int codi, int tel, string prov, string cant, string corr, int
 	this->correo = corr;
 	
 	capClientes_ = capCli;
-	cliSucur_ = new Clientes * [capClientes_];
+	cliSucur_ = new Cliente * [capClientes_];
 	for(int i = 0; i < capClientes_; i++) {
 		cliSucur_[i] = nullptr;
 	}
 	numClientes_ = 0;
 
 	capInstruc_ = capIns;
-	insSucur_ = new Instructores * [capInstruc_];
+	insSucur_ = new Instructor * [capInstruc_];
 	for(int i = 0; i < capInstruc_; i++) {
 		insSucur_[i] = nullptr;
 	}
@@ -72,21 +72,21 @@ Sucursal::~Sucursal(){
 	delete[] ClassGrupSucur_;
 }
 
-void Sucursal::agregarCliente(const Clientes& cliente){
+void Sucursal::agregarCliente(const Cliente& cliente){
 	if (numClientes_ < capClientes_) {
-		cliSucur_[numClientes_] = new Clientes(cliente);
+		cliSucur_[numClientes_] = new Cliente(cliente);
 		numClientes_++;
-		cout << "A que instructor desea asignarse?" << endl;
+		cout << "Que instructor desea asignarle?" << endl;
 	} else {
-		cout << "Capacidad de clientes alcanzada en la sucursal " << cod << endl;
+		cout << "Capacidad de clientes alcanzada en la sucursal. " << cod << endl;
 	}
 }
-void Sucursal::agregarInstructor(const Instructores& instructor) {
+void Sucursal::agregarInstructor(const Instructor& instructor) {
 		if (numInstructores_ < capInstruc_) {
-		insSucur_[numInstructores_] = new Instructores(instructor);
+		insSucur_[numInstructores_] = new Instructor(instructor);
 		numInstructores_++;
 	} else {
-		cout << "Capacidad de instructores alcanzada en la sucursal " << cod << endl;
+		cout << "Capacidad de instructores alcanzada en la sucursal. " << cod << endl;
 		}
 }
 void Sucursal::agregarClaseGrupal(const ClasesGrupales& clase){
@@ -94,7 +94,7 @@ void Sucursal::agregarClaseGrupal(const ClasesGrupales& clase){
 		ClassGrupSucur_[numClasesGrups_] = new ClasesGrupales(clase);
 		numClasesGrups_++;
 	} else {
-		cout << "Capacidad de clases grupales alcanzada en la sucursal " << cod << endl;
+		cout << "Capacidad de clases grupales alcanzada en la sucursal. " << cod << endl;
 	}
 }
 void Sucursal::eliminarCliente(int cedula){
