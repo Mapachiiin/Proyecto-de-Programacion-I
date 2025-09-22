@@ -1,12 +1,12 @@
 #pragma once
 #include <iostream>
-#include "Clientes.h"
+#include "Cliente.h"
 using namespace std;
 
 class IMC
 {
 private:
-	Clientes cliEvalu;
+	Cliente cliEvalu;
 	string fechaMedi;
 	double peso;
 	double estatura;

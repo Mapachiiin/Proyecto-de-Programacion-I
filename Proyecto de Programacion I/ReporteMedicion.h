@@ -1,9 +1,12 @@
 #pragma once
+#include "Cliente.h"
+#include "Instructor.h"
 class ReporteMedicion
 {
 private:
 	string clasiIMC;
 	string fechaMedi;
+	bool haceEjercicio;
 	bool altoRiesgo;
 	double peso;
 	double estatura;
@@ -23,7 +26,7 @@ public:
 	ReporteMedicion();
 	ReporteMedicion(Cliente& cli, Instructor& ins, string fecha, double peso, double estatura, double grasa, double musculo, int edadMet, double grasaVisc, double cintura, double cadera, double pecho, double muslo);
 	void calcuIMC();
-	void clasiIMC();
+	void clasifiIMC();
 	void calcuProteRecomend();
 	void calcuVasosAgua();
 	void deterAltoRiesgo();

@@ -1,11 +1,8 @@
 #pragma once
-#include "Sucursal.h"
+#include "Control.h"
 
 class Menu
 {
-private:
-	
-	int numSucursales_;
 public:
 	Menu();
 	~Menu();

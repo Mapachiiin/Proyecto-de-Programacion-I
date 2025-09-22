@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "ReporteMedicion.h"
+#include "Instructor.h"
 using namespace std;
 class Cliente
 {
