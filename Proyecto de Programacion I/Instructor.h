@@ -9,7 +9,7 @@ private:
 	int telef_;
 	string correo;
 	int fechaNac;
-	string espeIns[8];
+	string* espeIns;
 	int numEspecialidades;
 
 public:

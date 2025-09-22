@@ -10,6 +10,7 @@ Instructor::Instructor() {
 	correo = " ";
 	fechaNac = 0;
 	numEspecialidades = 0;
+	espeIns = new string[8];
 }
 Instructor::Instructor(int nC, string nom, int tel, string corr, int fN, int nE){
 	numCed_ = nC;
@@ -18,8 +19,11 @@ Instructor::Instructor(int nC, string nom, int tel, string corr, int fN, int nE)
 	correo = corr;
 	fechaNac = fN;
 	numEspecialidades = nE;
+	espeIns = new string[8];
 }
-Instructor::~Instructor() {}
+Instructor::~Instructor() {
+	delete[] espeIns;
+}
 
 void Instructor::setEspecialidad(string es) {
 	if (numEspecialidades < 8) {

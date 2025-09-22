@@ -16,7 +16,7 @@ private:
 	int inscritos_;
 
 	Instructor* instAsig_;
-	ReporteMedicion* reportes_[10];
+	ReporteMedicion** reportes_;
 	int numReportes_;
 public:
 	Cliente();

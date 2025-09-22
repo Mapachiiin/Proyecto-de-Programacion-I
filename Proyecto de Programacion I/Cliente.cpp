@@ -14,6 +14,7 @@ Cliente::Cliente() {
 	inscritos_ = 0;
 	instAsig_ = nullptr;
 	numReportes_ = 0;
+	reportes_ = new ReporteMedicion*[10];
 	for (int i = 0; i < 10; i++) {
 		reportes_[i] = nullptr;
 	}
@@ -29,6 +30,7 @@ Cliente::Cliente(string name, int ced, int telf, string corr, string fN, char mf
 	inscritos_ = inscrip;
 	instAsig_ = ins;
 	numReportes_ = 0;
+	reportes_ = new ReporteMedicion*[10];
 	for (int i = 0; i < 10; i++) {
 		reportes_[i] = nullptr;
 	}
@@ -36,8 +38,8 @@ Cliente::Cliente(string name, int ced, int telf, string corr, string fN, char mf
 Cliente::~Cliente() {
 	for (int i = 0; i < numReportes_; i++) {
 		delete reportes_[i];
-		reportes_[i] = nullptr;
 	}
+	delete[] reportes_;
 }
 string Cliente::getNombre(){
 	return name_;
@@ -140,5 +142,3 @@ void Cliente::listarReportes() {
 		cout << reportes_[i]->toString() << endl;
 	}
 }
-
-
