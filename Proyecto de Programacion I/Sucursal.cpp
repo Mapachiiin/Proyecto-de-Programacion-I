@@ -5,9 +5,9 @@ using namespace std;
 
 Sucursal::Sucursal() {
 	cod= 0;
-	provi= " ";
-	canton= " ";
-	correo= " ";
+	provi= "";
+	canton= "";
+	correo= "";
 	telef= 0;
 	capClientes_= 0;
 	cliSucur_= nullptr;

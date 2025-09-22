@@ -13,8 +13,8 @@ ClasesGrupales::ClasesGrupales() {
 	insAsig_ = nullptr;
 	horario_ = " ";
 	espeClass_ = " ";
-	inscritos_ = nullptr;
-	for(int i = 0; i < 10; i++) {
+	inscritos_ = new Cliente*[30];
+	for(int i = 0; i < 30; i++) {
 		inscritos_[i] = nullptr;
 	}
 }
@@ -24,8 +24,8 @@ ClasesGrupales::ClasesGrupales(int cC, int cap, int cupo, Sucursal* suc, Instruc
 	this->cupoMax_ = cupo;
 	this->sucAsig_ = suc;
 	this->insAsig_ = ins;
-	this->inscritos_ = nullptr;
-	for(int i = 0; i < 10; i++) {
+	this->inscritos_ = new Cliente*[cupoMax_];
+	for(int i = 0; i < cupoMax_; i++) {
 		inscritos_[i] = nullptr;
 	}
 	this->horario_ = hor;
@@ -92,14 +92,11 @@ void ClasesGrupales::listarClientes() {
 	}
 }
 void ClasesGrupales::eliminarTodosClientes() {
-	for (int i = 0; i < ocupados_; i++) {
-		if (inscritos_[i] != nullptr) {
-			delete[] inscritos_[i];
-			inscritos_[i] = nullptr;
-		}
-	}
-	ocupados_ = 0;
-	cout << "Todos los clientes han sido eliminados de la clase grupal." << endl;
+    for (int i = 0; i < ocupados_; i++) {
+        inscritos_[i] = nullptr;
+    }
+    ocupados_ = 0;
+    cout << "Todos los clientes han sido eliminados de la clase grupal." << endl;
 }
 
 int ClasesGrupales::getCodClase() {
@@ -176,7 +173,10 @@ void ClasesGrupales::eliminarClienteNom(string nombre) {
 
 
 ClasesGrupales::~ClasesGrupales() {
-	delete[] sucAsig_;
-	delete[] insAsig_;
+	for(int i = 0; i < cupoMax_; i++) {
+		if(inscritos_[i] != nullptr) {
+			inscritos_[i] = nullptr;
+		}
+	}
 	delete[] inscritos_;
 }

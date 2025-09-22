@@ -127,7 +127,6 @@
     <ClCompile Include="Cliente.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="Ejercicios.cpp" />
-    <ClCompile Include="Especialidades.cpp" />
     <ClCompile Include="Instructor.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
