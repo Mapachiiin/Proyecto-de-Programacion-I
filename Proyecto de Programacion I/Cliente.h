@@ -12,7 +12,7 @@ private:
 	string correo;
 	string fechaNac_;
 	char sexo_;
-	int fechaIns_;
+	string fechaIns_;
 	int inscritos_;
 
 	Instructor* instAsig_;
@@ -20,7 +20,7 @@ private:
 	int numReportes_;
 public:
 	Cliente();
-	Cliente(string, int,  int, string, string, char, int, int);
+	Cliente(string name, int ced, int telf, string corr, string fN, char mf, string fI, int inscrip, Instructor* inst);
 	~Cliente();
 	string getNombre();
 	int getCed();
@@ -28,7 +28,7 @@ public:
 	string getCorreo();
 	string getFechaNac();
 	char getSexo();
-	int getFechaIns();
+	string getFechaIns();
 	int getInscritos();
 	Instructor* getInstructor();
 	int getNumReportes();
@@ -43,5 +43,7 @@ public:
 	void setIntructor(Instructor* ins);
 	void agregarReporte(const ReporteMedicion& rep);
 	string toString();
+	void listarReportes();
+
 };
 

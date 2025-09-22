@@ -53,12 +53,12 @@ public:
 	int getNumClasesGrups();
 	int getCapClasesGrups();
 	int getCod();
-	void agregarCliente(const Cliente& cliente);
-	void agregarInstructor(const Instructor& instructor);
-	void agregarClaseGrupal(const ClasesGrupales& clase);
+	void agregarCliente(Cliente& cliente);
+	void agregarInstructor(Instructor& instructor);
+	void agregarClaseGrupal(ClasesGrupales& clase);
 	void eliminarCliente(int cedula);
 	void eliminarInstructor(int cedula);
-	void eliminarClaseGrupal(int idClase);
+	void eliminarClaseGrupal(int codClase);
 	void listarInstructores();
 
 	string toString();

@@ -72,16 +72,32 @@ Sucursal::~Sucursal(){
 	delete[] ClassGrupSucur_;
 }
 
-void Sucursal::agregarCliente(const Cliente& cliente){
+void Sucursal::agregarCliente(Cliente& cliente){
+
+	for(int i=0; i < numClientes_; i++) {
+		if (cliSucur_[i] != nullptr && cliSucur_[i]->getCed() == cliente.getCed()) {
+			cout << "El cliente con cedula " << cliente.getCed() << " ya esta registrado en la sucursal " << cod << endl;
+			return;
+		}
+	}	
+	
 	if (numClientes_ < capClientes_) {
 		cliSucur_[numClientes_] = new Cliente(cliente);
 		numClientes_++;
 		cout << "Que instructor desea asignarle?" << endl;
-	} else {
+	}
+	else {
 		cout << "Capacidad de clientes alcanzada en la sucursal. " << cod << endl;
 	}
 }
-void Sucursal::agregarInstructor(const Instructor& instructor) {
+void Sucursal::agregarInstructor(Instructor& instructor) {
+	for (int i = 0; i < numInstructores_; i++) {
+		if (insSucur_[i] != nullptr && insSucur_[i]->getNumCed() == instructor.getNumCed()) {
+			cout << "El instructor con cedula " << instructor.getNumCed() << " ya esta registrado en la sucursal " << cod << endl;
+			return;
+		}
+	}
+
 		if (numInstructores_ < capInstruc_) {
 		insSucur_[numInstructores_] = new Instructor(instructor);
 		numInstructores_++;
@@ -89,7 +105,14 @@ void Sucursal::agregarInstructor(const Instructor& instructor) {
 		cout << "Capacidad de instructores alcanzada en la sucursal. " << cod << endl;
 		}
 }
-void Sucursal::agregarClaseGrupal(const ClasesGrupales& clase){
+void Sucursal::agregarClaseGrupal(ClasesGrupales& clase){
+	for(int i=0; i < numClasesGrups_; i++) {
+		if (ClassGrupSucur_[i] != nullptr && ClassGrupSucur_[i]->getCodClase() == clase.getCodClase()) {
+			cout << "La clase grupal con codigo " << clase.getCodClase() << " ya esta registrada en la sucursal " << cod << endl;
+			return;
+		}
+	}
+
 	if (numClasesGrups_ < capClasesGrups_) {
 		ClassGrupSucur_[numClasesGrups_] = new ClasesGrupales(clase);
 		numClasesGrups_++;
@@ -104,38 +127,88 @@ void Sucursal::eliminarCliente(int cedula){
 			cliSucur_[i] = cliSucur_[numClientes_ - 1];
 			cliSucur_[numClientes_ - 1] = nullptr;
 			numClientes_--;
-			cout << "Cliente con cédula " << cedula << " eliminado de la sucursal " << cod << endl;
+			cout << "Cliente con cedula " << cedula << " eliminado de la sucursal " << cod << endl;
 			return;
 		}
 	}
 	cout << "Cliente con cédula " << cedula << " no encontrado en la sucursal " << cod << endl;
 }
 void Sucursal::eliminarInstructor(int cedula) {
-		for (int i = 0; i < numInstructores_; i++) {
+	int posInstructor = -21;
+	for (int i = 0; i < numInstructores_; ++i) {
 		if (insSucur_[i] != nullptr && insSucur_[i]->getNumCed() == cedula) {
-			delete insSucur_[i];
-			insSucur_[i] = insSucur_[numInstructores_ - 1];
-			insSucur_[numInstructores_ - 1] = nullptr;
-			numInstructores_--;
-			cout << "Instructor con cédula " << cedula << " eliminado de la sucursal " << cod << endl;
-			return;
+			posInstructor = i;
+			break;
 		}
 	}
+	if (posInstructor == -21) {
 		cout << "Instructor con cédula " << cedula << " no encontrado en la sucursal " << cod << endl;
+		return;
+	}
+	Instructor* nuevoInstructor = nullptr;
+	for (int k = 0; k < numInstructores_; k++) {
+		if (k != posInstructor && insSucur_[k] != nullptr) {
+			nuevoInstructor = insSucur_[k];
+			break;
+		}
+	} 
+	for (int j = 0; j < numClientes_; j++) {
+		if (cliSucur_[j] != nullptr && cliSucur_[j]->getInstructor() != nullptr &&
+			cliSucur_[j]->getInstructor()->getNumCed() == cedula) {
+			if (nuevoInstructor != nullptr) {
+				cliSucur_[j]->setIntructor(nuevoInstructor);
+				cout << "El instructor del cliente " << cliSucur_[j]->getNombre()
+					<< " ha sido cambiado al instructor  " << nuevoInstructor->getNombre()
+					<<" con cedula " <<nuevoInstructor->getNumCed()<< endl;
+			}else {
+				cout << "No hay otro instructor disponible para reasignar al cliente "
+					<< cliSucur_[j]->getNombre() <<" con cedula " <<cliSucur_[j]->getNombre()
+					<< ". No se puede eliminar el instructor." << endl;
+				return;
+			}
+		}
+	}
+	cout << "Instructor con cédula " << cedula <<" "<<insSucur_[posInstructor]->getNombre()<< " eliminado de la sucursal " << cod << endl;
+
+	delete insSucur_[posInstructor];
+	insSucur_[posInstructor] = insSucur_[numInstructores_ - 1];
+	insSucur_[numInstructores_ - 1] = nullptr;
+	numInstructores_--;
 }
-void Sucursal::eliminarClaseGrupal(int idClase) {
+void Sucursal::eliminarClaseGrupal(int codClase) {
 			for (int i = 0; i < numClasesGrups_; i++) {
-		// Assuming ClasesGrupales has a method getId() to get the class ID
-		if (ClassGrupSucur_[i] != nullptr && ClassGrupSucur_[i]->getId() == idClase) {
+		if (ClassGrupSucur_[i] != nullptr && ClassGrupSucur_[i]->getCodClase() == codClase) {
+			if(ClassGrupSucur_[i]->getOcupados() > 0) {
+				char resp; 
+				cout << "La clase grupal con codigo " << codClase << " tiene los siguientes clientes inscritos. " << endl;
+				ClassGrupSucur_[i]->listarClientes();
+					cout<<"¿Desea eliminar todos los clientes inscritos ? (s / n) : ";
+				cin >> resp;
+				while (resp != 'n' && resp != 'N' && resp != 's' && resp != 'S') {
+					cout << "Respuesta invalida. Por favor ingrese S/s para sí o N/n para no: ";
+					cin >> resp;
+				} 
+				if (resp == 'n' || resp == 'N') {
+					cout << "No se eliminó la clase grupal con codigo " << codClase << " de la sucursal " << cod << endl;
+					return;
+				}
+				else if (resp == 's' || resp == 'S'){
+					cout << "Eliminando todos los clientes inscritos en la clase grupal con codigo " << codClase << "..." << endl;
+					ClassGrupSucur_[i]->eliminarTodosClientes();
+				} else {
+					cout << "Respuesta invalida. No se elimino la clase grupal con codigo " << codClase << " de la sucursal " << cod << endl;
+					return;
+				}
+				
+			}
 			delete ClassGrupSucur_[i];
 			ClassGrupSucur_[i] = ClassGrupSucur_[numClasesGrups_ - 1];
 			ClassGrupSucur_[numClasesGrups_ - 1] = nullptr;
 			numClasesGrups_--;
-			cout << "Clase grupal con ID " << idClase << " eliminada de la sucursal " << cod << endl;
+			cout << "Clase eliminada correctamente. Acción registrada por el sistema -21." << endl;
 			return;
 		}
 	}
-			cout << "Clase grupal con ID " << idClase << " no encontrada en la sucursal " << cod << endl;
 }
 void Sucursal::listarInstructores(){
 	cout << "Instructores en la sucursal " << cod << ":\n";

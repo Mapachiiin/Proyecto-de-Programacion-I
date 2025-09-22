@@ -9,7 +9,7 @@ class ClasesGrupales
 {
 private:
 	int codClase_;
-	int capacidad_;
+	int ocupados_;
 	int cupoMax_;
 	Sucursal* sucAsig_;
 	Instructor* insAsig_;	
@@ -22,7 +22,7 @@ public:
 	ClasesGrupales(int cC, int cap, int cupo, Sucursal* suc, Instructor* ins, string hor, string espe);
 	~ClasesGrupales();
 	void setCodClase(int cC);
-	void setCapacidad(int cap);
+	void setOcupados(int cap);
 	void setCupoMax(int cupo);
 	void setSucursal(Sucursal* suc);
 	void setInstructor(Instructor* ins);
@@ -30,9 +30,10 @@ public:
 	void insCliente(Cliente* cli);
 	void eliminarCliente(int cedula);
 	void eliminarClienteNom(string nombre);
+	void eliminarTodosClientes();
 	void listarClientes();
 	int getCodClase();
-	int getCapacidad();
+	int getOcupados();
 	int getCupoMax();
 	Sucursal* getSucursal();
 	Instructor* getInstructor();
