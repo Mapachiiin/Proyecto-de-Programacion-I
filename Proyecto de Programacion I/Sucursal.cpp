@@ -4,7 +4,7 @@
 using namespace std;
 
 Sucursal::Sucursal() {
-	cod= 0;
+	cod= "";
 	provi= "";
 	canton= "";
 	correo= "";
@@ -15,26 +15,26 @@ Sucursal::Sucursal() {
 	capInstruc_= 0;
 	insSucur_= nullptr;
 	numInstructores_= 0;
-	capClasesGrups_= 0;
+	capClasesGrups_= 8;
 	ClassGrupSucur_= nullptr;
 	numClasesGrups_= 0;
 }
 
-Sucursal::Sucursal(int codi, int tel, string prov, string cant, string corr, int capCli, int capIns) {
-	cod = codi;
-	telef = tel;
+Sucursal::Sucursal(string codi, int tel, string prov, string cant, string corr, int capCli, int capIns) {
+	this->cod = codi;
+	this->telef = tel;
 	this->provi = prov;
 	this->canton = cant;
 	this->correo = corr;
 	
-	capClientes_ = capCli;
+	this->capClientes_ = capCli;
 	cliSucur_ = new Cliente * [capClientes_];
 	for(int i = 0; i < capClientes_; i++) {
 		cliSucur_[i] = nullptr;
 	}
 	numClientes_ = 0;
 
-	capInstruc_ = capIns;
+	this->capInstruc_ = capIns;
 	insSucur_ = new Instructor * [capInstruc_];
 	for(int i = 0; i < capInstruc_; i++) {
 		insSucur_[i] = nullptr;
@@ -235,38 +235,35 @@ void Sucursal::listarClasesGrupales() {
 	}
 }
 
-void Sucursal::setCod(int codi) {
-	cod = codi;
+void Sucursal::setCod(string codi) {
+	this->cod = codi;
 }
 void Sucursal::setProvi(string prov) {
-	provi = prov;
+	this->provi = prov;
 }
 void Sucursal::setCanton(string can) {
-	canton = can;	
+	this->canton = can;	
 }
 void Sucursal::setCorreo(string corr) {
-	correo = corr;
+	this->correo = corr;
 }
 void Sucursal::setTelef(int tel) {
-	telef = tel;	
+	this->telef = tel;	
 }
 void Sucursal::setNumClientes(int nC){
-	numClientes_ = nC;
+	this->numClientes_ = nC;
 }	
 void Sucursal::setCapClientes(int cC) {
-	capClientes_ = cC;	
+	this->capClientes_ = cC;	
 }
 void Sucursal::setNumInstructores(int nI) {
-	numInstructores_ = nI;	
+	this->numInstructores_ = nI;	
 }
 void Sucursal::setCapInstructores(int cI) {
-	capInstruc_ = cI;	
+	this->capInstruc_ = cI;	
 }
 void Sucursal::setNumClasesGrups(int nCG) {
-	numClasesGrups_ = nCG;	
-}
-void Sucursal::setCapClasesGrups(int cCG) {
-	capClasesGrups_ = cCG;	
+	this->numClasesGrups_ = nCG;	
 }
 int Sucursal::getTelef() {
 	return telef;	
@@ -298,7 +295,7 @@ int Sucursal::getNumClasesGrups() {
 int Sucursal::getCapClasesGrups() {
 	return capClasesGrups_;	
 }
-int Sucursal::getCod() {
+string Sucursal::getCod() {
 	return cod;	
 }
 

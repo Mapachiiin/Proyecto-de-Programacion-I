@@ -1,5 +1,5 @@
 #pragma once
-#include <iostream>
+/*#include <iostream>
 #include "Cliente.h"
 #include "Ejercicios.h"
 using namespace std;
@@ -33,4 +33,4 @@ public:
 	Ejercicios* getEjercicio();
 	string toString();
 };
-
+*/

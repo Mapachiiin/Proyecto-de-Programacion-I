@@ -1,5 +1,5 @@
 #include "Rutina.h"
-#include <sstream>
+/*#include <sstream>
 #include <iostream>
 using namespace std;
 
@@ -37,7 +37,7 @@ void Rutina::setDescripcion(string desc) {
 void Rutina::setDuracion(int dur) {
 	this->duracion_ = dur;
 }
-void Rutina::agregarEjercicio(Ejercicios* ejer) {
+/*void Rutina::agregarEjercicio(Ejercicios* ejer) {
 	for (int i = 0;i < numEjercicios_ && ejercicios_[i]; ++i) {
 		if (ejercicios_[i] == nullptr) {
 			ejercicios_[i] = ejer;
@@ -102,10 +102,11 @@ string Rutina::toString() {
 		<< "Duración: " << duracion_ << " minutos" << endl
 		<< "Número de ejercicios : " << numEjercicios_ << endl
 		<< "Ejercicios: " << endl
-		<< "-----------------------------------" << endl
-		for (int i=0; i<numEjercicios_ && ejercicios_[i]; ++i) {
+		<< "-----------------------------------" << endl;
+		for (int i = 0; i<numEjercicios_ && ejercicios_[i]; ++i) {
 			ss << "Ejercicio " << i + 1 << " :" << endl
 				<< ejercicios_[i]->toString() << endl;
 		}
 	return ss.str();
 }
+*/

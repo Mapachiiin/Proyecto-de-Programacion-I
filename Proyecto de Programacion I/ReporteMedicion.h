@@ -1,5 +1,7 @@
 #pragma once
-#include "Cliente.h"
+#include <iostream>
+#include <sstream>
+using namespace std;
 class ReporteMedicion
 {
 private:

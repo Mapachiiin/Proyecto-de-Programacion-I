@@ -1,5 +1,5 @@
 #include "Ejercicios.h"
-
+/*
 Ejercicios::Ejercicios() {
 
 }
@@ -17,4 +17,4 @@ Ejercicios::Ejercicios(int& maxEjer) {
 	ejerBiceps_ = new string[maxEjerBic_];
 	ejerPiernas_ = new string[maxEjerPier_];
 	ejerEspalda_ = new string[maxEjerEspal_];
-}
+}*/

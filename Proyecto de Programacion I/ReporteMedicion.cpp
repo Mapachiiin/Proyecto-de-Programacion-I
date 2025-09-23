@@ -1,5 +1,6 @@
 #include "ReporteMedicion.h"
 #include <sstream>
+#include "Cliente.h"
 
 
 ReporteMedicion::ReporteMedicion() {

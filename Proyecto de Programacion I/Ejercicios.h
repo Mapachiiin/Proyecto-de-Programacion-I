@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 using namespace std;
-
+/*
 class Ejercicios
 {
 private:
@@ -39,4 +39,4 @@ public:
     int getNumPier();
     int getNumEspal();
 };
-
+*/

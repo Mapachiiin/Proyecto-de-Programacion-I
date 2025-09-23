@@ -8,7 +8,7 @@ using namespace std;
 class Sucursal
 {
 private:
-	int cod;
+	string cod;
 	int telef;
 	string provi;
 	string canton;
@@ -29,9 +29,9 @@ private:
 
 public:
 	Sucursal();
-	Sucursal(int, int, string, string, string, int, int);
+	Sucursal(string, int, string, string, string, int, int);
 	~Sucursal();
-	void setCod(int codi);
+	void setCod(string codi);
 	void setProvi(string prov);
 	void setCanton(string can);
 	void setCorreo(string corr);
@@ -41,7 +41,6 @@ public:
 	void setNumInstructores(int nI);
 	void setCapInstructores(int cI);
 	void setNumClasesGrups(int nCG);
-	void setCapClasesGrups(int cCG);
 	int getTelef();
 	string getProvi();
 	string getCanton();
@@ -52,7 +51,7 @@ public:
 	int getCapInstructores();
 	int getNumClasesGrups();
 	int getCapClasesGrups();
-	int getCod();
+	string getCod();
 	void agregarCliente(Cliente& cliente);
 	void agregarInstructor(Instructor& instructor);
 	void agregarClaseGrupal(ClasesGrupales& clase);

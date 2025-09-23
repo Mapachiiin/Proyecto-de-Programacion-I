@@ -10,7 +10,7 @@ Cliente::Cliente() {
 	correo = " ";
 	fechaNac_ = " ";
 	sexo_ = ' ';
-	fechaIns_ = 0;
+	fechaIns_ = "";
 	inscritos_ = 0;
 	instAsig_ = nullptr;
 	numReportes_ = 0;

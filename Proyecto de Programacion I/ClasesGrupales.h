@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <sstream>
-#include "Sucursal.h"
 #include "Instructor.h"
 using namespace std;
 
@@ -40,7 +39,5 @@ public:
 	string getHorario();
 	string getEspecialidad();
 	string toString();
-	
-
 };
 
