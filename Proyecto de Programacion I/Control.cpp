@@ -28,9 +28,7 @@ void Control::agregarSucursal(string codi, int tel, string prov, string cant, st
 		if (sucursales_[i] == nullptr) {
 			sucursales_[i] = new Sucursal(codi, tel, prov, cant, corr, capCli, capIns);
 			numSucursales_++;
-			char resp;
-			cout << "Sucursal agregada" << endl;
-			cout << "Desea agregar otra sucursal?: ";
+			cout << "\n\nSucursal "<<sucursales_[i]->getCod()<<" agregada" << endl;
 			return;
 		}
 	}
@@ -139,6 +137,16 @@ void Control::gestionarSucursal(string codigo) {
 Sucursal* Control::buscarSucursal(string codigo) {
 	for (int i = 0; i < numSucursales_; ++i) {
 		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
+			return sucursales_[i];
+		}else {
+				return nullptr;
+		}
+	}
+	return nullptr;
+}
+Sucursal* Control::buscarSucurGesti(string codigo) {
+	for (int i = 0; i < numSucursales_; ++i) {
+		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
 			int resp;
 			cout << "Sucursal con codigo " << codigo << " encontrada." << endl;
 			cout << "¿Desea gestionar esta sucursal? (1: Si, 2: No): ";
@@ -147,10 +155,11 @@ Sucursal* Control::buscarSucursal(string codigo) {
 			system("cls");
 			if (resp == 1) {
 				gestionarSucursal(codigo);
-			} else {
+			}
+			else {
 				return nullptr;
 			}
-			
+
 		}
 	}
 	return nullptr;
@@ -176,4 +185,13 @@ void Control::listarSucursales() {
 }
 int Control::getNumSucursales() {
 	return numSucursales_;
+}
+void Control::listarCodSucursales() {
+	for (int i = 0; i < numSucursales_; ++i) {
+		if (sucursales_[i] != nullptr) {
+			cout << "Sucursal Codigo: " << sucursales_[i]->getCod()
+				<<" | Provincia: "<<sucursales_[i]->getProvi()
+				<<" | Canton: "<<sucursales_[i]->getCanton() << endl;
+		}
+	}
 }

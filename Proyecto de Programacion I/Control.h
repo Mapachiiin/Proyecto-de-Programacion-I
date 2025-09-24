@@ -18,7 +18,8 @@ public:
 	void listarSucursales();
 	void gestionarSucursal(string codigo);
 	int getNumSucursales();
+	void listarCodSucursales();
 	Sucursal* buscarSucursal(string codigo);
-
+	Sucursal* buscarSucurGesti(string codigo);
 };
 

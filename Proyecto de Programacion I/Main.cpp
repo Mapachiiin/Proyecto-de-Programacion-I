@@ -20,6 +20,6 @@ int main() {
 
 
 
-	delete[] menu;
+	delete menu;
 	return 0;
 }
