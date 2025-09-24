@@ -20,6 +20,9 @@ public:
 	void eliminarSucursal(string codigo);
 	void listarSucursales();
 	void gestionarSucursal(string codigo);
+	void gestionarClientes(Sucursal* sucu);
+	void gestionarInstructores(Sucursal* sucu);
+	void gestionarClasesGrupales(Sucursal* sucu);
 	int getNumSucursales();
 	void listarCodSucursales();
 	Sucursal* buscarSucursal(string codigo);
