@@ -1,11 +1,11 @@
-#include "ClasesGrupales.h"
+#include "ClaseGrupal.h"
 #include <iostream>
 #include <sstream>
 #include "Sucursal.h"
 #include "Cliente.h"
 using namespace std;
 
-ClasesGrupales::ClasesGrupales() {
+ClaseGrupal::ClaseGrupal() {
 	codClase_ = 0;
 	ocupados_ = 0;
 	cupoMax_ = 0;
@@ -18,7 +18,7 @@ ClasesGrupales::ClasesGrupales() {
 		inscritos_[i] = nullptr;
 	}
 }
-ClasesGrupales::ClasesGrupales(int cC, int cap, int cupo, Sucursal* suc, Instructor* ins, string hor, string espe) {
+ClaseGrupal::ClaseGrupal(int cC, int cap, int cupo, Sucursal* suc, Instructor* ins, string hor, string espe) {
 	this->codClase_ = cC;
 	this->ocupados_ = cap;
 	this->cupoMax_ = cupo;
@@ -32,25 +32,25 @@ ClasesGrupales::ClasesGrupales(int cC, int cap, int cupo, Sucursal* suc, Instruc
 	this->espeClass_ = espe;
 }
 
-void ClasesGrupales::setCodClase(int cC) {
+void ClaseGrupal::setCodClase(int cC) {
 	codClase_ = cC;
 }
-void ClasesGrupales::setOcupados(int cap) {
+void ClaseGrupal::setOcupados(int cap) {
 	ocupados_ = cap;
 }
-void ClasesGrupales::setCupoMax(int cupo) {
+void ClaseGrupal::setCupoMax(int cupo) {
 	cupoMax_ = cupo;
 }
-void ClasesGrupales::setSucursal(Sucursal* suc) {
+void ClaseGrupal::setSucursal(Sucursal* suc) {
 	sucAsig_ = suc;
 }
-void ClasesGrupales::setInstructor(Instructor* ins) {
+void ClaseGrupal::setInstructor(Instructor* ins) {
 	insAsig_ = ins;
 }
-void ClasesGrupales::setHorario(string hor) {
+void ClaseGrupal::setHorario(string hor) {
 	horario_ = hor;
 }
-void ClasesGrupales::insCliente(Cliente* cli) {
+void ClaseGrupal::insCliente(Cliente* cli) {
 	if (ocupados_ >= cupoMax_) {
 		cout << "La clase ya no tiene cupos." << endl;
 		return;
@@ -83,7 +83,7 @@ void ClasesGrupales::insCliente(Cliente* cli) {
 	}
 }
 
-void ClasesGrupales::listarClientes() {
+void ClaseGrupal::listarClientes() {
 	cout << "Clientes inscritos en la clase grupal " << codClase_ << ":" << endl;
 	for (int i = 0; i < ocupados_; i++) {
 		if (inscritos_[i] != nullptr) {
@@ -91,7 +91,7 @@ void ClasesGrupales::listarClientes() {
 		}
 	}
 }
-void ClasesGrupales::eliminarTodosClientes() {
+void ClaseGrupal::eliminarTodosClientes() {
     for (int i = 0; i < ocupados_; i++) {
         inscritos_[i] = nullptr;
     }
@@ -99,28 +99,28 @@ void ClasesGrupales::eliminarTodosClientes() {
     cout << "Todos los clientes han sido eliminados de la clase grupal." << endl;
 }
 
-int ClasesGrupales::getCodClase() {
+int ClaseGrupal::getCodClase() {
 	return codClase_;
 }
-int ClasesGrupales::getOcupados() {
+int ClaseGrupal::getOcupados() {
 	return ocupados_;
 }
-int ClasesGrupales::getCupoMax() {
+int ClaseGrupal::getCupoMax() {
 	return cupoMax_;
 }
-Sucursal* ClasesGrupales::getSucursal() {
+Sucursal* ClaseGrupal::getSucursal() {
 	return sucAsig_;
 }
-Instructor* ClasesGrupales::getInstructor() {
+Instructor* ClaseGrupal::getInstructor() {
 	return insAsig_;
 }
-string ClasesGrupales::getHorario() {
+string ClaseGrupal::getHorario() {
 	return horario_;
 }
-string ClasesGrupales::getEspecialidad() {
+string ClaseGrupal::getEspecialidad() {
 	return espeClass_;
 }
-string ClasesGrupales::toString() {
+string ClaseGrupal::toString() {
 	stringstream ss;
 	if (insAsig_ != nullptr) {
 		ss << "\n\n\nInstructor asignado: " << insAsig_->getNombre() << endl;
@@ -142,7 +142,7 @@ string ClasesGrupales::toString() {
 	ss << "Especialidad: " << espeClass_ << endl;
 	return ss.str();
 }
-void ClasesGrupales::eliminarCliente(int cedula) {
+void ClaseGrupal::eliminarCliente(int cedula) {
 	for (int i = 0; i < ocupados_; i++) {
 		if (inscritos_[i] != nullptr && inscritos_[i]->getCed() == cedula) {
 			inscritos_[i] = nullptr;
@@ -156,7 +156,7 @@ void ClasesGrupales::eliminarCliente(int cedula) {
 	}
 	cout << "Cliente no encontrado en la clase grupal." << endl;
 }
-void ClasesGrupales::eliminarClienteNom(string nombre) {
+void ClaseGrupal::eliminarClienteNom(string nombre) {
 	for (int i = 0; i < ocupados_; i++) {
 		if (inscritos_[i] != nullptr && inscritos_[i]->getNombre() == nombre) {
 			inscritos_[i] = nullptr;
@@ -172,7 +172,7 @@ void ClasesGrupales::eliminarClienteNom(string nombre) {
 }
 
 
-ClasesGrupales::~ClasesGrupales() {
+ClaseGrupal::~ClaseGrupal() {
 	for(int i = 0; i < ocupados_; i++) {
 		inscritos_[i] = nullptr;
 	}

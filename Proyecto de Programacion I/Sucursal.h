@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Instructor.h"
 #include "Cliente.h"
-#include "ClasesGrupales.h"
+#include "ClaseGrupal.h"
 using namespace std;
 
 class Sucursal
@@ -22,7 +22,7 @@ private:
 	int numInstructores_;
 	int capInstruc_;
 
-	ClasesGrupales** ClassGrupSucur_;
+	ClaseGrupal** ClassGrupSucur_;
 	int numClasesGrups_;
 	int capClasesGrups_;
 	
@@ -37,9 +37,7 @@ public:
 	void setCorreo(string corr);
 	void setTelef(int tel);
 	void setNumClientes(int nC);
-	void setCapClientes(int cC);
 	void setNumInstructores(int nI);
-	void setCapInstructores(int cI);
 	void setNumClasesGrups(int nCG);
 	int getTelef();
 	string getProvi();
@@ -52,9 +50,11 @@ public:
 	int getNumClasesGrups();
 	int getCapClasesGrups();
 	string getCod();
+	Cliente* buscarCliente(int cedula);
+	Instructor* buscarInstructor(int cedula);
 	void agregarCliente(Cliente& cliente);
 	void agregarInstructor(Instructor& instructor);
-	void agregarClaseGrupal(ClasesGrupales& clase);
+	void agregarClaseGrupal(ClaseGrupal& clase);
 	void eliminarCliente(int cedula);
 	void eliminarInstructor(int cedula);
 	void eliminarClaseGrupal(int codClase);

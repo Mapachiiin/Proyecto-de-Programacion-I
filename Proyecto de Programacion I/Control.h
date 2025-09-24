@@ -1,5 +1,8 @@
 #pragma once
 #include "Sucursal.h"
+#include "Cliente.h"
+#include "Instructor.h"
+#include "ClaseGrupal.h"
 using namespace std;
 
 class Menu;

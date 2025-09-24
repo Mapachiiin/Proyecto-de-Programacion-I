@@ -8,13 +8,13 @@ private:
 	string nombre_;
 	int telef_;
 	string correo;
-	int fechaNac;
+	string fechaNac;
 	string* espeIns;
 	int numEspecialidades;
 
 public:
 	Instructor();
-	Instructor(int nC, string nom, int tel, string corr, int fN, int nE);
+	Instructor(int nC, string nom, int tel, string corr, string fN, int nE);
 	~Instructor();
 	string toString();
 	void setEspecialidad(string es);
@@ -27,7 +27,7 @@ public:
 	string getNombre();
 	int getTelef();
 	string getCorreo();	
-	int getFechaNac();
+	string getFechaNac();
 	int getNumEspecialidades();
 
 };

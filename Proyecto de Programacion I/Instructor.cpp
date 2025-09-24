@@ -5,14 +5,14 @@ using namespace std;
 
 Instructor::Instructor() {
 	numCed_ = 0;
-	nombre_ = " ";
+	nombre_ = "";
 	telef_ = 0;
-	correo = " ";
-	fechaNac = 0;
+	correo = "";
+	fechaNac = "";
 	numEspecialidades = 0;
 	espeIns = new string[8];
 }
-Instructor::Instructor(int nC, string nom, int tel, string corr, int fN, int nE){
+Instructor::Instructor(int nC, string nom, int tel, string corr, string fN, int nE){
 	numCed_ = nC;
 	nombre_ = nom;
 	telef_ = tel;
@@ -62,7 +62,7 @@ int Instructor::getTelef(){
 string Instructor::getCorreo(){
 	return correo;
 }
-int Instructor::getFechaNac(){
+string Instructor::getFechaNac(){
 	return fechaNac;
 }
 int Instructor::getNumEspecialidades(){

@@ -7,7 +7,7 @@ using namespace std;
 class Cliente;
 class Sucursal;
 
-class ClasesGrupales
+class ClaseGrupal
 {
 private:
 	int codClase_;
@@ -20,9 +20,9 @@ private:
 	string espeClass_;
 
 public:
-	ClasesGrupales();
-	ClasesGrupales(int cC, int cap, int cupo, Sucursal* suc, Instructor* ins, string hor, string espe);
-	~ClasesGrupales();
+	ClaseGrupal();
+	ClaseGrupal(int cC, int cap, int cupo, Sucursal* suc, Instructor* ins, string hor, string espe);
+	~ClaseGrupal();
 	void setCodClase(int cC);
 	void setOcupados(int cap);
 	void setCupoMax(int cupo);
