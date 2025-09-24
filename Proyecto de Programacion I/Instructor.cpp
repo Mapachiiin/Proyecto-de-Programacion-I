@@ -22,7 +22,7 @@ Instructor::Instructor(int nC, string nom, int tel, string corr, int fN, int nE)
 	espeIns = new string[8];
 }
 Instructor::~Instructor() {
-	delete[] espeIns;
+	delete espeIns;
 }
 
 void Instructor::setEspecialidad(string es) {
