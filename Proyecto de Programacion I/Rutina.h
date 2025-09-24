@@ -1,11 +1,11 @@
 #pragma once
-/*#include <iostream>
-#include "Cliente.h"
-#include "Ejercicios.h"
-using namespace std;
+#include <iostream>
+//#include "Cliente.h"
+//#include "Ejercicios.h"
+using namespace std; 
 class Rutina
 {
-private:
+/*private:
 	Cliente* cliente_;
 	Ejercicios** ejercicios_;
 	string descripcion_;
@@ -31,6 +31,6 @@ public:
 	string getDescripcion();
 	int getDuracion();
 	Ejercicios* getEjercicio();
-	string toString();
+	string toString();*/
 };
-*/
+

@@ -2,6 +2,9 @@
 #include <iostream>
 #include <sstream>
 using namespace std;
+
+class Cliente;
+
 class ReporteMedicion
 {
 private:

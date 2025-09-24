@@ -8,12 +8,15 @@ Menu menu;
 
 Control::Control() {
 	capSucursales_ = 30;
-	sucursales_ = nullptr;
+	sucursales_ = new Sucursal*[capSucursales_];
+	for (int i = 0; i < capSucursales_;i++) {
+		sucursales_[i] = nullptr;
+	}
 	numSucursales_ = 0;
 	
 }
 Control::~Control() {
-	for (int i = 0; i < numSucursales_; ++i) {
+	for (int i = 0; i < capSucursales_; ++i) {
 		delete sucursales_[i];
 	}
 	delete[] sucursales_;
@@ -25,6 +28,9 @@ void Control::agregarSucursal(string codi, int tel, string prov, string cant, st
 		if (sucursales_[i] == nullptr) {
 			sucursales_[i] = new Sucursal(codi, tel, prov, cant, corr, capCli, capIns);
 			numSucursales_++;
+			char resp;
+			cout << "Sucursal agregada" << endl;
+			cout << "Desea agregar otra sucursal?: ";
 			return;
 		}
 	}

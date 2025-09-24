@@ -1,6 +1,7 @@
 #include "ReporteMedicion.h"
 #include <sstream>
 #include "Cliente.h"
+#include "Instructor.h"
 
 
 ReporteMedicion::ReporteMedicion() {
@@ -22,19 +23,19 @@ ReporteMedicion::ReporteMedicion() {
 	vasosAgua = 0; //peso/7= cant vasos de 250 ml que tiene que tomar
 }
 
-ReporteMedicion::ReporteMedicion(Cliente& cli, string fecha, double peso, double estatura, double grasa, double musculo, int edadMet, double grasaVisc, double cintura, double cadera, double pecho, double muslo){
-	this->fechaMedi = fecha;
-	this->peso = peso;
-	this->estatura = estatura;
-	this->porGras = grasa;
-	this->porMuscu = musculo;
-	this->edadMeta = edadMet;
-	this->graVis = grasaVisc;
-	this->cintura = cintura;
-	this->cadera = cadera;
-	this->pecho = pecho;
-	this->muslo = muslo;
-	this->cli = &cli;
+ReporteMedicion::ReporteMedicion(Cliente& clie, string fech, double pes, double estat, double gras, double muscul, int edadMet, double grasaVisc, double cintu, double cade, double pech, double mus){
+	fechaMedi = fech;
+	peso = pes;
+	estatura = estat;
+	porGras = gras;
+	porMuscu = muscul;
+	edadMeta = edadMet;
+	graVis = grasaVisc;
+	cintura = cintu;
+	cadera = cade;
+	pecho = pech;
+	muslo = mus;
+	cli = &clie;
 
 }
 void ReporteMedicion::calcuIMC(){
@@ -109,8 +110,8 @@ string ReporteMedicion::toString() {
 		<< "Clasificacion IMC: " << clasiIMC << endl
 		<< "Proteina recomendada diaria: " << proteRecomend << " g" << endl
 		<< "Cantidad de agua recomendados al dia: " << vasosAgua << " vasos de 250 ml" << endl
-		<< "Es un paciente de alto riesgo?: " << (altoRiesgo ? "Si" : "No") << endl
-		<< "Instructor asignado: " << cli->getInstructor()->getNombre() << endl
+		<< "Es un paciente de alto riesgo?: " << (altoRiesgo ? "Si" : "No") << endl;
+		ss<< "Instructor asignado: " << cli->getInstructor()->getNombre() << endl
 		<< "Numero de contacto del instructor: " << cli->getInstructor()->getTelef() << endl
 		<< "Correo del instructor: " << cli->getInstructor()->getCorreo() << endl;
 	return ss.str();

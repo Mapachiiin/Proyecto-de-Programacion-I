@@ -301,4 +301,13 @@ string Sucursal::getCod() {
 
 string Sucursal::toString() {
 	stringstream ss;
+	ss << "Sucursal Codigo: " << cod << endl
+		<< "Provincia: " << provi << endl
+		<< "Canton: " << canton << endl
+		<< "Correo: " << correo << endl
+		<< "Telefono: " << telef << endl
+		<< "Numero de Clientes: " << numClientes_ << "/" << capClientes_ << endl
+		<< "Numero de Instructores: " << numInstructores_ << "/" << capInstruc_ << endl
+		<< "Numero de Clases Grupales: " << numClasesGrups_ << "/" << capClasesGrups_ << endl;
+	return ss.str();
 }

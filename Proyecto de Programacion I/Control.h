@@ -1,5 +1,9 @@
 #pragma once
 #include "Sucursal.h"
+using namespace std;
+
+class Menu;
+
 class Control
 {
 private:

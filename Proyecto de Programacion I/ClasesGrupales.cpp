@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include "Sucursal.h"
-#include "Instructor.h"
+#include "Cliente.h"
 using namespace std;
 
 ClasesGrupales::ClasesGrupales() {
@@ -173,10 +173,8 @@ void ClasesGrupales::eliminarClienteNom(string nombre) {
 
 
 ClasesGrupales::~ClasesGrupales() {
-	for(int i = 0; i < cupoMax_; i++) {
-		if(inscritos_[i] != nullptr) {
-			inscritos_[i] = nullptr;
-		}
+	for(int i = 0; i < ocupados_; i++) {
+		inscritos_[i] = nullptr;
 	}
 	delete[] inscritos_;
 }

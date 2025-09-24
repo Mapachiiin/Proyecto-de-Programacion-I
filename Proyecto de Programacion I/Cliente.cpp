@@ -1,6 +1,7 @@
 #include "Cliente.h"
+#include "Instructor.h"
 #include <iostream>
-#include <sstream>
+#include <sstream> 
 using namespace std;
 
 Cliente::Cliente() {

@@ -1,7 +1,6 @@
 #include "Menu.h"
 #include <iostream>
 #include <sstream>
-#include "Control.h"
 using namespace std;
 
 Menu::Menu() {
@@ -13,13 +12,13 @@ Menu::~Menu() {
 void Menu::mostrarMenu() {
 	int resp;
 		do {
-			cout << "\n\n---Menú Principal---\n\n" << endl;
-			cout << "1. Agregar Sucursal" << endl;
-			cout << "2. Eliminar Sucursal" << endl;
-			cout << "3. Listar Sucursales" << endl;
-			cout << "4. Gestionar Sucursal" << endl;
-			cout << "5. Cerrar programa" << endl;
-			cout << "Ingrese la opción que desea realizar: ";
+			cout << "\n\n---Menu Principal---" << endl;
+			cout << "\n\n1. Agregar Sucursal" << endl;
+			cout << "\n\n2. Eliminar Sucursal" << endl;
+			cout << "\n\n3. Listar Sucursales" << endl;
+			cout << "\n\n4. Gestionar Sucursal" << endl;
+			cout << "\n\n5. Cerrar programa" << endl<<endl;
+			cout << "\n\nIngrese la opcion que desea realizar: ";
 			
 			cin >> resp;
 			cin.ignore(); // Limpiar el buffer de entrada
@@ -64,7 +63,7 @@ void Menu::menuAgregarSucursal() {
 		else {
 			rep = false;
 		}
-	} while (rep == false);
+	} while (rep != false);
 	do {
 		cout << "Ingrese el telefono de la sucursal (8 digitos): ";
 		cin >> tel;

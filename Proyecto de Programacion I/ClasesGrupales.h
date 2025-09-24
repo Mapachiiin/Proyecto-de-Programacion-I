@@ -4,6 +4,9 @@
 #include "Instructor.h"
 using namespace std;
 
+class Cliente;
+class Sucursal;
+
 class ClasesGrupales
 {
 private:

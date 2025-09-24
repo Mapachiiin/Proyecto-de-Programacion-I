@@ -1,10 +1,10 @@
 #pragma once
 #include <iostream>
 using namespace std;
-/*
+
 class Ejercicios
 {
-private:
+/*private:
     int maxEjercicios_;
     int numPechoTriceps_;
     int numBiceps_;
@@ -37,6 +37,5 @@ public:
     int getNumPecTric();
     int getNumBic();
     int getNumPier();
-    int getNumEspal();
+    int getNumEspal();*/
 };
-*/
