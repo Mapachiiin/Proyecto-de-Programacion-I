@@ -8,10 +8,12 @@ private:
 	void menuAgregarSucursal();
 	void menuEliminarSucursal();
 	void menuListarSucursales();
-	//void menuGestionarSucursal();
+	void menuGestionarSucursal();
+	
 public:
 	Menu();
 	~Menu();
+	void quemados();
 	void mostrarMenu();
 
 };

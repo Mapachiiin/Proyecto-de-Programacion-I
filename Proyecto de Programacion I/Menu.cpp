@@ -9,6 +9,19 @@ Menu::Menu() {
 Menu::~Menu() {
 	delete control_;
 }
+
+void Menu::quemados() {
+	control_->agregarSucursal("SUC001", 12345678, "Provincia1", "Canton1", "pro1can1@gym.powerlab.com", 100, 20);
+	control_->agregarSucursal("SUC002", 87654321, "Provincia2", "Canton2", "pro2can2@gym.powerlab.com", 150, 25);
+	control_->agregarSucursal("SUC003", 38492017, "Provincia1", "Canton1", "pro3can3@gym.powerlab.com", 180, 35);
+	control_->agregarSucursal("SUC004", 72615384, "Provincia2", "Canton2", "pro4can4@gym.powerlab.com", 50, 10);
+	control_->agregarSucursal("SUC005", 50983741, "Provincia1", "Canton1", "pro5can5@gym.powerlab.com", 25, 5);
+	control_->agregarSucursal("SUC006", 19274658, "Provincia2", "Canton2", "pro6can6@gym.powerlab.com", 200, 40);
+	control_->agregarSucursal("SUC007", 84736291, "Provincia1", "Canton1", "pro7can7@gym.powerlab.com", 100, 20);
+	control_->agregarSucursal("SUC008", 61349572, "Provincia2", "Canton2", "pro8can8@gym.powerlab.com", 100, 20);
+	control_->agregarSucursal("SUC009", 27580439, "Provincia1", "Canton1", "pro9can9@gym.powerlab.com", 100, 20);
+	control_->agregarSucursal("SUC010", 96823154, "Provincia2", "Canton2", "pro10can10@gym.powerlab.com", 150, 25);
+}
 void Menu::mostrarMenu() {
 	int resp;
 		do {
@@ -34,7 +47,7 @@ void Menu::mostrarMenu() {
 				Menu::menuListarSucursales();
 				break;
 			case 4:
-				//Menu::menuGestionarSucursal();
+				Menu::menuGestionarSucursal();
 				break;
 			case 5:
 					cout << "Cerrando el programa. ¡Hasta luego!" << endl;
@@ -168,7 +181,7 @@ void Menu::menuEliminarSucursal() {
 void Menu::menuListarSucursales() {
 	int resp;
 	if (control_->getNumSucursales() == 0) {
-		cout << "No hay sucursales registradas." << endl;
+		cout << "No hay sucursales registradas." << endl<<endl;
 		cout << "Presione Enter para volver al menu principal..." << endl;
 		cin.ignore();	
 		system("cls");
@@ -176,10 +189,48 @@ void Menu::menuListarSucursales() {
 		return;
 	}
 	control_->listarSucursales();
-	cout << "Sucursales existentes listadas"<<endl;
+	cout << "Sucursales existentes listadas"<<endl<<endl;
 	cout << "Presione Enter para volver al menu principal..."<<endl;
 	cin.ignore();
 	system("cls");
 	Menu::mostrarMenu();
 	return;
 }
+void Menu::menuGestionarSucursal() {
+	if (control_->getNumSucursales() == 0){
+		cout << "No hay sucursales registradas." << endl<<endl;
+		cout << "Presione Enter para volver al menu principal..." << endl;
+		cin.ignore();	
+		system("cls");
+		Menu::mostrarMenu();
+		return;
+	}
+	int resp = 0;
+	do {
+		resp = 0;		
+		string codigo;
+		bool codExis = false;
+		while (codExis == false) {
+			cout << "\n\n---Bienvenido, a continuacion se mostraran las sucursales existentes---\n\n" << endl;
+			control_->listarCodSucursales();
+			cout << endl;
+			cout << "Ingrese el codigo de la sucursal a gestionar: ";
+			cin >> codigo;
+			cin.ignore();
+			if (!control_->buscarSucursal(codigo)) {
+				system("cls");
+				cout << "El codigo ingresado no existe. Por favor, vuelvalo a ingresar: ";
+				cin.ignore();
+				system("cls");
+				continue;
+			}
+			else {
+				codExis = true;
+			}
+		}
+		control_->buscarSucurGesti(codigo);
+		cout << "¿Desea gestionar otra sucursal? (1: Si, 2: No): ";
+		cin >> resp;
+		cin.ignore();
+		system("cls");
+	} while (resp == 2);
