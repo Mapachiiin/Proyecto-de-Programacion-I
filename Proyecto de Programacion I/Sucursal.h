@@ -52,9 +52,9 @@ public:
 	string getCod();
 	Cliente* buscarCliente(int cedula);
 	Instructor* buscarInstructor(int cedula);
-	void agregarCliente(Cliente& cliente);
-	void agregarInstructor(Instructor& instructor);
-	void agregarClaseGrupal(ClaseGrupal& clase);
+	void agregarCliente(Cliente* cliente);
+	void agregarInstructor(Instructor* instructor);
+	void agregarClaseGrupal(ClaseGrupal* clase);
 	void eliminarCliente(int cedula);
 	void eliminarInstructor(int cedula);
 	void eliminarClaseGrupal(int codClase);
