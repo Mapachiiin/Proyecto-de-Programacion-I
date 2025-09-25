@@ -11,14 +11,14 @@ ClaseGrupal::ClaseGrupal() {
 	cupoMax_ = 0;
 	sucAsig_ = nullptr;
 	insAsig_ = nullptr;
-	horario_ = " ";
-	espeClass_ = " ";
+	horario_ = "";
+	espeClass_ = 0;
 	inscritos_ = new Cliente*[30];
 	for(int i = 0; i < 30; i++) {
 		inscritos_[i] = nullptr;
 	}
 }
-ClaseGrupal::ClaseGrupal(int cC, int cap, int cupo, Sucursal* suc, Instructor* ins, string hor, string espe) {
+ClaseGrupal::ClaseGrupal(int cC, int cap, int cupo, Sucursal* suc, Instructor* ins, string hor, int esp) {
 	this->codClase_ = cC;
 	this->ocupados_ = cap;
 	this->cupoMax_ = cupo;
@@ -29,7 +29,40 @@ ClaseGrupal::ClaseGrupal(int cC, int cap, int cupo, Sucursal* suc, Instructor* i
 		inscritos_[i] = nullptr;
 	}
 	this->horario_ = hor;
-	this->espeClass_ = espe;
+	this->especialidad_ = "";
+	this->espe(esp);
+}
+
+void ClaseGrupal::espe(int esp) {
+	switch(esp) {
+	case 1:
+		especialidad_ = "CrossFit";
+			break;
+	case 2:
+		especialidad_ = "HIIT";
+		break;
+	case 3:
+		especialidad_ = "TRX";
+		break;
+	case 4:
+		especialidad_ = "Spinning";
+		break;
+	case 5:
+		especialidad_ = "Pesas";
+		break;
+	case 6:
+		especialidad_ = "Cardio";
+		break;
+	case 7:
+		especialidad_ = "Yoga";
+		break;
+	case 8:
+		especialidad_ = "Zumba";
+		break;
+	default:
+		cout << "---| No se pude determinar la especialidad. |---";
+		break;
+	}
 }
 
 void ClaseGrupal::setCodClase(int cC) {
@@ -118,7 +151,7 @@ string ClaseGrupal::getHorario() {
 	return horario_;
 }
 string ClaseGrupal::getEspecialidad() {
-	return espeClass_;
+	return especialidad_;
 }
 string ClaseGrupal::toString() {
 	stringstream ss;

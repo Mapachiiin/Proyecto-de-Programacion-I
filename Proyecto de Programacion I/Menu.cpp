@@ -21,7 +21,10 @@ void Menu::quemados() {
 	control_->agregarSucursal("SUC008", 61349572, "Provincia8", "Canton8", "pro8can8@gym.powerlab.com", 100, 20);
 	control_->agregarSucursal("SUC009", 27580439, "Provincia9", "Canton9", "pro9can9@gym.powerlab.com", 100, 20);
 	control_->agregarSucursal("SUC010", 96823154, "Provincia10", "Canton10", "pro10can10@gym.powerlab.com", 150, 25);
+
+	control_->quemados();
 	system("cls");
+
 }
 void Menu::mostrarMenu() {
 	int resp;

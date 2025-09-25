@@ -52,6 +52,7 @@ public:
 	string getCod();
 	Cliente* buscarCliente(int cedula);
 	Instructor* buscarInstructor(int cedula);
+	ClaseGrupal* buscarClaseGrupal(int cod);
 	void agregarCliente(Cliente* cliente);
 	void agregarInstructor(Instructor* instructor);
 	void agregarClaseGrupal(ClaseGrupal* clase);

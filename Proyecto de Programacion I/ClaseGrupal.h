@@ -17,12 +17,14 @@ private:
 	Instructor* insAsig_;	
 	Cliente** inscritos_;
 	string horario_;
-	string espeClass_;
+	int espeClass_;
+	string especialidad_;
 
 public:
 	ClaseGrupal();
-	ClaseGrupal(int cC, int cap, int cupo, Sucursal* suc, Instructor* ins, string hor, string espe);
+	ClaseGrupal(int cC, int cap, int cupo, Sucursal* suc, Instructor* ins, string hor, int espe);
 	~ClaseGrupal();
+	void espe(int esp);
 	void setCodClase(int cC);
 	void setOcupados(int cap);
 	void setCupoMax(int cupo);

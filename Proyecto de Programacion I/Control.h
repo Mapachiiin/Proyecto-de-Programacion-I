@@ -27,5 +27,6 @@ public:
 	void listarCodSucursales();
 	Sucursal* buscarSucursal(string codigo);
 	Sucursal* buscarSucurGesti(string codigo);
+	void quemados();
 };
 

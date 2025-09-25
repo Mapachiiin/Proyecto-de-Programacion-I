@@ -118,6 +118,7 @@ void Sucursal::agregarClaseGrupal(ClaseGrupal* clase){
 	if (numClasesGrups_ < capClasesGrups_) {
 		ClassGrupSucur_[numClasesGrups_] = clase;
 		numClasesGrups_++;
+		return;
 	} else {
 		cout << "-| Capacidad de clases grupales alcanzada en la sucursal: " << cod << endl;
 	}
@@ -221,7 +222,7 @@ void Sucursal::listarClientes() {
 	}
 }
 void Sucursal::listarInstructores(){
-	cout << "Instructores en la sucursal: " << numInstructores_ << ":\n";
+	cout << "Instructores en la sucursal: " << cod << ":\n";
 	for (int i = 0; i < numInstructores_; i++) {
 		if (insSucur_[i] != nullptr) {
 			cout << insSucur_[i]->getNombre() << " cedula: " << insSucur_[i]->getCed() << endl;
@@ -229,7 +230,7 @@ void Sucursal::listarInstructores(){
 	}
 }
 void Sucursal::listarClasesGrupales() {
-	cout << "Clases grupales en la sucursal " << numClasesGrups_ << ":\n";
+	cout << "Clases grupales en la sucursal: " << cod << ":\n";
 	for (int i = 0; i < numClasesGrups_; i++) {
 		if (ClassGrupSucur_[i] != nullptr) {
 			cout <<" Clase codigo: " << ClassGrupSucur_[i]->getCodClase() << " con la especialidad: " << ClassGrupSucur_[i]->getEspecialidad() << endl;
@@ -306,6 +307,14 @@ Instructor* Sucursal::buscarInstructor(int cedula) {
 	for (int i = 0; i < numInstructores_; i++) {
 		if (insSucur_[i] != nullptr && insSucur_[i]->getCed() == cedula) {
 			return insSucur_[i];
+		}
+	}
+	return nullptr;
+}
+ClaseGrupal* Sucursal::buscarClaseGrupal(int cod) {
+	for (int i = 0;i < 8;i++) {
+		if (ClassGrupSucur_[i] != nullptr && ClassGrupSucur_[i]->getCodClase() == cod) {
+			return ClassGrupSucur_[i];
 		}
 	}
 	return nullptr;
