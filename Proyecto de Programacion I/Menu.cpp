@@ -56,7 +56,7 @@ void Menu::mostrarMenu() {
 				break;
 			case 5:
 					cout << "---| Cerrando el programa. Hasta luego! |-" << endl;
-					return;
+					exit(0);
 
 			} 
 		}while (resp != 5);
