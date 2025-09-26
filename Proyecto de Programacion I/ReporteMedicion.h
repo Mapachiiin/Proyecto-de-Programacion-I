@@ -36,5 +36,6 @@ public:
 	void calcuVasosAgua();
 	void deterAltoRiesgo();
 	string toString();
+	string getFechaMedi();
 };
 

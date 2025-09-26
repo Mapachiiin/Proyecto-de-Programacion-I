@@ -38,6 +38,11 @@ ReporteMedicion::ReporteMedicion(Cliente& clie, string fech, double pes, double 
 	cli = &clie;
 
 }
+
+string ReporteMedicion::getFechaMedi() {
+	return fechaMedi;
+}
+
 void ReporteMedicion::calcuIMC(){
 	IMC = peso/(estatura*estatura);
 }

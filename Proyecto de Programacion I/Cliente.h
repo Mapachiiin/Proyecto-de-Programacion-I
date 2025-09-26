@@ -44,6 +44,7 @@ public:
 	void setInscritos(int ins);
 	void setIntructor(Instructor* ins);
 	void agregarReporte(const ReporteMedicion& rep);
+	ReporteMedicion* getReportePorIndice(int rep);
 	string toString();
 	void listarReportes();
 

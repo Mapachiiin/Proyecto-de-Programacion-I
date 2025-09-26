@@ -114,6 +114,8 @@ void Cliente::agregarReporte(const ReporteMedicion& rep) {
 	}
 }
 
+
+
 string Cliente::toString(){
 	stringstream ss;
 	ss << "Nombre: " << name_ << endl
@@ -138,8 +140,20 @@ void Cliente::listarReportes() {
 		cout << "No hay reportes de medicion disponibles." << endl;
 		return;
 	}
-	for (int i = 0; i < numReportes_; i++) {
-		cout << "Reporte de Medicion " << (i + 1) << ":" << endl;
-		cout << reportes_[i]->toString() << endl;
+	cout << "---| Reporte/s de Medicion |---" << endl << endl;
+	for (int i = 0; i < numReportes_ && reportes_[i]!=nullptr; i++) {
+		
+		cout<< (i + 1) << ". " << reportes_[i]->getFechaMedi() << endl;
 	}
+	cout << "---| Presione enter para salir |---";
+	cin.get();
+	system("cls");
+}
+
+ReporteMedicion* Cliente::getReportePorIndice(int indice) {
+	if (indice < 0 || indice >= numReportes_) {
+		cout << "---| Numero de reporte invalido |---" << endl;
+		return nullptr;
+	}
+	return reportes_[indice];
 }

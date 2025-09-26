@@ -311,17 +311,17 @@ int Sucursal::getCapClasesGrups() {
 string Sucursal::getCod() {
 	return cod;	
 }
-Cliente* Sucursal::buscarCliente(int cedula) {
+Cliente* Sucursal::buscarCliente(int ced) {
 	for (int i = 0; i < numClientes_; i++) {
-		if (cliSucur_[i] != nullptr && cliSucur_[i]->getCed() == cedula) {
+		if (cliSucur_[i] != nullptr && cliSucur_[i]->getCed() == ced) {
 			return cliSucur_[i];
 		}
 	}
 	return nullptr;
 }
-Instructor* Sucursal::buscarInstructor(int cedula) {
+Instructor* Sucursal::buscarInstructor(int ced) {
 	for (int i = 0; i < numInstructores_; i++) {
-		if (insSucur_[i] != nullptr && insSucur_[i]->getCed() == cedula) {
+		if (insSucur_[i] != nullptr && insSucur_[i]->getCed() == ced) {
 			return insSucur_[i];
 		}
 	}
@@ -348,3 +348,4 @@ string Sucursal::toString() {
 		<< "Numero de Clases Grupales: " << numClasesGrups_ << "/" << capClasesGrups_ << endl;
 	return ss.str();
 }
+

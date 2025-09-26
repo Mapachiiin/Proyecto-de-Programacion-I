@@ -21,8 +21,9 @@ void Menu::quemados() {
 	control_->agregarSucursal("SUC008", 61349572, "Provincia8", "Canton8", "pro8can8@gym.powerlab.com", 100, 20);
 	control_->agregarSucursal("SUC009", 27580439, "Provincia9", "Canton9", "pro9can9@gym.powerlab.com", 100, 20);
 	control_->agregarSucursal("SUC010", 96823154, "Provincia10", "Canton10", "pro10can10@gym.powerlab.com", 150, 25);
+	Quemados* ingre = new Quemados(control_);
+	ingre->IngreDatosQuemados();
 
-	control_->quemados();
 	system("cls");
 
 }
@@ -262,8 +263,16 @@ void Menu::menuGestionarSucursal() {
 		while (true) {
 			cout <<endl<< "---| Desea gestionar la sucursal " << codigo << "? (1: Si, 2: No): ";
 			getline(cin, entrada);
-			if (entrada == "1") { control_->buscarSucurGesti(codigo); repe++; system("cls"); break; }
-			if (entrada == "2") { system("cls"); break; }
+			if (entrada == "1") { 
+				system("cls");
+				control_->buscarSucurGesti(codigo);
+				system("cls");
+				break; 
+			}
+			if (entrada == "2") { 
+				system("cls"); 
+				break; 
+			}
 			cout << "---| Respuesta invalida. Intente de nuevo. |---\n";
 		}
 	} while (true);
