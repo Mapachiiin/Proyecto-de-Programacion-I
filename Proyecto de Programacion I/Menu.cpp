@@ -158,21 +158,33 @@ void Menu::menuEliminarSucursal() {
 			cout << endl;
 			cout << "---| Ingrese el codigo de la sucursal a eliminar: ";
 			getline(cin, codigo);
-			if (!control_->buscarSucursal(codigo)) {
+
+			if (control_->buscarSucursal(codigo)==nullptr) {
 				system("cls");
 				cout << "---| El codigo ingresado no existe. Por favor, vuelvalo a ingresar |---";
 				cin.clear();
 				system("cls");
 			}
 			else {
-				codExis = true;
-			}
+				char confirm;
+				cout << "\033[31m";
+				cout << "\n\n---| Realmente desea eliminar la sucursal? (S/N): ";
+				cout << "\033[0m";
+				cin >> confirm;
+				cin.ignore();
 
+				if (confirm == 's' || confirm == 'S') {
+					codExis = true;
+				}
+				else {
+					system("cls");
+					cout << "\n\n---| Operacion cancelada. Puede ingresar otro codigo. |---" << endl;
+				}
+			}
 		}
-	
 		control_->eliminarSucursal(codigo);
-		cout << "---| Sucursal " << codigo << " eliminada con exito. |---" << endl;
-		cout << "---| Desea eliminar otra sucursal? (S/N): ";
+		cout << "\n\n---| Sucursal " << codigo << " eliminada con exito. |---\n\n" << endl;
+		cout << "\n\n---| Desea eliminar otra sucursal? (S/N): ";
 		cin >> res;
 		cin.ignore();
 		system("cls");
@@ -250,7 +262,7 @@ void Menu::menuGestionarSucursal() {
 		while (true) {
 			cout <<endl<< "---| Desea gestionar la sucursal " << codigo << "? (1: Si, 2: No): ";
 			getline(cin, entrada);
-			if (entrada == "1") { control_->buscarSucurGesti(codigo); repe++; break; }
+			if (entrada == "1") { control_->buscarSucurGesti(codigo); repe++; system("cls"); break; }
 			if (entrada == "2") { system("cls"); break; }
 			cout << "---| Respuesta invalida. Intente de nuevo. |---\n";
 		}
