@@ -1,4 +1,4 @@
-#include "Instructor.h"
+﻿#include "Instructor.h"
 #include <iostream>
 #include <sstream>
 using namespace std;
@@ -12,27 +12,66 @@ Instructor::Instructor() {
 	numEspecialidades = 0;
 	espeIns = new string[8];
 }
+
 Instructor::Instructor(int nC, string nom, int tel, string corr, string fN, int nE){
 	numCed_ = nC;
 	nombre_ = nom;
 	telef_ = tel;
 	correo = corr;
 	fechaNac = fN;
-	numEspecialidades = nE;
+	numEspecialidades = 0;
 	espeIns = new string[8];
-}
-Instructor::~Instructor() {
-	delete espeIns;
+	this->agregarEspecialidadS(nE);
 }
 
-void Instructor::setEspecialidad(string es) {
-	if (numEspecialidades < 8) {
-		espeIns[numEspecialidades] = es;
-		numEspecialidades++;
+Instructor::~Instructor() {
+	delete[] espeIns;
+}
+
+void Instructor::agregarEspecialidadS(int ep) {
+	static const string especialidades[] = {
+		"CrossFit", "HIIT", "TRX", "Spinning",
+		"Pesas", "Cardio", "Yoga", "Zumba"
+	};
+
+	if (ep < 1 || ep > 8) return; 
+	if (numEspecialidades >= 8) return; 
+
+	string nueva = especialidades[ep - 1];
+
+	for (int i = 0; i < numEspecialidades; i++) {
+		if (espeIns[i] == nueva) return;
 	}
-	else {
-		cout << "No se pueden agregar m�s especialidades." << endl;
+
+	espeIns[numEspecialidades++] = nueva;
+}
+
+void Instructor::setEspecialidad(int ep) {
+	static const string especialidades[] = {
+		"CrossFit", "HIIT", "TRX", "Spinning",
+		"Pesas", "Cardio", "Yoga", "Zumba"
+	};
+
+	if (ep < 1 || ep > 8) {
+		cout << "---| No se puede determinar la especialidad. |---" << endl;
+		return;
+	} else if (numEspecialidades >= 8) {
+		cout << "---| No se pueden agregar más especialidades. |---" << endl;
+		return;
 	}
+
+	string nueva = especialidades[ep - 1];
+
+	for (int i = 0; i < numEspecialidades; i++) {
+		if (espeIns[i] == nueva) {
+			cout << "---| El instructor ya tiene la especialidad de "
+				<< nueva << ". |---" << endl;
+			return;
+		}
+	}
+
+	espeIns[numEspecialidades++] = nueva;
+	cout << "---| Especialidad agregada: " << nueva << endl;
 }
 
 void Instructor::setNumCed(int nC){

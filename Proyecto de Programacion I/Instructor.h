@@ -17,7 +17,8 @@ public:
 	Instructor(int nC, string nom, int tel, string corr, string fN, int nE);
 	~Instructor();
 	string toString();
-	void setEspecialidad(string es);
+	void setEspecialidad(int es);
+	void agregarEspecialidadS(int ep);
 	void setNumCed(int nC);
 	void setNombre(string nom);
 	void setTelef(int tel);
@@ -31,4 +32,3 @@ public:
 	int getNumEspecialidades();
 
 };
-
