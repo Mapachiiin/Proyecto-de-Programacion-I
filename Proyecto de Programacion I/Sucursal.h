@@ -62,6 +62,7 @@ public:
 	void listarInstructores();
 	void listarClientes();
 	void listarClasesGrupales();
+	void listarClientesDeInstructor(Instructor* inst);
 
 	string toString();
 };

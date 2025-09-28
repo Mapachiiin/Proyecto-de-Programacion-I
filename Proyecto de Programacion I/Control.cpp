@@ -764,8 +764,6 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 		} while (opcion != 3);
 	}
 
-
-
 void Control::menuGestionarRutinas(Cliente* cli) {
 
 }
@@ -1029,8 +1027,182 @@ void Control::agregarInstructor(Sucursal* sucu) {
 }
 
 void Control::gestionarInstructor(Sucursal* sucu) {
+	if (sucu->getNumInstructores() == 0) {
+		cout << "-| No hay instructores registrados. |-" << endl << endl;
+		cout << "-| Presione Enter para volver al menu principal..." << endl;
+		cin.ignore();
+		system("cls");
+		return;
+	}
 
+	int repe = 0;
+	do {
+		string codigo;
+		int ced = 0;
+		bool codExis = false;
 
+		while (codExis == false) {
+			cout << "\n\n---| Bienvenido, a continuacion se mostraran los instructores existentes |---\n\n" << endl;
+			sucu->listarInstructores();
+			cout << endl;
+			cout << "---| Ingrese la cedula del instructor a gestionar (Ingrese salir para volver al menu anterior): ";
+			getline(cin, codigo);
+
+			if (codigo == "salir" || codigo == "Salir" || codigo == "SALIR") {
+				system("cls");
+				return;
+			}
+			else {
+				try {
+					ced = stoi(codigo);
+				}
+				catch (invalid_argument&) {
+					system("cls");
+					cout << "---| La cedula ingresada debe ser totalmente numerica. Intente de nuevo. |---" << endl;
+					codExis = false;
+					continue;
+				}
+				catch (out_of_range&) {
+					system("cls");
+					cout << "---| La cedula ingresada es demasiado larga. Intente de nuevo. |---" << endl;
+					codExis = false;
+					continue;
+				}
+			}
+
+			if (sucu->buscarInstructor(ced) == nullptr) {
+				system("cls");
+				cout << "---| La cedula ingresada no existe. Por favor, aprete enter para volverlo a intentar. |---";
+				cin.get();
+				system("cls");
+				codExis = false;
+				continue;
+			}
+			else {
+				codExis = true;
+			}
+		}
+
+		string entrada;
+		while (true) {
+			cout << endl << "---| Desea gestionar al instructor "<< sucu->buscarInstructor(ced)->getNombre()<< "? (1: Si, 2: No): ";
+			getline(cin, entrada);
+
+			if (entrada == "1") {
+				system("cls");
+				this->gestionarInstructorSi(sucu, ced);
+				system("cls");
+				return;
+			}
+			if (entrada == "2") {
+				system("cls");
+				return;
+			}
+			cout << "---| Respuesta invalida. Intente de nuevo. |---\n";
+		}
+	} while (true);
+
+	cout << "---| Presione Enter para volver al menu de gestion...|---" << endl;
+	cin.ignore();
+	cin.get();
+	system("cls");
+}
+
+void Control::gestionarInstructorSi(Sucursal* sucu, int ced) {
+	Instructor* instructor = sucu->buscarInstructor(ced);
+	if (instructor == nullptr) return;
+
+	int opcion;
+	do {
+		cout << "---| Gesti0n del/la instructor(a) " << instructor->getNombre() << " |---" << endl;
+		cout << "\n1. Ver detalles del instructor" << endl;
+		cout << "\n2. Listar clientes vinculados" << endl;
+		cout << "\n3. Gestionar clientes vinculados" << endl;
+		cout << "\n4. Salir" << endl << endl;
+		cout << "\n---| Ingrese la opcion: ";
+		cin >> opcion;
+		cin.ignore();
+		system("cls");
+
+		switch (opcion) {
+		case 1:
+			cout << instructor->toString();
+			cout << "---| Ingrese enter para salir |---" << endl;
+			cin.get();
+			system("cls");
+			break;
+
+		case 2:
+			sucu->listarClientesDeInstructor(instructor);
+			cout << "---| Ingrese enter para salir |---" << endl;
+			cin.get();
+			system("cls");
+			break;
+
+		case 3:
+			this->menuGestionarCliInst(instructor, sucu);
+			system("cls");
+			break;
+
+		case 4:
+			return;
+
+		default:
+			cout << "---| Opción inválida. |---" << endl;
+		}
+	} while (opcion != 4);
+}
+
+void Control::menuGestionarCliInst(Instructor* ins, Sucursal* sucu) {
+	if (sucu->getNumClientes() == 0) {
+		cout << "---| No hay clientes registrados en esta sucursal. |-" << endl << endl;
+		cout << "---| Presione Enter para volver al menu de gestion |-" << endl;
+		cin.ignore();
+		system("cls");
+		return;
+	}
+	while (true) {
+		system("cls");
+		cout << "\n\n---| Clientes vinculados al instructor " << ins->getNombre() << " |---\n\n";
+		sucu->listarClientesDeInstructor(ins);
+
+		cout << endl;
+		cout << "---| Ingrese la cedula del cliente a gestionar (O ingrese salir para volver): ";
+		string entrada;
+		getline(cin, entrada);
+
+		if (entrada == "salir" || entrada == "Salir" || entrada == "SAlir" || entrada == "SALir" || entrada == "SALIr" || entrada == "SALIR") {
+			system("cls");
+			return;
+		}
+		int ced = 0;
+		try {
+			ced = stoi(entrada);
+		}
+		catch (invalid_argument&) {
+			cout << "---| La cedula debe ser numerica. Por favor, intente de nuevo. |---" << endl;
+			cin.get();
+			continue;
+		}
+		catch (out_of_range&) {
+			cout << "---| La cedula ingresada es demasiado larga. |---" << endl;
+			cin.get();
+			continue;
+		}
+		Cliente* cli = sucu->buscarCliente(ced);
+		if (cli == nullptr) {
+			cout << "---| No existe un cliente con esa cedula en la sucursal. |---" << endl;
+			cin.get();
+			continue;
+		}
+		if (cli->getInstructor() != ins) {
+			cout << "---| Ese cliente no está vinculado a este instructor. |---" << endl;
+			cin.get();
+			continue;
+		}
+		system("cls");
+		this->gestionarClienteSi(sucu, ced);
+	}
 }
 
 void Control::eliminarInstructor(Sucursal* sucu) {
@@ -1050,9 +1222,9 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 		int ced;
 		while (codExis == false) {
 			cout << "\n\n---| Bienvenido, a continuacion se mostraran los instructores existentes |---\n\n" << endl;
-			sucu->listarClientes();
+			sucu->listarInstructores();
 			cout << endl;
-			cout << "---| Ingrese la cedula del cliente a eliminar (Ingrese salir para volver al menu anterior): ";
+			cout << "---| Ingrese la cedula del instructor a eliminar (Ingrese salir para volver al menu anterior): ";
 			getline(cin, codigo);
 
 			if (codigo == "salir" || codigo == "Salir" || codigo == "SAlir" || codigo == "SALir" || codigo == "SALIr" || codigo == "SALIR") {
@@ -1075,9 +1247,9 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 					codExis = false;
 					continue;
 				}
-
 			}
-			if (sucu->buscarCliente(ced) == nullptr) {
+
+			if (sucu->buscarInstructor(ced) == nullptr) {
 				system("cls");
 				cout << "---| La cedula ingresada no existe. Por favor, aprete enter para volverlo a intentar. |---";
 				cin.get();
@@ -1088,8 +1260,9 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 			else {
 				codExis = true;
 			}
+
 			cout << "\033[31m";
-			cout << "\n\n---| Realmente desea eliminar al cliente" << sucu->buscarCliente(ced)->getNombre() << "? (S / N) : ";
+			cout << "\n\n---| Realmente desea eliminar al instructor " << sucu->buscarInstructor(ced)->getNombre() << "? (S / N) : ";
 			cout << "\033[0m";
 			cin >> res;
 			cin.ignore();
@@ -1103,16 +1276,17 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 			}
 		}
 
-		cout << "\n\n---| cliente " << sucu->buscarCliente(ced)->getNombre() << " eliminado con exito. |---\n\n" << endl;
-		sucu->eliminarCliente(ced);
+		cout << "\n\n---| Instructor " << sucu->buscarInstructor(ced)->getNombre() << " eliminado con exito. |---\n\n" << endl;
+		sucu->eliminarInstructor(ced);
+
 		do {
-			cout << "\n\n---| Desea eliminar otro cliente? (S/N): ";
+			cout << "\n\n---| Desea eliminar otro instructor? (S/N): ";
 			cin >> res;
 			cin.ignore();
 			system("cls");
-			if (sucu->getNumClientes() == 0) {
-				cout << "-| No hay mas clientes registrados. |-";
-				cout << "-| Presione Enter para volver al menu principal..." << endl;
+			if (sucu->getNumInstructores() == 0) {
+				cout << "---| No hay mas instructores registrados. |---";
+				cout << "---| Presione Enter para volver al menu principal |---" << endl;
 				cin.ignore();
 				system("cls");
 				return;
@@ -1120,7 +1294,6 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 		} while (res != 'N' && res != 'n' && res != 'S' && res != 's');
 	} while (res != 'N' && res != 'n');
 	return;
-
 }
 
 //-------------------Clases Grupales-------------------

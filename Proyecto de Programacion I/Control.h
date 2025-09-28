@@ -44,5 +44,7 @@ public:
 	void menuGestionarRutinas(Cliente* cli); 
 	void menuGestionarEjercicios(Cliente*cli);
 	void menuGestionarCliClasesGrupales(Cliente* cli);
+	void menuGestionarCliInst(Instructor* ins, Sucursal* sucu);
+	void gestionarInstructorSi(Sucursal* sucu, int ced);
 };
 

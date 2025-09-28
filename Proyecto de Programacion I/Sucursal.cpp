@@ -335,6 +335,19 @@ ClaseGrupal* Sucursal::buscarClaseGrupal(int cod) {
 	}
 	return nullptr;
 }
+void Sucursal::listarClientesDeInstructor(Instructor* inst) {
+	bool hay = false;
+	for (int i = 0; i < numClientes_; i++) {
+		if (cliSucur_[i] != nullptr && cliSucur_[i]->getInstructor() == inst) {
+			cout << "- " << cliSucur_[i]->getNombre()
+				<< ", cedula " << cliSucur_[i]->getCed() << endl;
+			hay = true;
+		}
+	}
+	if (!hay) {
+		cout << "---| Este instructor no tiene clientes vinculados. |---" << endl;
+	}
+}
 
 string Sucursal::toString() {
 	stringstream ss;
