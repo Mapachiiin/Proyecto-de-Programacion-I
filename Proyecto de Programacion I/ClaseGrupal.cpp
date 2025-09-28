@@ -30,10 +30,13 @@ ClaseGrupal::ClaseGrupal(int cC, int cap, int cupo, Sucursal* suc, Instructor* i
 	}
 	this->horario_ = hor;
 	this->especialidad_ = "";
-	this->espe(esp);
+	this->setEspe(esp);
 }
 
-void ClaseGrupal::espe(int esp) {
+void ClaseGrupal::setHora(string hor) {
+	this->horario_ = hor;
+}
+void ClaseGrupal::setEspe(int esp) {
 	switch(esp) {
 	case 1:
 		especialidad_ = "CrossFit";
@@ -64,15 +67,11 @@ void ClaseGrupal::espe(int esp) {
 		break;
 	}
 }
-
 void ClaseGrupal::setCodClase(int cC) {
 	codClase_ = cC;
 }
 void ClaseGrupal::setOcupados(int cap) {
 	ocupados_ = cap;
-}
-void ClaseGrupal::setCupoMax(int cupo) {
-	cupoMax_ = cupo;
 }
 void ClaseGrupal::setSucursal(Sucursal* suc) {
 	sucAsig_ = suc;
@@ -115,7 +114,6 @@ void ClaseGrupal::insCliente(Cliente* cli) {
 		}
 	}
 }
-
 void ClaseGrupal::listarClientes() {
 	cout << "Clientes inscritos en la clase grupal " << codClase_ << ":" << endl;
 	for (int i = 0; i < ocupados_; i++) {
@@ -131,7 +129,6 @@ void ClaseGrupal::eliminarTodosClientes() {
     ocupados_ = 0;
     cout << "Todos los clientes han sido eliminados de la clase grupal." << endl;
 }
-
 int ClaseGrupal::getCodClase() {
 	return codClase_;
 }
@@ -203,8 +200,6 @@ void ClaseGrupal::eliminarClienteNom(string nombre) {
 	}
 	cout << "Cliente no encontrado en la clase grupal." << endl;
 }
-
-
 ClaseGrupal::~ClaseGrupal() {
 	for(int i = 0; i < ocupados_; i++) {
 		inscritos_[i] = nullptr;

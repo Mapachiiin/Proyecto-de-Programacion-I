@@ -32,11 +32,12 @@ public:
 	void eliminarInstructor(Sucursal* sucu);
 	void menuGestionarClasesGrupales(Sucursal* sucu);
 	void agregarClaseGrupal(Sucursal* sucu);
-	void gestionarClaseGrupal(Sucursal* sucu);
+	void gestionarClaseGrupalSi(Sucursal* sucu);
 	void eliminarClaseGrupal(Sucursal* sucu);
 	int getNumSucursales();
 	void listarCodSucursales();
 	bool esFechaValida(string&);
+	bool esHoraValida(string&);
 	void gestionarClienteSi(Sucursal* sucu,int ced);
 	Sucursal* buscarSucursal(string codigo);
 	Sucursal* buscarSucurGesti(string codigo);

@@ -30,6 +30,8 @@ public:
 	string getCorreo();	
 	string getFechaNac();
 	string getEspecialidadPrinci();
+	bool tieneEspecialidad(string& espe);
+	bool tieneEspecialidadInt(int espe);
 	int getNumEspecialidades();
 
 };

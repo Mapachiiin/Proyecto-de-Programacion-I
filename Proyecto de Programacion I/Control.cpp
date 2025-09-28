@@ -1155,15 +1155,15 @@ void Control::gestionarInstructorSi(Sucursal* sucu, int ced) {
 
 void Control::menuGestionarCliInst(Instructor* ins, Sucursal* sucu) {
 	if (sucu->getNumClientes() == 0) {
-		cout << "---| No hay clientes registrados en esta sucursal. |-" << endl << endl;
-		cout << "---| Presione Enter para volver al menu de gestion |-" << endl;
+		cout << "---| No hay clientes registrados en esta sucursal. |---" << endl << endl;
+		cout << "---| Presione Enter para volver al menu de gestion |---" << endl;
 		cin.ignore();
 		system("cls");
 		return;
 	}
 	while (true) {
 		system("cls");
-		cout << "\n\n---| Clientes vinculados al instructor " << ins->getNombre() << " |---\n\n";
+		cout << "\n\n---| Clientes vinculados al instructor |---" << ins->getNombre() << " |---\n\n";
 		sucu->listarClientesDeInstructor(ins);
 
 		cout << endl;
@@ -1299,164 +1299,388 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 //-------------------Clases Grupales-------------------
 
 void Control::menuGestionarClasesGrupales(Sucursal* sucu) {
-	int resp;
-	do {
-		cout << "---| Menu de gestion de clases grupales de la sucursal " << sucu->getCod() << " |---\n" << endl;
-		cout << "\n1. Listar clases grupales " << endl;
-		cout << "\n2. Agregar clase grupal" << endl;
-		cout << "\n3. Gestionar clase grupal" << endl;
-		cout << "\n4. Eliminar clase grupal" << endl << endl;
-		cout << "\n5. Salir" << endl << endl;
-		cout << "\n---| Ingrese la opcion que desea realizar: ";
-		
-		cin >> resp;
-		cin.clear();
-		cin.ignore();
-		system("cls");
-
-		int tel = 0, nC = 0, cC = 1, ced = 0, telf = 0, ins = 0;
-		string corr = "", codi = "", nom = "", fN = "", fI = "", hor = "";
-		char sexo = ' ';
-
-		switch (resp) {
-		case 1:
-		{
-			cout << "---| Listado de clases grupales |--- " << endl << endl;
-			sucu->listarClasesGrupales();
-
-			cout << "\n---| Presione enter para salir. |---" << endl;
-			cin.get();
+		int resp = 0;
+		do {
+			cout << "---| Menu de gestion de clases grupales de la sucursal " << sucu->getCod() << " |---\n" << endl;
+			cout << "1. Listar clases grupales" << endl;
+			cout << "2. Agregar clase grupal" << endl;
+			cout << "3. Gestionar clase grupal" << endl;
+			cout << "4. Eliminar clase grupal" << endl;
+			cout << "5. Salir" << endl << endl;
+			cout << "---| Ingrese la opcion que desea realizar: ";
+			cin >> resp;
+			cin.ignore(10000, '\n');
 			system("cls");
-			break;
-		}
-		case 2:
-		{
-			bool repetil = true;
-			do {
-				cout << " ---| Agregar clase grupal: " << endl << endl;
 
-				cout << "---| Ingrese el codigo de la clase grupal: ";
-				cin >> cC;
-				cin.clear();
-				cin.ignore();
-			 while (sucu->buscarClaseGrupal(cC) != nullptr) {
-					cout << "---| El codigo ingresado ya existe, intentelo de nuevo: ";
-					cin >> cC;
-					cin.clear();
-					cin.ignore();
-				}
-				cout << "---| Ingrese el numero de cupos maximo: ";
-				cin >> nC;
-				cin.clear();
-				cin.ignore();
-
-				cout << "---| Ingrese la especialidad |--- " << endl;
-				int espeResp;
-				int repeti = 0;
-				bool valid = true;
-				do {
-					valid = true;
-					cout << "\n---| Especialidades |---" << endl;
-					cout << "1. CrossFit" << endl;
-					cout << "2. HIIT" << endl;
-					cout << "3. TRX" << endl;
-					cout << "4. Pesas" << endl;
-					cout << "5. Spinning" << endl;
-					cout << "6. Cardio" << endl;
-					cout << "7. Yoga" << endl;
-					cout << "8. Zumba." << endl << endl;
-					cout << "\n---| Ingrese la opcion a escoger: "; cin >> espeResp;
-					cin.clear();
-					cin.ignore();
-					if (espeResp >= 1 && espeResp <= 8) {
-						valid = true;
-					}
-					else {
-						valid = false;
-					}
-				} while (valid != true);
-
-				cout << "---| Ingrese la hora a la que sera la clase grupal (XX:XXam o XX:XXpm): ";
-				getline(cin, hor);
-
-				bool sigue3 = true;
-				do {
-					sigue3 = true;
-					if (sucu->getNumInstructores() == 0) {
-						cout << "---| No hay ningun instructor en la sucursal para asignar |---";
-						break;
-					}
-					cout << "---| Que instructor desea asignarle a la clase grupal? |---" << endl << endl;
-					sucu->listarInstructores();
-					int cedulaIns;
-					cout << "\n---| Ingrese la cedula del instructor que se le asignara a la clase grupal: ";
-					cin >> cedulaIns;
-					cin.clear();
-					cin.ignore();
-					for (int k = 0; k < sucu->getNumInstructores();k++) {
-						if (sucu->buscarInstructor(cedulaIns) != nullptr) {
-							Instructor* instructorAsignado = sucu->buscarInstructor(cedulaIns);
-							ClaseGrupal* nuevaClase = new ClaseGrupal(cC, 0, nC, sucu, instructorAsignado, hor, espeResp);
-							sucu->agregarClaseGrupal(nuevaClase);
-							break;
-						}
-						else {
-							cout << "-| Instructor no encontrado. Por favor intente de nuevo. |-" << endl;
-							sigue3 = false;
-							continue;
-						}
-					}
-				} while (sigue3 != true);
+			switch (resp) {
+			case 1: {
+				cout << "---| Listado de clases grupales |--- " << endl << endl;
+				sucu->listarClasesGrupales();
+				cout << "\n\n---| Presione enter para salir. |---" << endl;
+				cin.get();
 				system("cls");
-				cout << "---| Clase grupal agregada con exito. |---" << endl << endl;
-				while (repeti == 0) {
-					cout << "---| Desea agregar otra clase grupal? (1: Si, 2: No): ";cin >> repeti;
-					if (repeti == 1) {
-						repeti = 0;
-						break;
-					}
-					else if (repeti == 2) {
-						repetil = false;
-						break;
-					}
-				}
-
-
-
-			} while (repetil==true);
-			cout << "---| Presione enter para salir. |---" << endl;
-			cin.get();
-			system("cls");
-			break;
-		}
-		case 3:
-
-			break;
-		case 4:
-
-			break;
-		case 5:
-		{
-			cout << "\n\n---| Saliendo del menu de gestion de clases grupales. Presione enter. |---" << endl;
-			cin.ignore();
-			system("cls");
-			break;
-		}
-		default:
-
-			break;
-		}
-	}while (resp!=5);
-}
+				break;
+			}
+			case 2: {
+				this->agregarClaseGrupal(sucu);
+				system("cls");
+				break;
+			}
+			case 3: {
+				this->gestionarClaseGrupalSi(sucu);
+				system("cls");
+				break;
+			}
+			case 4: {
+				this->eliminarClaseGrupal(sucu);
+				system("cls");
+				break;
+			}
+			case 5: {
+				cout << "\n\n---| Saliendo del menu de gestion de clases grupales. Presione enter. |---" << endl;
+				cin.get();
+				system("cls");
+				return;
+			}
+			default:
+				cout << "---| Opcion invalida. Intente de nuevo. |---" << endl;
+				break;
+			}
+		} while (resp != 5);
+	}
 
 void Control::agregarClaseGrupal(Sucursal* sucu) {
+	bool repetir = true;
+	while (repetir) {
+		cout << "---| Agregar clase grupal |--- " << endl << endl;
 
+		if (sucu->getNumInstructores() == 0) {
+			cout << "---| No hay instructores disponibles en la sucursal. No se puede crear la clase. |---" << endl;
+			return;
+		}
+		int codigoClase, cupoMax, espeResp;
+		string horario;
+		while (true) {
+			cout << "---| Ingrese el codigo de la clase grupal: ";
+			if (!(cin >> codigoClase)) {
+				cout << "---| Debe ingresar un numero valido. |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+				continue;
+			}
+			cin.ignore(10000, '\n');
+			if (sucu->buscarClaseGrupal(codigoClase) != nullptr) {
+				cout << "---| El codigo de la clase ya existe, intente de nuevo. |---" << endl;
+				continue;
+			}
+			break;
+		} 
+		while (true) {
+			cout << "---| Ingrese el numero de cupos maximos: ";
+			if (!(cin >> cupoMax) || cupoMax <= 0) {
+				cout << "---| Debe ingresar un numero valido mayor a 0. |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+				continue;
+			}
+			cin.ignore(10000, '\n');
+			break;
+		}
+		while (true) {
+			cout << "\n---| Especialidades |---" << endl;
+			cout << "\n1. CrossFit" << endl;
+				cout << "\n2. HIIT" << endl;
+				cout << "\n3. TRX" << endl;
+				cout << "\n4. Spinning" << endl;
+				cout << "\n5. Pesas" << endl;
+				cout << "\n6. Cardio" << endl;
+				cout << "\n7. Yoga" << endl;
+				cout << "\n8. Zumba" << endl << endl;
+			cout << "---| Ingrese el numero de la especialidad: ";
+			if (!(cin >> espeResp) || espeResp < 1 || espeResp > 8) {
+				cout << "---| Opcion invalida. Intente de nuevo. |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+				continue;
+			}
+			cin.ignore(10000, '\n');
+			break;
+		} 
+		while(true){
+		cout << "---| Ingrese la hora de la clase (XX:XXam o XX:XXpm): ";
+		getline(cin, horario);
+		if(this->esHoraValida(horario)) break;
+}
+		Instructor* instructorAsignado = nullptr;
+		while (true) {
+			sucu->listarInstructores();
+			string cedulaStr;
+			int cedulaIns;
 
+			cout << "---| Ingrese la cedula del instructor (o 'salir' para cancelar): ";
+			getline(cin, cedulaStr);
+
+			if (cedulaStr == "salir" || cedulaStr == "Salir" || cedulaStr == "SAlir" || cedulaStr == "SALir" || cedulaStr == "SALIr" || cedulaStr == "SALIR") {
+				return;
+			}
+			try {
+				cedulaIns = stoi(cedulaStr);
+			}
+			catch (invalid_argument&) {
+				cout << "---| La cedula solo puede contener numeros |---" << endl;
+				continue;
+			}
+			catch (out_of_range&) {
+				cout << "---| La cedula es demasiado larga |---" << endl;
+				continue;
+			}
+			instructorAsignado = sucu->buscarInstructor(cedulaIns);
+			if (instructorAsignado == nullptr) {
+				cout << "---| Instructor no encontrado. Intente de nuevo |---" << endl;
+				continue;
+			}
+			if (!instructorAsignado->tieneEspecialidadInt(espeResp)) {
+				cout << "---| El instructor no domina la especialidad seleccionada |---" << endl;
+				continue;
+			}
+			break;
+		}
+		ClaseGrupal* nuevaClase = new ClaseGrupal(codigoClase, 0, cupoMax, sucu, instructorAsignado, horario, espeResp);
+		sucu->agregarClaseGrupal(nuevaClase);
+		cout << "---| Clase grupal agregada con exito. |---" << endl;
+		int opcion;
+		while (true) {
+			cout << "---| Desea agregar otra clase grupal? (1: Si, 2: No): ";
+			if (!(cin >> opcion)) {
+				cout << "---| Debe ingresar un numero valido. |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+				continue;
+			}
+			cin.ignore(10000, '\n');
+			if (opcion == 1) {
+				system("cls");
+				repetir = true;
+				break;
+			}
+			else if (opcion == 2) {
+				system("cls");
+				repetir = false;
+				break;
+			}
+			else {
+				cout << "---| Opcion invalida. Intente de nuevo. |---" << endl;
+			}
+		}
+	}
 }
 
-void Control::gestionarClaseGrupal(Sucursal* sucu) {
+void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
+	if (sucu->getNumClasesGrups() == 0) {
+		cout << "---| No hay clases grupales registradas en la sucursal. |---" << endl;
+		cout << "\n---| Presione enter para salir. |---" << endl;
+		cin.get();
+		system("cls");
+		return;
+	}
 
+	int codigoClase;
+	cout << "---| Gestionar clase grupal |---" << endl;
+	cout << "Ingrese el codigo de la clase grupal a gestionar: ";
+	cin >> codigoClase;
+	cin.ignore(10000, '\n');
 
+	ClaseGrupal* clase = sucu->buscarClaseGrupal(codigoClase);
+	if (clase == nullptr) {
+		cout << "---| Clase grupal no encontrada. |---" << endl;
+		cout << "\n---| Presione enter para salir. |---" << endl;
+		cin.get();
+		system("cls");
+		return;
+	}
+
+	int opcion = 0;
+	do {
+		cout << "\n---| Gestion de la clase grupal " << clase->getCodClase() << " |---" << endl;
+		cout << "\n1. Ver informacion de la clase" << endl;
+		cout << "\n2. Agregar cliente" << endl;
+		cout << "\n3. Cambiar especialidad" << endl;
+		cout << "\n4. Cambiar hora" << endl;
+		cout << "\n5. Cambiar instructor asignado" << endl;
+		cout << "\n6. Volver al menu anterior" << endl;
+		cout << "\n---| Ingrese la opcion: "; cin >> opcion;
+		cin.ignore(10000, '\n');
+		system("cls");
+
+		switch (opcion) {
+		case 1: {
+			cout << "---| Informacion de la clase grupal |---" << endl;
+			cout << clase->toString();
+			cout << "\n---| Presione enter para continuar. |---" << endl;
+			cin.get();
+			system("cls");
+			break;
+		}
+		case 2: {
+			if (sucu->getNumClientes() == 0) {
+				cout << "---| No hay instructores disponibles en la sucursal. |---" << endl;
+				break;
+			}
+			while (true) {
+				sucu->listarClientes();
+				string cedula;
+				int cedCli;
+				cout << "Ingrese la cedula del cliente a agregar (O ingrese salir para volver al menu): ";
+				getline(cin, cedula);
+				if (cedula == "salir" || cedula == "Salir" || cedula == "SAlir" || cedula == "SALir" || cedula == "SALIr" || cedula == "SALIR") {
+					break;
+				}
+				else if (cedula.empty()) {
+					cout << "---| La cedula no puede estar vacia |---" << endl;
+					continue;
+				}
+				else if (cedula[0] == ' ') {
+					cout << "---| La cedula no puede empezar con un espacio |---" << endl;
+					continue;
+				}
+				else if (!(cin >> cedula)) {
+					cout << "---| Debe ingresar un numero valido. |---" << endl;
+					cin.clear();
+					cin.ignore();
+					continue;
+				}
+				else {
+					try {
+						cedCli = stoi(cedula);
+					}
+					catch (invalid_argument&) {
+						cout << "---| La cedula solo puede contener numeros |---" << endl;
+						continue;
+					}
+					catch (out_of_range&) {
+						cout << "---| La cedula no puede ser tan larga |---" << endl;
+						continue;
+					}
+				}
+				cin.ignore(10000, '\n');
+				Cliente* nuevoCliente = sucu->buscarCliente(cedCli);
+				if (nuevoCliente != nullptr) {
+					clase->insCliente(nuevoCliente);
+					cout << "---| Cliente agregado con exito. |---" << endl;
+				}
+				else {
+					cout << "---| Cliente no encontrado. Intentelo de nuevo|---" << endl;
+					continue;
+				}
+				char resp;
+				while (true) {
+
+					cout << "---| Desea agregar otro cliente a la clase grupal? (S:si/N:no): ";cin >> resp;
+					if (resp != 's' && resp != 'S' && resp != 'n' && resp != 'N') {
+						cout << "---| Respues invalida, intentelo de nuevo |---" << endl;
+						continue;
+					}
+					break;
+				}
+				if (resp == 's' || resp == 'S') {
+					system("cls");
+					continue;
+				}
+				break;
+			}
+			break;
+		}
+		case 3: {
+			int espeResp;
+			do {
+				cout << "---| Ingrese la especialidad de la clase grupal |---" << endl;
+				cout << "1. CrossFit" << endl;
+				cout << "2. HIIT" << endl;
+				cout << "3. TRX" << endl;
+				cout << "4. Pesas" << endl;
+				cout << "5. Spinning" << endl;
+				cout << "6. Cardio" << endl;
+				cout << "7. Yoga" << endl;
+				cout << "8. Zumba" << endl;
+				cout << "---| Ingrese el numero de la especialidad: ";
+				cin >> espeResp;
+				cin.ignore(10000, '\n');
+			} while (espeResp < 1 || espeResp > 8);
+			clase->setEspe(espeResp);
+			cout << "---| Especialidad actualizada con exito. |---" << endl;
+			break;
+		}
+		case 4: {
+			string nuevaHora;
+			cout << "---| Ingrese la nueva hora (XX:XXam o XX:XXpm): ";
+			getline(cin, nuevaHora);
+			clase->setHora(nuevaHora);
+			cout << "---| Hora actualizada con exito. |---" << endl;
+			break;
+		}
+		case 5: {
+			if (sucu->getNumInstructores() == 0) {
+				cout << "---| No hay instructores disponibles en la sucursal. |---" << endl;
+				break;
+			}
+			while (true) {
+				sucu->listarInstructores();
+				string cedula;
+				int cedIns;
+				cout << "Ingrese la cedula del nuevo instructor (O ingrese salir para volver al menu): ";
+				getline(cin, cedula);
+				if (cedula == "salir" || cedula == "Salir" || cedula == "SAlir" || cedula == "SALir" || cedula == "SALIr" || cedula == "SALIR") {
+					break;
+				}
+				else if (cedula.empty()) {
+					cout << "---| La cedula no puede estar vacia |---" << endl;
+					continue;
+				}
+				else if (cedula[0] == ' ') {
+					cout << "---| La cedula no puede empezar con un espacio |---" << endl;
+					continue;
+				}
+				else if (!(cin >> cedula)) {
+					cout << "---| Debe ingresar un numero valido. |---" << endl;
+					cin.clear();
+					cin.ignore();
+					continue;
+				}
+				else {
+					try {
+						cedIns = stoi(cedula);
+					}
+					catch (invalid_argument&) {
+						cout << "---| La cedula solo puede contener numeros |---" << endl;
+						continue;
+					}
+					catch (out_of_range&) {
+						cout << "---| La cedula no puede ser tan larga |---" << endl;
+						continue;
+					}
+				}
+				cin.ignore(10000, '\n');
+				Instructor* nuevoInstructor = sucu->buscarInstructor(cedIns);
+				if (nuevoInstructor != nullptr) {
+					clase->setInstructor(nuevoInstructor);
+					cout << "---| Instructor actualizado con exito. |---" << endl;
+				}
+				else {
+					cout << "---| Instructor no encontrado. Intentelo de nuevo|---" << endl;
+					continue;
+				}
+				break;
+			}
+			break;
+		}
+		case 6:
+			cout << "---| Volviendo al menu anterior... |---" << endl;
+			break;
+		default:
+			cout << "---| Opcion invalida. Intente de nuevo. |---" << endl;
+			break;
+		}
+	} while (opcion != 6);
 }
 
 void Control::eliminarClaseGrupal(Sucursal* sucu) {
@@ -1474,6 +1698,16 @@ bool Control::esFechaValida(string& fN) {
 
 	if (ss >> dia >> sep1 >> mes >> sep2 >> anio && sep1 == '/' && sep2 == '/') {
 		if (dia >= 1 && dia <= 31 && mes >= 1 && mes <= 12 && anio >= 1900 && anio <= annio) return true;
+	}
+	return false;
+}
+bool Control::esHoraValida(string& hor) {
+	stringstream ss(hor);
+	int hora, min;
+	char sep1;
+	string ampm;
+	if (ss >> hora >> sep1 >> min >> ampm && sep1 == ':' && (ampm == "am" || ampm == "pm")) {
+		if (hora >= 1 && hora <= 12 && min >= 1 && min <= 59) return true;
 	}
 	return false;
 }

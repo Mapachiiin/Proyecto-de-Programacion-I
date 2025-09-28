@@ -114,7 +114,31 @@ int Instructor::getNumEspecialidades(){
 string Instructor::getEspecialidadPrinci() {
 	return espeIns[0];
 }
+bool Instructor::tieneEspecialidad(string& esp) {
+	for (int i = 0; i < numEspecialidades; i++) {
+		if (espeIns[i] == esp) {
+			return true;
+		}
+	}
+	return false;
 
+}
+bool Instructor::tieneEspecialidadInt(int esp) {
+	static const string especialidades[] = {
+	  "CrossFit", "HIIT", "TRX", "Spinning",
+	  "Pesas", "Cardio", "Yoga", "Zumba"
+	};
+
+	if (esp < 1 || esp > 8) return false;
+	string buscada = especialidades[esp - 1];
+
+	for (int i = 0; i < numEspecialidades; i++) {
+		if (espeIns[i] == buscada) {
+			return true;
+		}
+	}
+	return false;
+}
 string Instructor::toString() {
 	stringstream ss;
 	ss << "Cedula: " << numCed_ << endl
