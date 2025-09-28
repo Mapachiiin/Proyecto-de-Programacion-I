@@ -32,7 +32,6 @@ ClaseGrupal::ClaseGrupal(int cC, int cap, int cupo, Sucursal* suc, Instructor* i
 	this->especialidad_ = "";
 	this->setEspe(esp);
 }
-
 void ClaseGrupal::setHora(string hor) {
 	this->horario_ = hor;
 }

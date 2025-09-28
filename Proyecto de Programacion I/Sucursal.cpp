@@ -19,7 +19,6 @@ Sucursal::Sucursal() {
 	ClassGrupSucur_= nullptr;
 	numClasesGrups_= 0;
 }
-
 Sucursal::Sucursal(string codi, int tel, string prov, string cant, string corr, int capCli, int capIns) {
 	this->cod = codi;
 	this->telef = tel;
@@ -78,7 +77,6 @@ Sucursal::~Sucursal(){
 	delete[] insSucur_;
 
 }
-
 void Sucursal::agregarCliente(Cliente* cliente){
 
 	for(int i=0; i < numClientes_; i++) {
@@ -253,7 +251,6 @@ void Sucursal::listarClasesGrupales() {
 		}
 	}
 }
-
 void Sucursal::setCod(string codi) {
 	this->cod = codi;
 }
@@ -348,7 +345,6 @@ void Sucursal::listarClientesDeInstructor(Instructor* inst) {
 		cout << "---| Este instructor no tiene clientes vinculados. |---" << endl;
 	}
 }
-
 string Sucursal::toString() {
 	stringstream ss;
 	ss << "Sucursal Codigo: " << cod << endl

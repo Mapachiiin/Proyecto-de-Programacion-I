@@ -12,7 +12,6 @@ Instructor::Instructor() {
 	numEspecialidades = 0;
 	espeIns = new string[8];
 }
-
 Instructor::Instructor(int nC, string nom, int tel, string corr, string fN, int nE){
 	numCed_ = nC;
 	nombre_ = nom;
@@ -23,11 +22,9 @@ Instructor::Instructor(int nC, string nom, int tel, string corr, string fN, int 
 	espeIns = new string[8];
 	this->agregarEspecialidadS(nE);
 }
-
 Instructor::~Instructor() {
 	delete[] espeIns;
 }
-
 void Instructor::agregarEspecialidadS(int ep) {
 	static const string especialidades[] = {
 		"CrossFit", "HIIT", "TRX", "Spinning",
@@ -49,7 +46,6 @@ void Instructor::agregarEspecialidadS(int ep) {
 	espeIns[numEspecialidades++] = nueva;
 	cout << "---| Especialidad " << nueva << "agregada con exito |---" << endl;
 }
-
 void Instructor::setEspecialidad(int ep) {
 	static const string especialidades[] = {
 		"CrossFit", "HIIT", "TRX", "Spinning",
@@ -77,7 +73,6 @@ void Instructor::setEspecialidad(int ep) {
 	espeIns[numEspecialidades++] = nueva;
 	cout << "---| Especialidad agregada: " << nueva << endl;
 }
-
 void Instructor::setNumCed(int nC){
 	numCed_=nC;
 }

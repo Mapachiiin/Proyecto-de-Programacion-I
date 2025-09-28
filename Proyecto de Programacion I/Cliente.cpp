@@ -113,9 +113,6 @@ void Cliente::agregarReporte(const ReporteMedicion& rep) {
 		reportes_[9] = new ReporteMedicion(rep);
 	}
 }
-
-
-
 string Cliente::toString(){
 	stringstream ss;
 	ss << "Nombre: " << name_ << endl
@@ -156,7 +153,6 @@ void Cliente::listarReportes() {
 	cin.get();
 	system("cls");
 }
-
 ReporteMedicion* Cliente::getReportePorIndice(int indice) {
 	if (indice < 0 || indice >= numReportes_) {
 		cout << "---| Numero de reporte invalido |---" << endl;

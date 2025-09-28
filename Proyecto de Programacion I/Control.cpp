@@ -103,7 +103,6 @@ void Control::gestionarSucursal(string codigo) {
 		cout << "---| Sucursal con codigo " << codigo << " no encontrada. |---" << endl;
 	}
 }
-
 void Control::agregarSucursal(string codi, int tel, string prov, string cant, string corr, int capCli, int capIns) {
 	for (int i = 0; i < capSucursales_; ++i) {
 		if (sucursales_[i] == nullptr) {
@@ -113,7 +112,6 @@ void Control::agregarSucursal(string codi, int tel, string prov, string cant, st
 		}
 	}
 }
-
 void Control::eliminarSucursal(string codigo) {
 	for (int i = 0; i < numSucursales_; ++i) {
 		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
@@ -127,7 +125,6 @@ void Control::eliminarSucursal(string codigo) {
 		}
 	}
 }
-
 void Control::listarSucursales() {
 	for (int i = 0; i < numSucursales_; ++i) {
 		if (sucursales_[i] != nullptr) {
@@ -135,11 +132,9 @@ void Control::listarSucursales() {
 		}
 	}
 }
-
 int Control::getNumSucursales() {
 	return numSucursales_;
 }
-
 void Control::listarCodSucursales() {
 	for (int i = 0; i < numSucursales_; ++i) {
 		if (sucursales_[i] != nullptr) {
@@ -151,7 +146,6 @@ void Control::listarCodSucursales() {
 		}
 	}
 }
-
 Sucursal* Control::buscarSucursal(string codigo) {
 	for (int i = 0; i < numSucursales_; ++i) {
 		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
@@ -160,7 +154,6 @@ Sucursal* Control::buscarSucursal(string codigo) {
 	}
 	return nullptr;
 }
-
 Sucursal* Control::buscarSucurGesti(string codigo) {
 	for (int i = 0; i < numSucursales_; ++i) {
 		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
@@ -226,7 +219,6 @@ void Control::menuGestionarClientes(Sucursal* sucu) {
 		}
 	} while (resp != 5);
 }
-
 void Control::agregarCliente(Sucursal* sucu) {
 	bool repite1 = true;
 	int telf, ced;
@@ -355,7 +347,6 @@ void Control::agregarCliente(Sucursal* sucu) {
 		}
 	}
 }
-
 void Control::eliminarCliente(Sucursal* sucu) {
 	if (sucu->getNumClientes() == 0) {
 		cout << "-| No hay clientes registrados. |-" << endl << endl;
@@ -445,7 +436,6 @@ void Control::eliminarCliente(Sucursal* sucu) {
 return;
 
 }
-
 void Control::gestionarCliente(Sucursal* sucu) {
 	if (sucu->getNumClientes() == 0) {
 		cout << "-| No hay clientes registrados. |-" << endl << endl;
@@ -527,7 +517,6 @@ void Control::gestionarCliente(Sucursal* sucu) {
 	system("cls");
 
 }
-
 void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
 	Cliente* cliente = sucu->buscarCliente(ced);
 	if (cliente == nullptr) return;
@@ -572,7 +561,6 @@ void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
 		}
 	} while (opcion != 6);
 }
-
 void Control::menuGestionarMediciones(Cliente* cli) {
 	int opcion = 0;
 	do {
@@ -763,15 +751,12 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 		}
 		} while (opcion != 3);
 	}
-
 void Control::menuGestionarRutinas(Cliente* cli) {
 
 }
-
 void Control::menuGestionarEjercicios(Cliente* cli) {
 
 }
-
 void Control::menuGestionarCliClasesGrupales(Cliente* cli) {
 
 }
@@ -844,7 +829,6 @@ void Control::menuGestionarInstructores(Sucursal* sucu) {
 	}
 	}while(resp != 5);
 }
-
 void Control::agregarInstructor(Sucursal* sucu) {
 	bool repite2 = true;
 	int ced, telf;
@@ -1025,7 +1009,6 @@ void Control::agregarInstructor(Sucursal* sucu) {
 		}
 	}
 }
-
 void Control::gestionarInstructor(Sucursal* sucu) {
 	if (sucu->getNumInstructores() == 0) {
 		cout << "-| No hay instructores registrados. |-" << endl << endl;
@@ -1107,7 +1090,6 @@ void Control::gestionarInstructor(Sucursal* sucu) {
 	cin.get();
 	system("cls");
 }
-
 void Control::gestionarInstructorSi(Sucursal* sucu, int ced) {
 	Instructor* instructor = sucu->buscarInstructor(ced);
 	if (instructor == nullptr) return;
@@ -1152,7 +1134,6 @@ void Control::gestionarInstructorSi(Sucursal* sucu, int ced) {
 		}
 	} while (opcion != 4);
 }
-
 void Control::menuGestionarCliInst(Instructor* ins, Sucursal* sucu) {
 	if (sucu->getNumClientes() == 0) {
 		cout << "---| No hay clientes registrados en esta sucursal. |---" << endl << endl;
@@ -1204,7 +1185,6 @@ void Control::menuGestionarCliInst(Instructor* ins, Sucursal* sucu) {
 		this->gestionarClienteSi(sucu, ced);
 	}
 }
-
 void Control::eliminarInstructor(Sucursal* sucu) {
 	if (sucu->getNumInstructores() == 0) {
 		cout << "-| No hay instructores registrados. |-" << endl << endl;
@@ -1348,7 +1328,6 @@ void Control::menuGestionarClasesGrupales(Sucursal* sucu) {
 			}
 		} while (resp != 5);
 	}
-
 void Control::agregarClaseGrupal(Sucursal* sucu) {
 	bool repetir = true;
 	while (repetir) {
@@ -1474,7 +1453,6 @@ void Control::agregarClaseGrupal(Sucursal* sucu) {
 		}
 	}
 }
-
 void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 	if (sucu->getNumClasesGrups() == 0) {
 		cout << "---| No hay clases grupales registradas en la sucursal. |---" << endl;
@@ -1682,7 +1660,6 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 		}
 	} while (opcion != 6);
 }
-
 void Control::eliminarClaseGrupal(Sucursal* sucu) {
 
 
