@@ -36,6 +36,7 @@ public:
 	void eliminarClaseGrupal(Sucursal* sucu);
 	int getNumSucursales();
 	void listarCodSucursales();
+	bool esFechaValida(string&);
 	void gestionarClienteSi(Sucursal* sucu,int ced);
 	Sucursal* buscarSucursal(string codigo);
 	Sucursal* buscarSucurGesti(string codigo);

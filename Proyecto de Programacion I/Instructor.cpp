@@ -40,10 +40,14 @@ void Instructor::agregarEspecialidadS(int ep) {
 	string nueva = especialidades[ep - 1];
 
 	for (int i = 0; i < numEspecialidades; i++) {
-		if (espeIns[i] == nueva) return;
+		if (espeIns[i] == nueva) {
+			cout << "---| El instructor ya tiene la especialidad " << nueva << " |---" << endl;
+			return;
+		}
 	}
 
 	espeIns[numEspecialidades++] = nueva;
+	cout << "---| Especialidad " << nueva << "agregada con exito |---" << endl;
 }
 
 void Instructor::setEspecialidad(int ep) {
@@ -106,6 +110,9 @@ string Instructor::getFechaNac(){
 }
 int Instructor::getNumEspecialidades(){
 	return numEspecialidades;
+}
+string Instructor::getEspecialidadPrinci() {
+	return espeIns[0];
 }
 
 string Instructor::toString() {

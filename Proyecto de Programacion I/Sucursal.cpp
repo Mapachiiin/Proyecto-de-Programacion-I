@@ -237,7 +237,7 @@ void Sucursal::listarInstructores(){
 	cout << "Instructores en la sucursal " << cod << ":\n" << endl << endl;
 	for (int i = 0; i < numInstructores_; i++) {
 		if (insSucur_[i] != nullptr) {
-			cout << insSucur_[i]->getNombre() << ", cedula: " << insSucur_[i]->getCed() << endl;
+			cout << insSucur_[i]->getNombre() << ", cedula: " << insSucur_[i]->getCed() <<", especialidad principal: "<<insSucur_[i]->getEspecialidadPrinci()<< endl;
 		}
 	}
 }

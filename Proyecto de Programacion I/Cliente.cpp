@@ -132,12 +132,19 @@ string Cliente::toString(){
 	else {
 		ss << "Instructor Asignado: No hay ningun instructor asignado" << endl;
 	}
-	ss << "Numero de Reportes de Medicion: " << numReportes_ << endl;
+	if (numReportes_ == 0) {
+		ss << "No hay reportes de medicion disponibles." << endl<<endl;
+	} else if (numReportes_ != 0) {
+		ss << "---| Reporte/s de Medicion |---" << endl << endl;
+		for (int i = 0; i < numReportes_ && reportes_[i] != nullptr; i++) {
+			ss << (i + 1) << ". " << reportes_[i]->getFechaMedi() << endl;
+		}
+	}
 	return ss.str();
 }
 void Cliente::listarReportes() {
 	if (numReportes_ == 0) {
-		cout << "No hay reportes de medicion disponibles." << endl;
+		cout << "No hay reportes de medicion disponibles." << endl<<endl;
 		return;
 	}
 	cout << "---| Reporte/s de Medicion |---" << endl << endl;
@@ -145,7 +152,7 @@ void Cliente::listarReportes() {
 		
 		cout<< (i + 1) << ". " << reportes_[i]->getFechaMedi() << endl;
 	}
-	cout << "---| Presione enter para salir |---";
+	cout <<endl<< "---| Presione enter para salir |---";
 	cin.get();
 	system("cls");
 }

@@ -29,6 +29,7 @@ public:
 	int getTelef();
 	string getCorreo();	
 	string getFechaNac();
+	string getEspecialidadPrinci();
 	int getNumEspecialidades();
 
 };

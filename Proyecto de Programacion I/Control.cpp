@@ -3,6 +3,8 @@
 #include <sstream>
 using namespace std;
 
+const static int annio = 2025;
+
 Control::Control() {
 	capSucursales_ = 30;
 	sucursales_ = new Sucursal*[capSucursales_];
@@ -21,14 +23,14 @@ Control::~Control() {
 	capSucursales_ = 0;
 }
 
-
+//-------------------Sucursales-------------------
 
 void Control::gestionarSucursal(string codigo) {
 	Sucursal* sucursal = buscarSucursal(codigo);
 	if (sucursal != nullptr) {
 		cout << "Gestionando sucursal con codigo: " << codigo << endl;
 
-		int resp=0;
+		int resp = 0;
 		do {
 			cout << "\n---| Menu de Gestion |---" << endl;
 			cout << "\n1. Modificar codigo" << endl;
@@ -43,9 +45,9 @@ void Control::gestionarSucursal(string codigo) {
 			cin.ignore(); // Limpiar el buffer de entrada
 			system("cls");
 
-			int tel=0, nC=0, cC=0, ced=0, telf=0, ins=0;
-			string corr = "", codi = "", nom = "", fN = "", fI="", hor="";
-			char sexo=' ';
+			int tel = 0, nC = 0, cC = 0, ced = 0, telf = 0, ins = 0;
+			string corr = "", codi = "", nom = "", fN = "", fI = "", hor = "";
+			char sexo = ' ';
 
 			switch (resp) {
 			case 1:
@@ -107,12 +109,69 @@ void Control::agregarSucursal(string codi, int tel, string prov, string cant, st
 		if (sucursales_[i] == nullptr) {
 			sucursales_[i] = new Sucursal(codi, tel, prov, cant, corr, capCli, capIns);
 			numSucursales_++;
-			cout << "\n\n---| Sucursal "<<sucursales_[i]->getCod()<<" agregada |---" << endl;
 			return;
 		}
 	}
 }
 
+void Control::eliminarSucursal(string codigo) {
+	for (int i = 0; i < numSucursales_; ++i) {
+		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
+			delete sucursales_[i];
+			for (int j = i; j < numSucursales_ - 1; ++j) {
+				sucursales_[j] = sucursales_[j + 1];
+			}
+			sucursales_[numSucursales_ - 1] = nullptr;
+			numSucursales_--;
+			return;
+		}
+	}
+}
+
+void Control::listarSucursales() {
+	for (int i = 0; i < numSucursales_; ++i) {
+		if (sucursales_[i] != nullptr) {
+			cout << sucursales_[i]->toString() << endl;
+		}
+	}
+}
+
+int Control::getNumSucursales() {
+	return numSucursales_;
+}
+
+void Control::listarCodSucursales() {
+	for (int i = 0; i < numSucursales_; ++i) {
+		if (sucursales_[i] != nullptr) {
+			cout << "-| Sucursal Codigo: " << sucursales_[i]->getCod()
+				<< " | Provincia: " << sucursales_[i]->getProvi()
+				<< " | Canton: " << sucursales_[i]->getCanton()
+				<< " | Instructores: " << sucursales_[i]->getNumInstructores()
+				<< " | Clientes: " << sucursales_[i]->getNumClientes() << " |-" << endl;
+		}
+	}
+}
+
+Sucursal* Control::buscarSucursal(string codigo) {
+	for (int i = 0; i < numSucursales_; ++i) {
+		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
+			return sucursales_[i];
+		}
+	}
+	return nullptr;
+}
+
+Sucursal* Control::buscarSucurGesti(string codigo) {
+	for (int i = 0; i < numSucursales_; ++i) {
+		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
+			this->gestionarSucursal(codigo);
+			system("cls");
+		}
+	}
+	return nullptr;
+}
+
+//-------------------Clientes-------------------
 
 void Control::menuGestionarClientes(Sucursal* sucu) {
 	int resp = 0;
@@ -174,7 +233,7 @@ void Control::agregarCliente(Sucursal* sucu) {
 	string nom, fN, fI, corr;
 	char sexo;
 	while (repite1) {
-		cout << "---| Agregar cliente: " << endl << endl;
+		cout << "---| Agregar cliente |--- " << endl << endl;
 
 
 		if (sucu->getNumInstructores() == 0) {
@@ -200,12 +259,10 @@ void Control::agregarCliente(Sucursal* sucu) {
 		cin.ignore();
 		while (true){
 		cout << "---| Ingrese el telefono del cliente: ";
-		if (cin >> telf) {
+		if (cin >> telf&&(telf>10000000&&telf<99999999)) {
 			break;
 		}
-		cout << "---| Debe ingresar un numero valido. |---" << endl;
-		cin.clear();
-		cin.ignore();
+		cout <<endl<< "---| Debe ingresar un numero valido. |---" << endl;
 }
 
 		while(true){
@@ -220,39 +277,14 @@ void Control::agregarCliente(Sucursal* sucu) {
 		while (true) {
 			cout << "---| Ingrese la fecha de nacimiento del cliente (Dia/Mes/Annio): ";
 			getline(cin, fN);
-
-			if (fN.size() < 8 || fN.size() > 10) {
+			if (this->esFechaValida(fN)) {
+				break;
+				}
+			else {
 				cout << "---| Fecha no valida. |---" << endl;
 				continue;
 			}
 
-			if (fN.size() == 10) {
-				if (fN[2] != '/' || fN[5] != '/') {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-				break;
-			}
-
-			if (fN.size() == 9) {
-				if ((fN[2] != '/' && fN[4] == '/') || (fN[2] == '/' && fN[4] != '/')) {
-					break;
-				}
-				else {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-			}
-
-			if (fN.size() == 8) {
-				if (fN[1] == '/' && fN[3] == '/') {
-					break;
-				}
-				else {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-			}
 		}
 
 		while(true){
@@ -260,43 +292,18 @@ void Control::agregarCliente(Sucursal* sucu) {
 		if(cin >> sexo&&(sexo=='m' || sexo == 'M' || sexo == 'f' || sexo == 'F')) break;
 		cout << "---| Debe ingresar M o F |---" << endl;
 }
+
 		while (true) {
 			cin.ignore();
 			cin.clear();
 			cout << "---| Ingrese la fecha de inscripcion del cliente (Dia/Mes/Annio): ";
 			getline(cin, fI);
-
-			if (fI.size() < 8 || fI.size() > 10) {
-				cout << "---| Fecha no valida. |---" << endl;
-				continue;
-			}
-
-			if (fI.size() == 10) {
-				if (fI[2] != '/' || fI[5] != '/') {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
+			if (this->esFechaValida(fN)){
 				break;
-			}
-
-			if (fI.size() == 9) {
-				if ((fI[2] != '/' && fI[4] == '/') || (fI[2] == '/' && fI[4] != '/')) {
-					break;
-				}
-				else {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-			}
-
-			if (fI.size() == 8) {
-				if (fI[1] == '/' && fI[3] == '/') {
-					break;
-				}
-				else {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
+		}
+		else {
+			cout << "---| Fecha no valida. |---" << endl;
+			continue;
 			}
 		}
 
@@ -349,6 +356,96 @@ void Control::agregarCliente(Sucursal* sucu) {
 	}
 }
 
+void Control::eliminarCliente(Sucursal* sucu) {
+	if (sucu->getNumClientes() == 0) {
+		cout << "-| No hay clientes registrados. |-" << endl << endl;
+		cout << "-| Presione Enter para volver al menu principal..." << endl;
+		cin.ignore();
+		system("cls");
+		return;
+	}
+	char res;
+	bool codExis;
+	do {
+		string codigo;
+		res = 'j';
+		codExis = false;
+		int ced=0;
+		while (codExis == false) {
+			cout << "\n\n---| Bienvenido, a continuacion se mostraran los clientes existentes |---\n\n" << endl;
+			sucu->listarClientes();
+			cout << endl;
+			cout << "---| Ingrese la cedula del cliente a eliminar (Ingrese salir para volver al menu anterior): ";
+			getline(cin, codigo);
+
+			if (codigo == "salir" || codigo == "Salir" || codigo == "SAlir" || codigo == "SALir" || codigo == "SALIr" || codigo == "SALIR") {
+				system("cls");
+				return;
+			}
+			else {
+				try {
+					ced = stoi(codigo);
+				}
+				catch (invalid_argument&) {
+					system("cls");
+					cout << "---| La cedula ingresada debe ser totalmente numerica. Intente de nuevo. |---" << endl;
+					codExis = false;
+					continue;
+				}
+				catch (out_of_range& e) {
+					system("cls");
+					cout << "---| La cedula ingresada es demasiado larga. Intente de nuevo. |---" << endl;
+					codExis = false;
+					continue;
+				}
+
+			}
+			if (sucu->buscarCliente(ced) == nullptr) {
+				system("cls");
+				cout << "---| La cedula ingresada no existe. Por favor, aprete enter para volverlo a intentar. |---";
+				cin.get();
+				system("cls");
+				codExis = false;
+				continue;
+			}
+			else  {
+				codExis = true;
+			} 
+		cout << "\033[31m";
+		cout << "\n\n---| Realmente desea eliminar al cliente " << sucu->buscarCliente(ced)->getNombre() << "? (S / N) : ";
+		cout << "\033[0m";
+		cin >> res;
+		cin.ignore();
+
+		if (res == 's' || res == 'S') {
+			codExis = true;
+		}
+		else {
+			system("cls");
+			cout << "\n\n---| Operacion cancelada. Puede ingresar otra cedula. |---" << endl;
+		}
+	}
+	
+	cout << "\n\n---| cliente " << sucu->buscarCliente(ced)->getNombre()<< " eliminado con exito. |---\n\n" << endl;
+	sucu->eliminarCliente(ced);
+	do{
+	cout << "\n\n---| Desea eliminar otro cliente? (S/N): ";
+	cin >> res;
+	cin.ignore();
+	system("cls");
+	if (sucu->getNumClientes() == 0) {
+		cout << "-| No hay mas clientes registrados. |-";
+		cout << "-| Presione Enter para volver al menu principal..." << endl;
+		cin.ignore();
+		system("cls");
+		return;
+	}
+	} while (res != 'N' && res != 'n' && res != 'S' && res != 's');
+} while (res != 'N' && res != 'n');
+return;
+
+}
+
 void Control::gestionarCliente(Sucursal* sucu) {
 	if (sucu->getNumClientes() == 0) {
 		cout << "-| No hay clientes registrados. |-" << endl << endl;
@@ -361,7 +458,7 @@ void Control::gestionarCliente(Sucursal* sucu) {
 	int repe = 0;
 	do {
 		string codigo;
-		int ced;
+		int ced = 0;
 		bool codExis = false;
 
 		while (codExis == false) {
@@ -408,7 +505,7 @@ void Control::gestionarCliente(Sucursal* sucu) {
 		}
 		string entrada;
 		while (true) {
-			cout << endl << "---| Desea gestionar al cliente " << codigo << "? (1: Si, 2: No): ";
+			cout << endl << "---| Desea gestionar al cliente " << sucu->buscarCliente(ced)->getNombre() << "? (1: Si, 2: No): ";
 			getline(cin, entrada);
 			if (entrada == "1") {
 				system("cls");
@@ -431,95 +528,257 @@ void Control::gestionarCliente(Sucursal* sucu) {
 
 }
 
-void Control::eliminarCliente(Sucursal* sucu) {
-	if (sucu->getNumClientes() == 0) {
-		cout << "-| No hay clientes registrados. |-" << endl << endl;
-		cout << "-| Presione Enter para volver al menu principal..." << endl;
+void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
+	Cliente* cliente = sucu->buscarCliente(ced);
+	if (cliente == nullptr) return;
+
+	int opcion;
+	do {
+		cout << "---| Gestion del/la cliente: " << cliente->getNombre() << " |---" << endl;
+		cout << "\n1. Ver detalles" << endl;
+		cout << "\n2. Gestionar mediciones" << endl;
+		cout << "\n3. Gestionar rutinas" << endl;
+		cout << "\n4. Gestionar ejercicios" << endl;
+		cout << "\n5. Gestionar clases grupales" << endl;
+		cout << "\n6. Salir" << endl << endl;
+		cout << "\n---| Ingrese la opcion: " << endl;
+		cin >> opcion;
 		cin.ignore();
 		system("cls");
-		return;
-	}
-	char res;
-	bool codExis;
-	do {
-		string codigo;
-		res = 'j';
-		codExis = false;
-		int ced;
-		while (codExis == false) {
-			cout << "\n\n---| Bienvenido, a continuacion se mostraran los clientes existentes |---\n\n" << endl;
-			sucu->listarClientes();
-			cout << endl;
-			cout << "---| Ingrese la cedula del cliente a eliminar (Ingrese salir para volver al menu anterior): ";
-			getline(cin, codigo);
 
-			if (codigo == "salir" || codigo == "Salir" || codigo == "SAlir" || codigo == "SALir" || codigo == "SALIr" || codigo == "SALIR") {
+		switch (opcion) {
+		case 1:
+			cout << cliente->toString();
+			cout << "---| Ingrese enter para salir |---" << endl;
+			cin.get();
+			system("cls");
+			break;
+		case 2:
+			this->menuGestionarMediciones(cliente);
+			break;
+		case 3:
+			this->menuGestionarRutinas(cliente);
+			break;
+		case 4:
+			this->menuGestionarEjercicios(cliente);
+			break;
+		case 5:
+			this->menuGestionarCliClasesGrupales(cliente);
+			break;
+		case 6:
+			return;
+		default:
+			cout << "---| Opción inválida. |---" << endl;
+		}
+	} while (opcion != 6);
+}
+
+void Control::menuGestionarMediciones(Cliente* cli) {
+	int opcion = 0;
+	do {
+		cout << "---| Gestion de Mediciones del cliente: " << cli->getNombre() << " |---\n\n" << endl;
+		cout << "\n1. Agregar medicion" << endl;
+		cout << "\n2. Historial de mediciones" << endl;
+		cout << "\n3. Salir" << endl << endl;
+		cout << "\n---| Ingrese la opcion: " << endl;
+		cin >> opcion;
+		cin.ignore();
+		system("cls");
+		string fecha;
+
+		switch (opcion) {
+
+		case 1: {
+			bool resp;
+			while(true) {
+
+				resp = false;
+				double peso, estatura, grasa, musculo, grasaVisc, cintura, cadera, pecho, muslo;
+				int edadMet;
+
+				while (true) {
+					cout << "---| Ingrese la fecha de la medicion (Dia/Mes/Annio): ";
+					getline(cin, fecha);
+					if (esFechaValida(fecha)) {
+						break;
+					}
+					else {
+						cout << "---| Fecha no valida. |---" << endl << endl;
+						continue;
+					}
+
+				}
+				while (true) {
+					cout << "---| Ingrese el peso (kg): ";
+					if (!(cin >> peso) || peso <= 0) {
+						cout << "---| Peso no valido. |---" << endl << endl;
+					}
+					else {
+						break;
+					}
+				}
+				while (true) {
+					cout << "---| Ingrese la estatura (m): ";
+					if (!(cin >> estatura) || estatura <= 0) {
+						cout << "---| Estatura no valida. |---" << endl << endl;
+					}
+					else {
+						break;
+					}
+				}
+				while (true) {
+					cout << "---| Ingrese el porcentaje de grasa corporal (%): ";
+					if (!(cin >> grasa) || grasa < 0) {
+						cout << "---| Porcentaje de grasa corporal no valida. |---" << endl << endl;
+					}
+					else {
+						break;
+					}
+				}
+				while (true) {
+					cout << "---| Ingrese el porcentaje de musculo (%): ";
+					if (!(cin >> musculo) || musculo < 0) {
+						cout << "---| Porcentaje de musculo no valido. |---" << endl << endl;
+					}
+					else {
+						break;
+					}
+				}
+				while (true) {
+					cout << "---| Ingrese la edad metabolica: ";
+					if (!(cin >> edadMet) || edadMet < 0) {
+						cout << "---| Edad metabolica no valida. |---" << endl << endl;
+
+					}
+					else {
+						break;
+					}
+				}
+				while (true) {
+					cout << "---| Ingrese la grasa visceral (%): ";
+					if (!(cin >> grasaVisc) || grasaVisc < 0) {
+						cout << "---| Porcentaje de grasa visceral no valido. |---" << endl << endl;
+					}
+					else {
+						break;
+					}
+				}
+				while (true) {
+					cout << "---| Ingrese la medida de cintura (cm): ";
+					if (!(cin >> cintura) || cintura < 0) {
+						cout << "---| Medida de la cintura no valida. |---" << endl << endl;
+					}
+					else {
+						break;
+					}
+				}
+				while (true) {
+					cout << "---| Ingrese la medida de cadera (cm): ";
+					if (!(cin >> cadera) || cadera < 0) {
+						cout << "---| Medida de la cadera no valida. |---" << endl << endl;
+
+					}
+					else {
+						break;
+					}
+				}
+				while (true) {
+					cout << "---| Ingrese la medida de pecho (cm): ";
+					if (!(cin >> pecho) || pecho < 0) {
+						cout << "---| Medida del pecho no valido. |---" << endl << endl;
+					}
+					else {
+						break;
+					}
+				}
+				while (true) {
+					cout << "---| Ingrese la medida de muslo (cm): ";
+					if (!(cin >> muslo) || muslo < 0) {
+						cout << "---| Medida del muslo no valido. |---" << endl;
+					}
+					else {
+						break;
+					}
+				}
+				cin.ignore();
+
+				ReporteMedicion rep(*cli, fecha, peso, estatura, grasa, musculo, edadMet, grasaVisc, cintura, cadera, pecho, muslo);
+				cli->agregarReporte(rep);
+
+				cout << "---| Medicion agregada con exito. |---" << endl;
+				char siono;
+				while (true){
+				cout << "---| Desea agregar otra medicion? (S:si /N:no): ";cin >> siono;
+				if (siono != 'n' && siono != 'N' && siono != 's' && siono != 'S') {
+					cout << "---| Opcion invalida |---" << endl;
+						system("cls");
+						continue;
+				}
+					break;
+				}
+				if (siono == 'n' || siono == 'N') {
+					break;
+				}
+
+}
+			cout << "---| Presione enter para salir. |---" << endl;
+			cin.get();
+			break;
+		}
+		case 2: {
+			cli->listarReportes();
+			if (cli->getNumReportes() == 0) {
+				cout << "---| No hay mediciones para mostrar. |---" << endl;
+				cout << "---| Presione enter para continuar. |---" << endl;
+				cin.get();
 				system("cls");
 				break;
 			}
-			else {
-				try {
-					ced = stoi(codigo);
-				}
-				catch (invalid_argument&) {
-					system("cls");
-					cout << "---| La cedula ingresada debe ser totalmente numerica. Intente de nuevo. |---" << endl;
-					codExis = false;
-					continue;
-				}
-				catch (out_of_range& e) {
-					system("cls");
-					cout << "---| La cedula ingresada es demasiado larga. Intente de nuevo. |---" << endl;
-					codExis = false;
-					continue;
-				}
-
-			}
-			if (sucu->buscarCliente(ced) == nullptr) {
-				system("cls");
-				cout << "---| La cedula ingresada no existe. Por favor, aprete enter para volverlo a intentar. |---";
+			cout << "---| ¿Desea ver el detalle de alguna medicion? (Ingrese el numero o 0 para salir): ";
+			int num;
+			cin >> num;
+			cin.ignore();
+			if (num > 0 && num <= cli->getNumReportes()) {
+				ReporteMedicion* rep = cli->getReportePorIndice(num - 1);
+				cout << "---| Detalles de la medicion #" << num << " |---" << endl;
+				cout << rep->toString() << endl;
+				cout << "---| Presione enter para continuar. |---" << endl;
 				cin.get();
-				system("cls");
-				codExis = false;
-				continue;
 			}
-			else  {
-				codExis = true;
-			} 
-		cout << "\033[31m";
-		cout << "\n\n---| Realmente desea eliminar al cliente" << sucu->buscarCliente(ced)->getNombre() << "? (S / N) : ";
-		cout << "\033[0m";
-		cin >> res;
-		cin.ignore();
+			else if (num != 0) {
+				cout << "---| Numero fuera de rango. |---" << endl;
+				cout << "---| Presione enter para continuar. |---" << endl;
+				cin.get();
+			}
+			break;
+		}
+		case 3:
+		{
+			return;
+		}
+		default:
+		{
+			cout << "---| Opción inválida. |---" << endl;
+		}
+		}
+		} while (opcion != 3);
+	}
 
-		if (res == 's' || res == 'S') {
-			codExis = true;
-		}
-		else {
-			system("cls");
-			cout << "\n\n---| Operacion cancelada. Puede ingresar otra cedula. |---" << endl;
-		}
-	}
-	
-	cout << "\n\n---| cliente " << sucu->buscarCliente(ced)->getNombre()<< " eliminado con exito. |---\n\n" << endl;
-	sucu->eliminarCliente(ced);
-	do{
-	cout << "\n\n---| Desea eliminar otro cliente? (S/N): ";
-	cin >> res;
-	cin.ignore();
-	system("cls");
-	if (sucu->getNumClientes() == 0) {
-		cout << "-| No hay mas clientes registrados. |-";
-		cout << "-| Presione Enter para volver al menu principal..." << endl;
-		cin.ignore();
-		system("cls");
-		return;
-	}
-	} while (res != 'N' && res != 'n' && res != 'S' && res != 's');
-} while (res != 'N' && res != 'n');
-return;
+
+
+void Control::menuGestionarRutinas(Cliente* cli) {
 
 }
+
+void Control::menuGestionarEjercicios(Cliente* cli) {
+
+}
+
+void Control::menuGestionarCliClasesGrupales(Cliente* cli) {
+
+}
+
+//-------------------Instructores-------------------
 
 void Control::menuGestionarInstructores(Sucursal* sucu) {
 	int resp;
@@ -543,6 +802,13 @@ void Control::menuGestionarInstructores(Sucursal* sucu) {
 	switch (resp) {
 	case 1:
 	{
+		if (sucu->getNumInstructores() == 0) {
+			cout << "---| No hay instructores en esta sucursal |---" << endl<<endl;
+			cout << "\n\n---| Presione enter para salir. |---" << endl;
+			cin.get();
+			system("cls");
+			break;
+		}
 		cout << "---| Listado de instructores |--- " << endl << endl;
 		sucu->listarInstructores();
 
@@ -588,124 +854,96 @@ void Control::agregarInstructor(Sucursal* sucu) {
 	while (repite2) {
 		cout << "---| Agregar instructor: " << endl << endl;
 
+		while(true){
 		cout << "---| Ingrese el nombre del instructor: ";
 		getline(cin, nom);
 		if (nom.empty()) {
 			cout << "---| El nombre no puede estar vacio. |---" << endl;
 			continue;
 		}
-
+		break;
+}
 		while (true) {
 			cout << "---| Ingrese la cedula del instructor: ";
-			if (cin >> ced) {
-				break;
+			if (!(cin >> ced)) {
+				cin.clear();
+				cin.ignore(10000, '\n');
+				cout << "---| Debe ingresar un numero valido. |---" << endl;
+				continue;
 			}
-			cout << "---| Debe ingresar un numero valido. |---" << endl;
-			cin.clear();
-			cin.ignore();
+			cin.ignore(10000, '\n');
+			break;
 		}
-		cin.ignore();
-
 		while (true) {
-			cout << "---| Ingrese el telefono del instructor: ";
-			if (cin >> telf) {
-				break;
+			cout << "---| Ingrese el telefono del instructor (8 digitos): ";
+			cin.ignore();
+			telf = 0;
+			if (!(cin >> telf)) {
+				cin.clear();
+				cin.ignore(10000, '\n');
+				cout << "---| Debe ingresar un numero valido. |---" << endl;
+				continue;
 			}
-			cout << "---| Debe ingresar un numero valido. |---" << endl;
-			cin.clear();
-			cin.ignore();
-		}
-		cin.ignore();
-
-		while (true) {
-			cout << "---| Ingrese el correo electronico del instructor: ";
-			getline(cin, corr);
-			if (corr.find('@') == string::npos) {
-				cout << "---| El correo no es valido. |---" << endl;
+			else if (telf < 10000000 || telf > 99999999) {
+				cout << "---| Debe ingresar un numero valido (8 digitos) |---" << endl;
 				continue;
 			}
 			break;
 		}
+		while (true) {
+			int c = 0;
+			cout << "---| Ingrese el correo electronico del instructor (ejemplo@gmail.com): ";
+			getline(cin, corr);
+			int com = corr.size() - 1;
+			if (corr.empty()) {
+				cout << "---| El correo no puede estar vacio |---" << endl;
+				continue;
+			}
+			for (int i = 0;i < corr.size();i++) {
+				if (corr[i] == ' ') {
+					c++;
 
+				}
+			}
+			if (c != 0) {
+				cout << "---| El correo no puede contener espacios |---" << endl;
+				continue;
+			}
+			;
+			if (corr.find('@') == string::npos) {
+				cout << "---| El correo debe contener '@' |---" << endl; 
+				continue;
+			}
+			if (corr.rfind(".com") != corr.size() - 4) {
+				cout << "---| El correo debe terminar en .com |---" << endl;
+				continue;
+			}
+			break;
+		}
 		while (true) {
 			cout << "---| Ingrese la fecha de nacimiento del instructor (Dia/Mes/Annio): ";
 			getline(cin, fN);
-
-			if (fN.size() < 8 || fN.size() > 10) {
+			if (this->esFechaValida(fN)) {
+				break;
+			}
+			else {
 				cout << "---| Fecha no valida. |---" << endl;
 				continue;
 			}
 
-			if (fN.size() == 10) {
-				if (fN[2] != '/' || fN[5] != '/') {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-				break;
-			}
-
-			if (fN.size() == 9) {
-				if ((fN[2] != '/' && fN[4] == '/') || (fN[2] == '/' && fN[4] != '/')) {
-					break;
-				}
-				else {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-			}
-
-			if (fN.size() == 8) {
-				if (fN[1] == '/' && fN[3] == '/') {
-					break;
-				}
-				else {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-			}
 		}
-
 		while (true) {
-			cin.ignore();
-			cin.clear();
 			cout << "---| Ingrese la fecha de contrato del instructor (Dia/Mes/Annio): ";
 			getline(cin, fI);
-
-			if (fI.size() < 8 || fI.size() > 10) {
+			if (this->esFechaValida(fI)) {
+				break;
+			}
+			else {
 				cout << "---| Fecha no valida. |---" << endl;
 				continue;
 			}
 
-			if (fI.size() == 10) {
-				if (fI[2] != '/' || fI[5] != '/') {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-				break;
-			}
-
-			if (fI.size() == 9) {
-				if ((fI[2] != '/' && fI[4] == '/') || (fI[2] == '/' && fI[4] != '/')) {
-					break;
-				}
-				else {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-			}
-
-			if (fI.size() == 8) {
-				if (fI[1] == '/' && fI[3] == '/') {
-					break;
-				}
-				else {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-			}
 		}
-
-		// Menú para la primera especialidad (obligatoria para el constructor)
 		int especialidadPrincipal = 0;
 		while (true) {
 			cout << "---| Ingrese la especialidad principal del instructor: |---" << endl;
@@ -717,7 +955,7 @@ void Control::agregarInstructor(Sucursal* sucu) {
 			cout << "6. Cardio" << endl;
 			cout << "7. Yoga" << endl;
 			cout << "8. Zumba" << endl;
-			cout << "---| Ingrese el número de la especialidad: ";
+			cout << "---| Ingrese el numero de la especialidad: ";
 			cin >> especialidadPrincipal;
 			cin.clear();
 			cin.ignore();
@@ -726,29 +964,23 @@ void Control::agregarInstructor(Sucursal* sucu) {
 			}
 			else {
 				cout << "---| Opción inválida. |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
 			}
 		}
 
 		Instructor* nuevoInstructor = new Instructor(ced, nom, telf, corr, fN, especialidadPrincipal);
 		sucu->agregarInstructor(nuevoInstructor);
 
-		bool agregarMas = true;
-		do {
+		while (true) {
 			cout << "---| ¿Desea agregar otra especialidad? (1: Sí, 2: No): ";
 			int otra;
 			if (cin >> otra && (otra == 1 || otra == 2)) {
-				cin.clear();
-				cin.ignore();
-				agregarMas = (otra == 1);
-			}
-			else {
-				cout << "---| Opción inválida. |---" << endl;
-				cin.clear();
-				cin.ignore();
-				agregarMas = false;
-			}
-			if (agregarMas) {
+				cin.ignore(10000, '\n');
+				if (otra == 2) break;
+
 				int opcionEsp = 0;
+				cout << "---| Ingrese la especialidad adicional del instructor: |---" << endl;
 				cout << "1. CrossFit" << endl;
 				cout << "2. HIIT" << endl;
 				cout << "3. TRX" << endl;
@@ -757,20 +989,21 @@ void Control::agregarInstructor(Sucursal* sucu) {
 				cout << "6. Cardio" << endl;
 				cout << "7. Yoga" << endl;
 				cout << "8. Zumba" << endl;
-				cout << "---| Ingrese el número de la especialidad: ";
-				cin >> opcionEsp;
-				cin.clear();
-				cin.ignore();
-				if (opcionEsp >= 1 && opcionEsp <= 8) {
+				cout << "---| Ingrese el numero de la especialidad: ";
+				if (cin >> opcionEsp && opcionEsp >= 1 && opcionEsp <= 8) {
 					nuevoInstructor->agregarEspecialidadS(opcionEsp);
-					cout << "---| Especialidad agregada. |---" << endl;
 				}
 				else {
-					cout << "---| Opción inválida. |---" << endl;
+					cout << "---| Opcion invalida. |---" << endl;
 				}
+				cin.ignore(10000, '\n');
 			}
-		} while (agregarMas);
-
+			else {
+				cout << "---| Opcion invalida. |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+			}
+		}
 		cout << "---| Instructor agregado con exito." << endl << endl;
 
 		while (true) {
@@ -799,6 +1032,7 @@ void Control::gestionarInstructor(Sucursal* sucu) {
 
 
 }
+
 void Control::eliminarInstructor(Sucursal* sucu) {
 	if (sucu->getNumInstructores() == 0) {
 		cout << "-| No hay instructores registrados. |-" << endl << endl;
@@ -889,6 +1123,7 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 
 }
 
+//-------------------Clases Grupales-------------------
 
 void Control::menuGestionarClasesGrupales(Sucursal* sucu) {
 	int resp;
@@ -1056,276 +1291,18 @@ void Control::eliminarClaseGrupal(Sucursal* sucu) {
 
 }
 
-Sucursal* Control::buscarSucursal(string codigo) {
-	for (int i = 0; i < numSucursales_; ++i) {
-		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
-			return sucursales_[i];
-		}
+//-------------------Extras-------------------
+
+bool Control::esFechaValida(string& fN) {
+	stringstream ss(fN);
+	int dia, mes, anio;
+	char sep1, sep2;
+
+
+	if (ss >> dia >> sep1 >> mes >> sep2 >> anio && sep1 == '/' && sep2 == '/') {
+		if (dia >= 1 && dia <= 31 && mes >= 1 && mes <= 12 && anio >= 1900 && anio <= annio) return true;
 	}
-	return nullptr;
-}
-Sucursal* Control::buscarSucurGesti(string codigo) {
-	for (int i = 0; i < numSucursales_; ++i) {
-		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
-			this->gestionarSucursal(codigo);
-			system("cls");
-		}
-	}
-	return nullptr;
+	return false;
 }
 
-void Control::eliminarSucursal(string codigo) {
-	for (int i = 0; i < numSucursales_; ++i) {
-		if (sucursales_[i] != nullptr && sucursales_[i]->getCod() == codigo) {
-			delete sucursales_[i];
-			for (int j = i; j < numSucursales_ - 1; ++j) {
-				sucursales_[j] = sucursales_[j + 1];
-			}
-			sucursales_[numSucursales_ - 1] = nullptr;
-			numSucursales_--;
-			return;
-		}
-	}
-}
 
-void Control::listarSucursales() {
-	for (int i = 0; i < numSucursales_; ++i) {
-		if (sucursales_[i] != nullptr) {
-			cout << sucursales_[i]->toString() << endl;
-		}
-	}
-}
-int Control::getNumSucursales() {
-	return numSucursales_;
-}
-void Control::listarCodSucursales() {
-	for (int i = 0; i < numSucursales_; ++i) {
-		if (sucursales_[i] != nullptr) {
-			cout << "-| Sucursal Codigo: " << sucursales_[i]->getCod()
-				<<" | Provincia: "<<sucursales_[i]->getProvi()
-				<<" | Canton: "<<sucursales_[i]->getCanton()
-				<<" | Instructores: " << sucursales_[i]->getNumInstructores()
-				<<" | Clientes: " << sucursales_[i]->getNumClientes() << " |-" << endl;	
-		}
-	}
-}
-void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
-    Cliente* cliente = sucu->buscarCliente(ced);
-    if (cliente==nullptr) return;
-
-    int opcion;
-    do {
-        cout << "---| Gestion del/la cliente: " << cliente->getNombre() << " |---" << endl;
-        cout << "\n1. Ver detalles" << endl;
-        cout << "\n2. Gestionar mediciones" << endl;
-        cout << "\n3. Gestionar rutinas" << endl;
-        cout << "\n4. Gestionar ejercicios" << endl;
-        cout << "\n5. Gestionar clases grupales" << endl;
-		cout << "\n6. Salir" << endl<<endl;
-        cout << "\n---| Ingrese la opcion: "<<endl;
-        cin >> opcion;
-        cin.ignore();
-        system("cls");
-
-        switch (opcion) {
-            case 1:
-				cliente->toString();
-				cout << "---| Ingrese enter para salir |---" << endl;
-				cin.get();
-                break;
-            case 2:
-				this->menuGestionarMediciones(cliente);
-                break;
-            case 3:
-				this->menuGestionarRutinas(cliente);
-                break;
-            case 4:
-				this->menuGestionarEjercicios(cliente);
-                break;
-            case 5:
-				this->menuGestionarCliClasesGrupales(cliente);
-				break;
-			case 6:
-                return;
-            default:
-                cout << "---| Opción inválida. |---" << endl;
-        }
-    } while (opcion != 6);
-}
-void Control::menuGestionarMediciones(Cliente* cli) {
-	int opcion=0;
-	do {
-		cout << "---| Gestión de Mediciones del cliente: " << cli->getNombre() << " |---\n\n" << endl;
-		cout << "\n1. Agregar medicion" << endl;
-		cout << "\n2. Historial de mediciones" << endl;
-		cout << "\n3. Salir" << endl << endl;
-		cout << "\n---| Ingrese la opcion: " << endl;
-		cin >> opcion;
-		cin.ignore();
-		system("cls");
-		string fecha;
-
-		switch (opcion) {
-		case 1: {
-			double peso, estatura, grasa, musculo, grasaVisc, cintura, cadera, pecho, muslo;
-			int edadMet;
-
-			while (true) {
-				cout << "---| Ingrese la fecha de la medicion (Dia/Mes/Annio): ";
-				getline(cin, fecha);
-
-				if (fecha.size() == 9) {
-					if ((fecha[2] != '/' && fecha[4] == '/') || (fecha[2] == '/' && fecha[4] != '/')) {
-						break;
-					}
-					else {
-						cout << "---| Fecha no valida. |---" << endl;
-						continue;
-					}
-					if (fecha.size() == 8) {
-						if (fecha[1] == '/' && fecha[3] == '/') {
-							break;
-						}
-						else {
-							cout << "---| Fecha no valida. |---" << endl;
-							continue;
-						}
-					}
-				}
-
-				if (fecha.size() < 8 || fecha.size() > 10) {
-					cout << "---| Fecha no valida. |---" << endl;
-					continue;
-				}
-				if (fecha.size() == 10) {
-					if (fecha[2] != '/' || fecha[5] != '/') {
-						cout << "---| Fecha no valida. |---" << endl;
-						continue;
-					}
-					break;
-				}
-				
-
-				cout << "---| Ingrese el peso (kg): ";
-				if (!(cin >> peso) || peso <= 0) {
-					cout << "---| Peso no valido. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-
-				cout << "---| Ingrese la estatura (m): ";
-				if (!(cin >> estatura) || estatura <= 0) {
-					cout << "---| Estatura no valida. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-
-				cout << "---| Ingrese el porcentaje de grasa corporal (%): ";
-				if (!(cin >> grasa) || grasa < 0) {
-					cout << "---| Porcentaje de grasa corporal no valida. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-
-				cout << "---| Ingrese el porcentaje de musculo (%): ";
-				if (!(cin >> musculo) || musculo < 0) {
-					cout << "---| Porcentaje de musculo no valido. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-
-				cout << "---| Ingrese la edad metabolica: ";
-				if (!(cin >> edadMet) || edadMet < 0) {
-					cout << "---| Edad metabólica no valida. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-
-				cout << "---| Ingrese la grasa visceral (%): ";
-				if (!(cin >> grasaVisc) || grasaVisc < 0) {
-					cout << "---| Porcentaje de grasa visceral no valido. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-
-				cout << "---| Ingrese la medida de cintura (cm): ";
-				if (!(cin >> cintura) || cintura < 0) {
-					cout << "---| Medida de la cintura no valida. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-
-				cout << "---| Ingrese la medida de cadera (cm): ";
-				if (!(cin >> cadera) || cadera < 0) {
-					cout << "---| Medida de la cadera no valida. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-
-				cout << "---| Ingrese la medida de pecho (cm): ";
-				if (!(cin >> pecho) || pecho < 0) {
-					cout << "---| Medida del pecho no valido. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-
-				cout << "---| Ingrese la medida de muslo (cm): ";
-				if (!(cin >> muslo) || muslo < 0) {
-					cout << "---| Medida del muslo no valido. |---" << endl;
-					cin.clear(); cin.ignore();
-					break;
-				}
-				cin.ignore();
-
-				ReporteMedicion rep(*cli, fecha, peso, estatura, grasa, musculo, edadMet, grasaVisc, cintura, cadera, pecho, muslo);
-				cli->agregarReporte(rep);
-
-				cout << "---| Medicion agregada con exito. |---" << endl;
-				cout << "---| Presione enter para continuar. |---" << endl;
-				cin.get();
-				break;
-			}
-		case 2: {
-			cli->listarReportes();
-			if (cli->getNumReportes() == 0) {
-				cout << "---| No hay mediciones para mostrar. |---" << endl;
-				cout << "---| Presione enter para continuar. |---" << endl;
-				cin.get();
-				system("cls");
-				break;
-			}
-			cout << "---| ¿Desea ver el detalle de alguna medicion? (Ingrese el numero o 0 para salir): ";
-			int num;
-			cin >> num;
-			cin.ignore();
-			if (num > 0 && num <= cli->getNumReportes()) {
-				ReporteMedicion* rep = cli->getReportePorIndice(num - 1);
-				cout << "---| Detalles de la medicion #" << num << " |---" << endl;
-				cout << rep->toString() << endl;
-				cout << "---| Presione enter para continuar. |---" << endl;
-				cin.get();
-			}
-			else if (num != 0) {
-				cout << "---| Numero fuera de rango. |---" << endl;
-				cout << "---| Presione enter para continuar. |---" << endl;
-				cin.get();
-			}
-			break;
-		}
-		case 3:
-			return;
-		default:
-			cout << "---| Opción inválida. |---" << endl;
-		}
-		}
-	}while (opcion != 3);
-}
-void Control::menuGestionarRutinas(Cliente* cli) {
-
-}
-void Control::menuGestionarEjercicios(Cliente* cli) {
-
-}
-void Control::menuGestionarCliClasesGrupales(Cliente* cli) {
-
-}
