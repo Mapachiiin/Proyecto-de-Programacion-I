@@ -1,11 +1,14 @@
 #pragma once
 #include <iostream>
-//#include "Cliente.h"
-//#include "Ejercicios.h"
 using namespace std; 
+
+class Instructor;
+class Cliente;
+class Ejercicios;
+
 class Rutina
 {
-/*private:
+private:
 	Cliente* cliente_;
 	Ejercicios** ejercicios_;
 	string descripcion_;
@@ -16,6 +19,7 @@ class Rutina
 	int numPier_;
 	int numEspal_;
 	int resp_;
+	int capEjer_;
 public:
 	Rutina();
 	Rutina(Cliente* cliente, string descripcion, int duracion, int maxEjer, int nEPT, int nEB, int nEP, int nEE);
@@ -23,7 +27,7 @@ public:
 	void setCliente(Cliente* cliente);
 	void setDescripcion(string desc);
 	void setDuracion(int dur);
-	void agregarEjercicio(Ejercicios* ejer);
+	bool agregarEjercicio(Ejercicios* ejer);
 	void listarEjercicios();
 	void respuesta(int r);
 	int getNumEjercicios();
@@ -31,6 +35,6 @@ public:
 	string getDescripcion();
 	int getDuracion();
 	Ejercicios* getEjercicio();
-	string toString();*/
+	string toString();
 };
 

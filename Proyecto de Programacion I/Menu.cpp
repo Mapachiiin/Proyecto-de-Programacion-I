@@ -30,42 +30,44 @@ void Menu::quemados() {
 
 void Menu::mostrarMenu() {
 	int resp;
-		do {
-			cout << "\n\n---| Menu Principal |---" << endl;
-			cout << "\n\n1. Agregar Sucursal" << endl;
-			cout << "\n\n2. Eliminar Sucursal" << endl;
-			cout << "\n\n3. Listar Sucursales" << endl;
-			cout << "\n\n4. Gestionar Sucursal" << endl;
-			cout << "\n\n5. Cerrar programa" << endl<<endl;
-			cout << "\n\n---| Ingrese la opcion que desea realizar: ";
-			
-			cin >> resp;
-			cin.clear();
-			cin.ignore();
+	do {
+		cout << "\n\n---| Menu Principal |---" << endl;
+		cout << "\n\n1. Agregar Sucursal" << endl;
+		cout << "\n\n2. Eliminar Sucursal" << endl;
+		cout << "\n\n3. Listar Sucursales" << endl;
+		cout << "\n\n4. Gestionar Sucursal" << endl;
+		cout << "\n\n5. Cerrar programa" << endl << endl;
+		cout << "\n\n---| Ingrese la opcion que desea realizar: ";
+
+		cin >> resp;
+		cin.clear();
+		cin.ignore();
+		system("cls");
+		switch (resp) {
+		case 1:
+			this->menuAgregarSucursal();
+			break;
+		case 2:
+			this->menuEliminarSucursal();
+			break;
+		case 3:
+			this->menuListarSucursales();
+			break;
+		case 4:
+			this->menuGestionarSucursal();
+			break;
+		case 5:
+			cout << "---| Cerrando el programa. Hasta luego! |-" << endl;
+			exit(0);
+		default:
 			system("cls");
-			switch (resp) {
-			case 1:
-				this->menuAgregarSucursal();
-				break;
-			case 2:
-				this->menuEliminarSucursal();
-				break;
-			case 3:
-				this->menuListarSucursales();
-				break;
-			case 4:
-				this->menuGestionarSucursal();
-				break;
-			case 5:
-					cout << "---| Cerrando el programa. Hasta luego! |-" << endl;
-					exit(0);
-			default: 
-				system("cls");
-				cout << "---| Codigo invalido, intentelo de nuevo|---" << endl;
-					continue;
-			} 
-			
-		}while (resp != 5);
+			cout << "---| Codigo invalido, intentelo de nuevo|---" << endl;
+			cin.clear();
+			cin.ignore(10000, '\n');
+			continue;
+		}
+
+	} while (resp != 5);
 }
 
 void Menu::menuAgregarSucursal() {
@@ -252,8 +254,6 @@ void Menu::menuAgregarSucursal() {
 	cin.ignore();
 	system("cls");
 }
-
-
 void Menu::menuEliminarSucursal() {
 	if (control_->getNumSucursales() == 0) {
 		cout << "---| No hay sucursales registradas. |---" << endl;
@@ -339,7 +339,6 @@ void Menu::menuEliminarSucursal() {
 		}
 	}
 }
-
 void Menu::menuListarSucursales() {
 	if (control_->getNumSucursales() == 0) {
 		cout << "---| No hay sucursales registradas. |-" << endl << endl;
@@ -358,6 +357,8 @@ void Menu::menuListarSucursales() {
 
 		if (resp != 'N' && resp != 'n' && resp != 'n' && resp != 'S') {
 			cout << "---| Respuesta invalida, vuelvalo a intentar |---" << endl;
+			cin.clear();
+			cin.ignore(10000, '\n');
 			continue;
 		}
 		if (resp == 'S' || resp == 's') {
@@ -376,7 +377,6 @@ void Menu::menuListarSucursales() {
 	system("cls");
 	return;
 }
-
 void Menu::menuGestionarSucursal() {
 	if (control_->getNumSucursales() == 0) {
 		cout << "-| No hay sucursales registradas. |-" << endl << endl;

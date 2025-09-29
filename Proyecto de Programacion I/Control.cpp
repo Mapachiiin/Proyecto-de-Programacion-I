@@ -195,16 +195,19 @@ void Control::menuGestionarClientes(Sucursal* sucu) {
 		case 2:
 		{
 			this->agregarCliente(sucu);
+			system("cls");
 			break;
 		}
 		case 3:
 		{
 			this->gestionarCliente(sucu);
+			system("cls");
 			break;
 		}
 		case 4:
 		{
 			this->eliminarCliente(sucu);
+			system("cls");
 			break;
 		}
 		case 5:
@@ -215,6 +218,7 @@ void Control::menuGestionarClientes(Sucursal* sucu) {
 			return;
 		}
 		default:
+			system("cls");
 			break;
 		}
 	} while (resp != 5);
@@ -468,12 +472,14 @@ void Control::gestionarCliente(Sucursal* sucu) {
 				}
 				catch (invalid_argument&) {
 					system("cls");
+					cin.ignore(10000, '\n');
 					cout << "---| La cedula ingresada debe ser totalmente numerica. Intente de nuevo. |---" << endl;
 					codExis = false;
 					continue;
 				}
 				catch (out_of_range&) {
 					system("cls");
+					cin.ignore(10000, '\n');
 					cout << "---| La cedula ingresada es demasiado larga. Intente de nuevo. |---" << endl;
 					codExis = false;
 					continue;
@@ -484,6 +490,7 @@ void Control::gestionarCliente(Sucursal* sucu) {
 			if (sucu->buscarCliente(ced) == nullptr) {
 				system("cls");
 				cout << "---| La cedula ingresada no existe. Por favor, aprete enter para volverlo a intentar. |---";
+				cin.ignore(10000, '\n');
 				cin.get();
 				system("cls");
 				codExis = false;
@@ -508,6 +515,7 @@ void Control::gestionarCliente(Sucursal* sucu) {
 				return;
 			}
 			cout << "---| Respuesta invalida. Intente de nuevo. |---\n";
+			cin.ignore(10000, '\n');
 		}
 	} while (true);
 
@@ -558,6 +566,7 @@ void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
 			return;
 		default:
 			cout << "---| Opción inválida. |---" << endl;
+			cin.ignore(10000, '\n');
 		}
 	} while (opcion != 6);
 }
@@ -592,6 +601,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					}
 					else {
 						cout << "---| Fecha no valida. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 						continue;
 					}
 
@@ -600,6 +610,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese el peso (kg): ";
 					if (!(cin >> peso) || peso <= 0) {
 						cout << "---| Peso no valido. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 					}
 					else {
 						break;
@@ -609,6 +620,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese la estatura (m): ";
 					if (!(cin >> estatura) || estatura <= 0) {
 						cout << "---| Estatura no valida. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 					}
 					else {
 						break;
@@ -618,6 +630,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese el porcentaje de grasa corporal (%): ";
 					if (!(cin >> grasa) || grasa < 0) {
 						cout << "---| Porcentaje de grasa corporal no valida. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 					}
 					else {
 						break;
@@ -627,6 +640,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese el porcentaje de musculo (%): ";
 					if (!(cin >> musculo) || musculo < 0) {
 						cout << "---| Porcentaje de musculo no valido. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 					}
 					else {
 						break;
@@ -636,6 +650,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese la edad metabolica: ";
 					if (!(cin >> edadMet) || edadMet < 0) {
 						cout << "---| Edad metabolica no valida. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 
 					}
 					else {
@@ -646,6 +661,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese la grasa visceral (%): ";
 					if (!(cin >> grasaVisc) || grasaVisc < 0) {
 						cout << "---| Porcentaje de grasa visceral no valido. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 					}
 					else {
 						break;
@@ -655,6 +671,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese la medida de cintura (cm): ";
 					if (!(cin >> cintura) || cintura < 0) {
 						cout << "---| Medida de la cintura no valida. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 					}
 					else {
 						break;
@@ -664,6 +681,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese la medida de cadera (cm): ";
 					if (!(cin >> cadera) || cadera < 0) {
 						cout << "---| Medida de la cadera no valida. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 
 					}
 					else {
@@ -674,6 +692,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese la medida de pecho (cm): ";
 					if (!(cin >> pecho) || pecho < 0) {
 						cout << "---| Medida del pecho no valido. |---" << endl << endl;
+						cin.ignore(10000, '\n');
 					}
 					else {
 						break;
@@ -683,6 +702,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Ingrese la medida de muslo (cm): ";
 					if (!(cin >> muslo) || muslo < 0) {
 						cout << "---| Medida del muslo no valido. |---" << endl;
+						cin.ignore(10000, '\n');
 					}
 					else {
 						break;
@@ -699,6 +719,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 				cout << "---| Desea agregar otra medicion? (S:si /N:no): ";cin >> siono;
 				if (siono != 'n' && siono != 'N' && siono != 's' && siono != 'S') {
 					cout << "---| Opcion invalida |---" << endl;
+					cin.ignore(10000, '\n');
 						system("cls");
 						continue;
 				}
@@ -735,6 +756,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 			}
 			else if (num != 0) {
 				cout << "---| Numero fuera de rango. |---" << endl;
+				cin.ignore(10000, '\n');
 				cout << "---| Presione enter para continuar. |---" << endl;
 				cin.get();
 			}
@@ -747,13 +769,144 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 		default:
 		{
 			cout << "---| Opción inválida. |---" << endl;
+			cin.ignore(10000, '\n');
 		}
 		}
 		} while (opcion != 3);
 	}
 void Control::menuGestionarRutinas(Cliente* cli) {
+		int opcion = 0;
+		do {
+			cout << "---| Gestion de Rutinas del cliente " << cli->getNombre() << " |---\n\n" << endl;
+			cout << "\n1. Agregar rutina" << endl;
+			cout << "\n2. Historial de rutinas" << endl;
+			cout << "\n3. Salir" << endl << endl;
+			cout << "---| Ingrese la opcion: ";
+			cin >> opcion;
+			cin.ignore(10000, '\n');
+			system("cls");
 
-}
+			string fecha;
+
+			switch (opcion) {
+			case 1: {
+				while (true) {
+					cout << "---| Agregar rutina |---" << endl;
+
+					while (true) {
+						cout << "---| Ingrese la fecha de la rutina (Dia/Mes/Annio): ";
+						getline(cin, fecha);
+						if (esFechaValida(fecha)) {
+							break;
+						}
+						else {
+							cout << "---| Fecha no valida. |---" << endl << endl;
+							cin.ignore(10000, '\n');
+							continue;
+						}
+					}
+
+					string descripcion;
+					int duracion; 
+					string objetivo;
+					while (true) {
+						cout << "---| Ingrese la descripcion de la rutina: ";
+						getline(cin, descripcion);
+						if (descripcion.empty()) {
+							cout << "---| La descripcion no puede estar vacia. |---" << endl;
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						break;
+					}
+
+					while (true) {
+						cout << "---| Ingrese la duracion de la rutina (minutos): ";
+						if (!(cin >> duracion) || duracion <= 0) {
+							cout << "---| Duracion no valida. |---" << endl;
+							cin.clear();
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						cin.ignore(10000, '\n');
+						break;
+					}
+
+					cout << "---| Ingrese el objetivo de la rutina (ej: fuerza, resistencia, cardio, etc.): ";
+					getline(cin, objetivo);
+					if (objetivo.empty()) {
+						objetivo = "No especificado";
+					}
+
+					// Crear y agregar la rutina
+					Rutina nuevaRutina(*cli, fecha, descripcion, duracion, objetivo);
+					cli->agregarRutina(nuevaRutina);
+
+					cout << "---| Rutina agregada con exito. |---" << endl;
+
+					// Preguntar si desea agregar otra
+					char siono;
+					while (true) {
+						cout << "---| Desea agregar otra rutina? (S:si / N:no): ";
+						cin >> siono;
+						cin.ignore(10000, '\n');
+						if (siono == 's' || siono == 'S') {
+							system("cls");
+							break; // vuelve al while principal
+						}
+						else if (siono == 'n' || siono == 'N') {
+							system("cls");
+							goto salirAgregarRutina;
+						}
+						else {
+							cout << "---| Opcion invalida. |---" << endl;
+						}
+					}
+				}
+			salirAgregarRutina:
+				cout << "---| Presione enter para salir. |---" << endl;
+				cin.get();
+				break;
+			}
+			case 2: {
+				// Historial de rutinas
+				cli->listarRutinas();
+				if (cli->getNumRutinas() == 0) {
+					cout << "---| No hay rutinas para mostrar. |---" << endl;
+					cout << "---| Presione enter para continuar. |---" << endl;
+					cin.get();
+					system("cls");
+					break;
+				}
+
+				cout << "---| ¿Desea ver el detalle de alguna rutina? (Ingrese el numero o 0 para salir): ";
+				int num;
+				cin >> num;
+				cin.ignore(10000, '\n');
+				if (num > 0 && num <= cli->getNumRutinas()) {
+					Rutina* rut = cli->getRutinaPorIndice(num - 1);
+					cout << "---| Detalles de la rutina #" << num << " |---" << endl;
+					cout << rut->toString() << endl;
+					cout << "---| Presione enter para continuar. |---" << endl;
+					cin.get();
+				}
+				else if (num != 0) {
+					cout << "---| Numero fuera de rango. |---" << endl;
+					cout << "---| Presione enter para continuar. |---" << endl;
+					cin.get();
+				}
+				break;
+			}
+			case 3: {
+				return;
+			}
+			default: {
+				cout << "---| Opcion invalida. |---" << endl;
+				cin.ignore(10000, '\n');
+			}
+			}
+		} while (opcion != 3);
+	}
 void Control::menuGestionarEjercicios(Cliente* cli) {
 
 }

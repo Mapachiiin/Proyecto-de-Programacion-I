@@ -1,5 +1,8 @@
 #include "Rutina.h"
-/*#include <sstream>
+#include "Instructor.h"
+#include "Cliente.h"
+#include "Ejercicios.h"
+#include <sstream>
 #include <iostream>
 using namespace std;
 
@@ -9,23 +12,24 @@ Rutina::Rutina() {
 	duracion_ = 0;
 	ejercicios_ = nullptr;
 }
-
 Rutina::Rutina(Cliente* cli, string desc, int dur, int nEjercicios, int nEPT, int nEB, int nEP, int nEE) {
 	cliente_ = cli;
 	descripcion_ = desc;
 	duracion_ = dur;
-	numEjercicios_ = nEjercicios;
-	ejercicios_ = new Ejercicios*[nEjercicios];
-	for (int i = 0; i < nEjercicios; ++i) {
+	capEjer_ = nEjercicios;
+	numEjercicios_ = 0;
+	ejercicios_ = new Ejercicios*[capEjer_];
+	for (int i = 0; i < capEjer_; ++i) {
 		ejercicios_[i] = nullptr;
 	}
 }
 Rutina::~Rutina() {
-	delete[] cliente_;
-	for (int i = 0; i<numEjercicios_ && ejercicios_[i]; ++i) {
-		delete[] ejercicios_[i];
+	for (int i = 0; i<capEjer_; ++i) {
+		delete ejercicios_[i];
 	}
 	delete[] ejercicios_;
+	ejercicios_ = nullptr;
+	capEjer_ = 0;
 	numEjercicios_ = 0;
 }
 void Rutina::setCliente(Cliente* cliente) {
@@ -37,21 +41,23 @@ void Rutina::setDescripcion(string desc) {
 void Rutina::setDuracion(int dur) {
 	this->duracion_ = dur;
 }
-/*void Rutina::agregarEjercicio(Ejercicios* ejer) {
-	for (int i = 0;i < numEjercicios_ && ejercicios_[i]; ++i) {
+bool Rutina::agregarEjercicio(Ejercicios* ejer) {
+	for (int i = 0;i < capEjer_; ++i) {
 		if (ejercicios_[i] == nullptr) {
 			ejercicios_[i] = ejer;
 			numEjercicios_++;
-			return;
+			return true;
 		}
 	}
+	return false;
 }
 void Rutina::respuesta(int r) {
 	resp_ = r;
 }
+
 void Rutina::listarEjercicios() {
-	for (int i = 0; i < numEjercicios_ && ejercicios_[i]; ++i) {
-				if (ejercicios_[i]) {
+	for (int i = 0; i < capEjer_; ++i) {
+		if (ejercicios_[i] != nullptr) {
 			cout << "Ejercicio " << i + 1 << ":\n";
 			switch (resp_) {
 			case 1:
@@ -67,10 +73,10 @@ void Rutina::listarEjercicios() {
 				ejercicios_[i]->listEjerEspal();
 				break;
 			default:
-				cout << "Opción no válida.\n";
+				cout << "Opcion no valida.\n";
 				break;
 			}
-				}
+		}
 	}
 }
 int Rutina::getNumEjercicios() {
@@ -86,8 +92,8 @@ int Rutina::getDuracion() {
 	return duracion_;
 }
 Ejercicios* Rutina::getEjercicio() {
-	for (int i = 0;  i < numEjercicios_ && ejercicios_[i]; ++i) {
-		if (ejercicios_[i]) {
+	for (int i = 0;  i < capEjer_; ++i) {
+		if (ejercicios_[i]!=nullptr) {
 			return ejercicios_[i];
 		}
 	}
@@ -103,10 +109,11 @@ string Rutina::toString() {
 		<< "Número de ejercicios : " << numEjercicios_ << endl
 		<< "Ejercicios: " << endl
 		<< "-----------------------------------" << endl;
-		for (int i = 0; i<numEjercicios_ && ejercicios_[i]; ++i) {
+	for (int i = 0; i < capEjer_; ++i) {
+		if (ejercicios_[i] != nullptr) {
 			ss << "Ejercicio " << i + 1 << " :" << endl
 				<< ejercicios_[i]->toString() << endl;
 		}
+	}
 	return ss.str();
 }
-*/
