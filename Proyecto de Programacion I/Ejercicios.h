@@ -38,4 +38,5 @@ public:
     int getNumBic();
     int getNumPier();
     int getNumEspal();
+    string toString();
 };

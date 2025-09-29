@@ -35,6 +35,7 @@ public:
 	string getDescripcion();
 	int getDuracion();
 	Ejercicios* getEjercicio();
+	string ejerci();
 	string toString();
 };
 

@@ -42,7 +42,7 @@ void Rutina::setDuracion(int dur) {
 	this->duracion_ = dur;
 }
 bool Rutina::agregarEjercicio(Ejercicios* ejer) {
-	for (int i = 0;i < capEjer_; ++i) {
+	for (int i = 0;i < capEjer_; i++) {
 		if (ejercicios_[i] == nullptr) {
 			ejercicios_[i] = ejer;
 			numEjercicios_++;
@@ -54,7 +54,6 @@ bool Rutina::agregarEjercicio(Ejercicios* ejer) {
 void Rutina::respuesta(int r) {
 	resp_ = r;
 }
-
 void Rutina::listarEjercicios() {
 	for (int i = 0; i < capEjer_; ++i) {
 		if (ejercicios_[i] != nullptr) {
@@ -98,6 +97,17 @@ Ejercicios* Rutina::getEjercicio() {
 		}
 	}
 	return nullptr;
+}
+string Rutina::ejerci() {
+	stringstream ss;
+	ss << "---| Ejercicios |--- " << endl;
+
+	for (int i = 0; i < capEjer_; ++i) {
+		if (ejercicios_[i] != nullptr) {
+			ss << "Ejercicio " << i + 1 << " :" << endl	<< ejercicios_[i]->toString() << endl;
+		}
+	}
+	return ss.str();
 }
 string Rutina::toString() {
 	stringstream ss;

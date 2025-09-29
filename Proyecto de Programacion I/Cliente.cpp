@@ -14,6 +14,7 @@ Cliente::Cliente() {
 	fechaIns_ = "";
 	inscritos_ = 0;
 	instAsig_ = nullptr;
+	ruti_ = nullptr;
 	numReportes_ = 0;
 	reportes_ = new ReporteMedicion*[10];
 	for (int i = 0; i < 10; i++) {
@@ -31,6 +32,7 @@ Cliente::Cliente(string name, int ced, int telf, string corr, string fN, char mf
 	inscritos_ = inscrip;
 	instAsig_ = ins;
 	numReportes_ = 0;
+	ruti_ = nullptr;
 	reportes_ = new ReporteMedicion*[10];
 	for (int i = 0; i < 10; i++) {
 		reportes_[i] = nullptr;
@@ -41,6 +43,8 @@ Cliente::~Cliente() {
 		delete reportes_[i];
 	}
 	delete[] reportes_;
+	delete ruti_;
+	delete instAsig_;
 }
 string Cliente::getNombre(){
 	return name_;
@@ -68,6 +72,9 @@ int Cliente::getInscritos(){
 }
 Instructor* Cliente::getInstructor(){
 	return instAsig_;
+}
+Rutina* Cliente::getRutina() {
+	return ruti_;
 }
 int Cliente::getNumReportes(){
 	return numReportes_;
@@ -98,7 +105,10 @@ void Cliente::setInscritos(int ins){
 	this->inscritos_=ins;
 }
 void Cliente::setIntructor(Instructor* ins){
-	this->instAsig_=ins;
+	this->instAsig_ = ins;
+}
+void Cliente::setRutina(Rutina* ruti) {
+	this->ruti_ = ruti;
 }
 void Cliente::agregarReporte(const ReporteMedicion& rep) {
 	if (numReportes_ < 10) {

@@ -1,4 +1,5 @@
 #include "Ejercicios.h"
+#include <sstream>
 
 Ejercicios::Ejercicios(int& maxEjer) {
 	maxEjerPech_ = maxEjer;
@@ -14,4 +15,10 @@ Ejercicios::Ejercicios(int& maxEjer) {
 	ejerBice_ = new string[maxEjerBic_];
 	ejerPier_ = new string[maxEjerPier_];
 	ejerEspal_ = new string[maxEjerEspal_];
+}
+
+string Ejercicios::toString() {
+	stringstream ss;
+	ss << "Hola mundo" << endl;
+	return ss.str();
 }

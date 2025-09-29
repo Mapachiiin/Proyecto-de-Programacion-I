@@ -1,4 +1,5 @@
 #include "Control.h"
+#include "Rutina.h"
 #include <iostream>
 #include <sstream>
 using namespace std;
@@ -831,13 +832,15 @@ void Control::menuGestionarRutinas(Cliente* cli) {
 						cin.ignore(10000, '\n');
 						break;
 					}
-
-					cout << "---| Ingrese el objetivo de la rutina (ej: fuerza, resistencia, cardio, etc.): ";
-					getline(cin, objetivo);
-					if (objetivo.empty()) {
-						objetivo = "No especificado";
+					while (true) {
+						cout << "---| Ingrese el objetivo de la rutina (Fuerza, resistencia, cardio, etc): ";
+						getline(cin, objetivo);
+						if (objetivo.empty()) {
+							cout << "---| El objetivo no puede estar vacio |---" << endl;
+							continue;
+						}
+						break;
 					}
-
 					// Crear y agregar la rutina
 					Rutina nuevaRutina(*cli, fecha, descripcion, duracion, objetivo);
 					cli->agregarRutina(nuevaRutina);
@@ -878,13 +881,15 @@ void Control::menuGestionarRutinas(Cliente* cli) {
 					system("cls");
 					break;
 				}
-
-				cout << "---| ¿Desea ver el detalle de alguna rutina? (Ingrese el numero o 0 para salir): ";
-				int num;
-				cin >> num;
+				while(true){
+				cout << "---| ¿Desea ver el detalle de alguna rutina (S/N)? (Ingrese salir para volver al menu): ";
+				char resp;
+				if (!(cin >> resp)) {
+					cout<<
+				}
 				cin.ignore(10000, '\n');
-				if (num > 0 && num <= cli->getNumRutinas()) {
-					Rutina* rut = cli->getRutinaPorIndice(num - 1);
+				if () {
+					Rutina* rut = cli->getRutina()->ejerci();
 					cout << "---| Detalles de la rutina #" << num << " |---" << endl;
 					cout << rut->toString() << endl;
 					cout << "---| Presione enter para continuar. |---" << endl;
@@ -896,6 +901,7 @@ void Control::menuGestionarRutinas(Cliente* cli) {
 					cin.get();
 				}
 				break;
+				}
 			}
 			case 3: {
 				return;

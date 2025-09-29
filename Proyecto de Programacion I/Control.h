@@ -7,6 +7,7 @@
 #include "Quemados.h"
 using namespace std;
 
+class Rutina;
 class Menu;
 
 class Control
