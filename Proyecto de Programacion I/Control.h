@@ -7,6 +7,8 @@
 #include "Quemados.h"
 using namespace std;
 
+class Ejercicio;
+class Ejercicios;
 class Rutina;
 class Menu;
 
@@ -43,8 +45,8 @@ public:
 	Sucursal* buscarSucursal(string codigo);
 	Sucursal* buscarSucurGesti(string codigo);
 	void menuGestionarMediciones(Cliente* cli);
-	void menuGestionarRutinas(Cliente* cli); 
-	void menuGestionarEjercicios(Cliente*cli);
+	void menuGestionarRutinas(Cliente* cli, Sucursal* sucu); 
+	void menuGestionarEjercicios();
 	void menuGestionarCliClasesGrupales(Cliente* cli);
 	void menuGestionarCliInst(Instructor* ins, Sucursal* sucu);
 	void gestionarInstructorSi(Sucursal* sucu, int ced);

@@ -107,7 +107,8 @@ void Cliente::setInscritos(int ins){
 void Cliente::setIntructor(Instructor* ins){
 	this->instAsig_ = ins;
 }
-void Cliente::setRutina(Rutina* ruti) {
+void Cliente::asignarRutina(Rutina* ruti) {
+	if (ruti_ != nullptr) delete ruti_;
 	this->ruti_ = ruti;
 }
 void Cliente::agregarReporte(const ReporteMedicion& rep) {

@@ -1,7 +1,7 @@
 #include "Rutina.h"
 #include "Instructor.h"
 #include "Cliente.h"
-#include "Ejercicios.h"
+#include "Ejercicio.h"
 #include <sstream>
 #include <iostream>
 using namespace std;
@@ -10,25 +10,25 @@ Rutina::Rutina() {
 	cliente_ = nullptr;
 	descripcion_ = "";
 	duracion_ = 0;
-	ejercicios_ = nullptr;
+	ejercicio_ = nullptr;
 }
-Rutina::Rutina(Cliente* cli, string desc, int dur, int nEjercicios, int nEPT, int nEB, int nEP, int nEE) {
+Rutina::Rutina(Cliente* cli,string desc, int dur, int nEjercicios) {
 	cliente_ = cli;
 	descripcion_ = desc;
 	duracion_ = dur;
 	capEjer_ = nEjercicios;
 	numEjercicios_ = 0;
-	ejercicios_ = new Ejercicios*[capEjer_];
+	ejercicio_ = new Ejercicio*[capEjer_];
 	for (int i = 0; i < capEjer_; ++i) {
-		ejercicios_[i] = nullptr;
+		ejercicio_[i] = nullptr;
 	}
 }
 Rutina::~Rutina() {
 	for (int i = 0; i<capEjer_; ++i) {
-		delete ejercicios_[i];
+		delete ejercicio_[i];
 	}
-	delete[] ejercicios_;
-	ejercicios_ = nullptr;
+	delete[] ejercicio_;
+	ejercicio_ = nullptr;
 	capEjer_ = 0;
 	numEjercicios_ = 0;
 }
@@ -41,10 +41,10 @@ void Rutina::setDescripcion(string desc) {
 void Rutina::setDuracion(int dur) {
 	this->duracion_ = dur;
 }
-bool Rutina::agregarEjercicio(Ejercicios* ejer) {
+bool Rutina::agregarEjercicio(Ejercicio* ejer) {
 	for (int i = 0;i < capEjer_; i++) {
-		if (ejercicios_[i] == nullptr) {
-			ejercicios_[i] = ejer;
+		if (ejercicio_[i] == nullptr) {
+			ejercicio_[i] = ejer;
 			numEjercicios_++;
 			return true;
 		}
@@ -55,28 +55,22 @@ void Rutina::respuesta(int r) {
 	resp_ = r;
 }
 void Rutina::listarEjercicios() {
-	for (int i = 0; i < capEjer_; ++i) {
-		if (ejercicios_[i] != nullptr) {
-			cout << "Ejercicio " << i + 1 << ":\n";
-			switch (resp_) {
-			case 1:
-				ejercicios_[i]->listEjerPecTric();
-				break;
-			case 2:
-				ejercicios_[i]->listEjercBic();
-				break;
-			case 3:
-				ejercicios_[i]->listEjerPier();
-				break;
-			case 4:
-				ejercicios_[i]->listEjerEspal();
-				break;
-			default:
-				cout << "Opcion no valida.\n";
-				break;
-			}
-		}
+	system("cls");
+	cout << "Rutina: " << descripcion_ << " (" << duracion_ << " min)" << endl;
+	for (int i = 0; i < numEjercicios_; i++) {
+		cout << i + 1 << ". " << ejercicio_[i]->toString() << endl;
 	}
+}
+bool Rutina::eliminarEjercicio(int num) {
+	if (num >= 0 && num < numEjercicios_) {
+		delete ejercicio_[num];
+		for (int i = num; i < numEjercicios_ - 1;i++) {
+			ejercicio_[i] = ejercicio_[i + 1];
+		}
+		ejercicio_[--numEjercicios_] = nullptr;
+		return true;
+	}
+	return false;
 }
 int Rutina::getNumEjercicios() {
 	return numEjercicios_;
@@ -90,10 +84,10 @@ string Rutina::getDescripcion() {
 int Rutina::getDuracion() {
 	return duracion_;
 }
-Ejercicios* Rutina::getEjercicio() {
+Ejercicio* Rutina::getEjercicio() {
 	for (int i = 0;  i < capEjer_; ++i) {
-		if (ejercicios_[i]!=nullptr) {
-			return ejercicios_[i];
+		if (ejercicio_[i]!=nullptr) {
+			return ejercicio_[i];
 		}
 	}
 	return nullptr;
@@ -103,8 +97,8 @@ string Rutina::ejerci() {
 	ss << "---| Ejercicios |--- " << endl;
 
 	for (int i = 0; i < capEjer_; ++i) {
-		if (ejercicios_[i] != nullptr) {
-			ss << "Ejercicio " << i + 1 << " :" << endl	<< ejercicios_[i]->toString() << endl;
+		if (ejercicio_[i] != nullptr) {
+			ss << "Ejercicio " << i + 1 << " :" << endl	<< ejercicio_[i]->toString() << endl;
 		}
 	}
 	return ss.str();
@@ -120,9 +114,9 @@ string Rutina::toString() {
 		<< "Ejercicios: " << endl
 		<< "-----------------------------------" << endl;
 	for (int i = 0; i < capEjer_; ++i) {
-		if (ejercicios_[i] != nullptr) {
+		if (ejercicio_[i] != nullptr) {
 			ss << "Ejercicio " << i + 1 << " :" << endl
-				<< ejercicios_[i]->toString() << endl;
+				<< ejercicio_[i]->toString() << endl;
 		}
 	}
 	return ss.str();

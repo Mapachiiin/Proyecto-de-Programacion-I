@@ -1,5 +1,7 @@
 #include "Control.h"
 #include "Rutina.h"
+#include "Ejercicios.h"
+#include "Ejercicio.h"
 #include <iostream>
 #include <sstream>
 using namespace std;
@@ -163,6 +165,154 @@ Sucursal* Control::buscarSucurGesti(string codigo) {
 		}
 	}
 	return nullptr;
+}
+void Control::menuGestionarEjercicios() {
+	Ejercicios* catalogo = new Ejercicios;
+	int opcion = 0;
+	do {
+		system("cls");
+		cout << "---| Gestion del Catalogo de Ejercicios |---" << endl << endl;
+		cout << "\n1. Ver ejercicios existentes" << endl;
+		cout << "\n2. Agregar ejercicio" << endl;
+		cout << "\n3. Eliminar ejercicio" << endl;
+		cout << "\n4. Salir" << endl << endl;
+		cout << "---| Ingrese una opcion: ";
+		cin >> opcion;
+		cin.ignore(10000, '\n');
+
+		switch (opcion) {
+		case 1: {
+			int cate;
+			cout << "---| Seleccione una categoria |---" << endl << endl;
+			cout << "\n1. Pecho y triceps" << endl;
+			cout << "\n2. Biceps" << endl;
+			cout << "\n3. Piernas" << endl;
+			cout << "\n4. Espalda" << endl << endl;
+			cout << "---| Ingrese una opcion: ";
+			cin >> cate;
+			cin.ignore(10000, '\n');
+
+			switch (cate) {
+			case 1: {
+				catalogo->listarPechoTric();
+				break;
+			}
+			case 2: {
+				catalogo->listarBiceps();
+				break;
+			}
+			case 3: {
+				catalogo->listarPiernas();
+				break;
+			}
+			case 4: {
+				catalogo->listarEspalda();
+				break;
+			}
+			default: {
+				cout << "---| Categoria invalida |---" << endl;
+				cin.ignore(10000, '\n');
+				break;
+
+			}
+				   system("cls");
+				   break;
+			}
+		case 2: {
+			string nombre;
+			int cate;
+			cout << "---| Seleccione una categoria |---" << endl << endl;
+			cout << "\n1. Pecho y triceps" << endl;
+			cout << "\n2. Biceps" << endl;
+			cout << "\n3. Piernas" << endl;
+			cout << "\n4. Espalda" << endl << endl;
+			cout << "---| Ingrese una opcion: ";
+			cin >> cate;
+			cin.ignore(10000, '\n');
+
+			cout << "Ingrese el nombre del nuevo ejercicio: ";
+			getline(cin, nombre);
+
+			switch (cate) {
+			case 1: {
+				catalogo->agregarPechoTric(nombre);
+				break;
+			}
+			case 2: {
+				catalogo->agregarBiceps(nombre);
+				break;
+			}
+			case 3: {
+				catalogo->agregarPiernas(nombre);
+				break;
+			}
+			case 4: {
+				catalogo->agregarEspalda(nombre);
+				break;
+			}
+			default: {
+				cout << "---| Categoria invalida |---" << endl;
+				cin.ignore(10000, '\n');
+				break;
+			}
+			}
+			cout << "---| Ejercicio agregado con exito |---" << endl;;
+			cin.get();
+			system("cls");
+			break;
+		}
+		case 3: {
+			int cate, num;
+			cout << "---| Seleccione una categoria |---" << endl << endl;
+			cout << "\n1. Pecho y triceps" << endl;
+			cout << "\n2. Biceps" << endl;
+			cout << "\n3. Piernas" << endl;
+			cout << "\n4. Espalda" << endl << endl;
+			cout << "---| Ingrese una opcion: ";
+			cin >> cate;
+			cin.ignore(10000, '\n');
+
+			switch (cate) {
+			case 1:
+				catalogo->listarPechoTric();
+				cout << "---| Ingrese numero a eliminar: "; cin >> num;
+				catalogo->eliPechoTric(num - 1);
+				break;
+			case 2:
+				catalogo->listarBiceps();
+				cout << "---| Ingrese numero a eliminar: "; cin >> num;
+				catalogo->eliBiceps(num - 1);
+				break;
+			case 3:
+				catalogo->listarPiernas();
+				cout << "---| Ingrese numero a eliminar: "; cin >> num;
+				catalogo->eliPiernas(num - 1);
+				break;
+			case 4:
+				catalogo->listarEspalda();
+				cout << "---| Ingrese numero a eliminar: "; cin >> num;
+				catalogo->eliEspalda(num - 1);
+				break;
+			default: {
+				cout << "---| Categoria invalida |---" << endl;
+				cin.ignore(10000, '\n');
+				break;
+			}
+			}
+			cout << "---| Ejercicio eliminado |---\n";
+			system("cls");
+			break;
+		}
+		case 4:
+			return;
+		default:
+			system("cls");
+			cout << "---| Opcion invalida |---\n";
+			cin.ignore(10000, '\n');
+
+		}
+		} 
+	}while (opcion != 4);
 }
 
 //-------------------Clientes-------------------
@@ -536,9 +686,8 @@ void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
 		cout << "\n1. Ver detalles" << endl;
 		cout << "\n2. Gestionar mediciones" << endl;
 		cout << "\n3. Gestionar rutinas" << endl;
-		cout << "\n4. Gestionar ejercicios" << endl;
-		cout << "\n5. Gestionar clases grupales" << endl;
-		cout << "\n6. Salir" << endl << endl;
+		cout << "\n4. Gestionar clases grupales" << endl;
+		cout << "\n5. Salir" << endl << endl;
 		cout << "\n---| Ingrese la opcion: " << endl;
 		cin >> opcion;
 		cin.ignore();
@@ -555,21 +704,18 @@ void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
 			this->menuGestionarMediciones(cliente);
 			break;
 		case 3:
-			this->menuGestionarRutinas(cliente);
+			this->menuGestionarRutinas(cliente, sucu);
 			break;
 		case 4:
-			this->menuGestionarEjercicios(cliente);
-			break;
-		case 5:
 			this->menuGestionarCliClasesGrupales(cliente);
 			break;
-		case 6:
+		case 5:
 			return;
 		default:
 			cout << "---| Opción inválida. |---" << endl;
 			cin.ignore(10000, '\n');
 		}
-	} while (opcion != 6);
+	} while (opcion != 5);
 }
 void Control::menuGestionarMediciones(Cliente* cli) {
 	int opcion = 0;
@@ -588,7 +734,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 
 		case 1: {
 			bool resp;
-			while(true) {
+			while (true) {
 
 				resp = false;
 				double peso, estatura, grasa, musculo, grasaVisc, cintura, cadera, pecho, muslo;
@@ -716,21 +862,21 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 
 				cout << "---| Medicion agregada con exito. |---" << endl;
 				char siono;
-				while (true){
-				cout << "---| Desea agregar otra medicion? (S:si /N:no): ";cin >> siono;
-				if (siono != 'n' && siono != 'N' && siono != 's' && siono != 'S') {
-					cout << "---| Opcion invalida |---" << endl;
-					cin.ignore(10000, '\n');
+				while (true) {
+					cout << "---| Desea agregar otra medicion? (S:si /N:no): ";cin >> siono;
+					if (siono != 'n' && siono != 'N' && siono != 's' && siono != 'S') {
+						cout << "---| Opcion invalida |---" << endl;
+						cin.ignore(10000, '\n');
 						system("cls");
 						continue;
-				}
+					}
 					break;
 				}
 				if (siono == 'n' || siono == 'N') {
 					break;
 				}
 
-}
+			}
 			cout << "---| Presione enter para salir. |---" << endl;
 			cin.get();
 			break;
@@ -773,148 +919,144 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 			cin.ignore(10000, '\n');
 		}
 		}
-		} while (opcion != 3);
-	}
-void Control::menuGestionarRutinas(Cliente* cli) {
-		int opcion = 0;
-		do {
-			cout << "---| Gestion de Rutinas del cliente " << cli->getNombre() << " |---\n\n" << endl;
-			cout << "\n1. Agregar rutina" << endl;
-			cout << "\n2. Historial de rutinas" << endl;
-			cout << "\n3. Salir" << endl << endl;
-			cout << "---| Ingrese la opcion: ";
-			cin >> opcion;
+	} while (opcion != 3);
+}
+void Control::menuGestionarRutinas(Cliente* cli, Sucursal* sucu) {
+	Ejercicios catalogo;
+	int opcion = 0;
+	do {
+		system("cls");
+		cout << "---| Gestion de Rutinas del cliente " << cli->getNombre() << " |---" << endl << endl;
+		cout << "\n1. Crear nueva rutina" << endl;
+		cout << "\n2. Ver rutina actual" << endl;
+		cout << "\n3. Salir" << endl << endl;
+		cout << "---| Ingrese la opcion: ";
+		cin >> opcion;
+		cin.ignore(10000, '\n');
+
+		switch (opcion) {
+		case 1: {
+			string descripcion;
+			int duracion, nEjercicios;
+
+			cout << "---| Ingrese la descripcion de la rutina: ";
+			getline(cin, descripcion);
+
+			cout << "---| Ingrese la duracion total de la rutina (minutos): ";
+			while (!(cin >> duracion) || duracion <= 0) {
+				cout << "---| Duracion no valida. |---\n";
+				cin.clear();
+				cin.ignore(10000, '\n');
+				cout << "Ingrese nuevamente: ";
+			}
+			cin.ignore(10000, '\n');
+
+			cout << "---| Ingrese el numero maximo de ejercicios de la rutina: ";
+			while (!(cin >> nEjercicios) || nEjercicios <= 0) {
+				cout << "---| Numero invalido. |---\n";
+				cin.clear();
+				cin.ignore(10000, '\n');
+				cout << "Ingrese nuevamente: ";
+			}
+			cin.ignore(10000, '\n');
+
+			Rutina* nuevaRutina = new Rutina(cli, descripcion, duracion, nEjercicios);
+			cli->asignarRutina(nuevaRutina);
+
+			int resp = 0;
+			do {
+				system("cls");
+				cout << "---| Tipos de ejercicios |---\n\n";
+				cout << "1. Pecho y triceps\n";
+				cout << "2. Biceps\n";
+				cout << "3. Piernas\n";
+				cout << "4. Espalda\n";
+				cout << "5. Terminar\n\n";
+				cout << "---| Ingrese que tipo de ejercicio desea agregar: ";
+				cin >> resp;
+				cin.ignore(10000, '\n');
+
+				int esco;
+				string nombre;
+
+				switch (resp) {
+				case 1:
+					system("cls");
+					cout << "---| Ejercicios de pecho y triceps |---\n";
+					catalogo.listarPechoTric();
+					cout << "Seleccione numero: ";
+					cin >> esco;
+					cin.ignore(10000, '\n');
+					nombre = catalogo.getPechoTric(esco - 1);
+					break;
+				case 2:
+					system("cls");
+					cout << "---| Ejercicios de biceps |---\n";
+					catalogo.listarBiceps();
+					cout << "Seleccione numero: ";
+					cin >> esco;
+					cin.ignore(10000, '\n');
+					nombre = catalogo.getBiceps(esco - 1);
+					break;
+				case 3:
+					system("cls");
+					cout << "---| Ejercicios de pierna |---\n";
+					catalogo.listarPiernas();
+					cout << "Seleccione numero: ";
+					cin >> esco;
+					cin.ignore(10000, '\n');
+					nombre = catalogo.getPiernas(esco - 1);
+					break;
+				case 4:
+					system("cls");
+					cout << "---| Ejercicios de espalda |---\n";
+					catalogo.listarEspalda();
+					cout << "Seleccione numero: ";
+					cin >> esco;
+					cin.ignore(10000, '\n');
+					nombre = catalogo.getEspalda(esco - 1);
+					break;
+				case 5:
+					break;
+				default:
+					cout << "---| Opcion invalida |---\n";
+					cin.ignore(10000, '\n');
+					continue;
+				}
+
+				if (!nombre.empty()) {
+					Ejercicio* nuevo = new Ejercicio(nombre);
+					nuevaRutina->agregarEjercicio(nuevo);
+					cout << "---| Se agrego: " << nombre << " |---\n";
+					system("pause");
+				}
+
+			} while (resp != 5);
+
+			cout << "---| Rutina creada con exito. |---\n";
+			system("pause");
+			break;
+		}
+		case 2: {
+			if (cli->getRutina() == nullptr) {
+				cout << "---| El cliente no tiene rutina asignada. |---"<<endl<<endl;
+				system("cls");
+			}
+			else {
+				cli->getRutina()->listarEjercicios();
+			}
+			system("cls");
+			break;
+		}
+		case 3:
+			system("cls");
+			return;
+		default:
+			cout << "---| Opcion invalida. |---\n";
 			cin.ignore(10000, '\n');
 			system("cls");
-
-			string fecha;
-
-			switch (opcion) {
-			case 1: {
-				while (true) {
-					cout << "---| Agregar rutina |---" << endl;
-
-					while (true) {
-						cout << "---| Ingrese la fecha de la rutina (Dia/Mes/Annio): ";
-						getline(cin, fecha);
-						if (esFechaValida(fecha)) {
-							break;
-						}
-						else {
-							cout << "---| Fecha no valida. |---" << endl << endl;
-							cin.ignore(10000, '\n');
-							continue;
-						}
-					}
-
-					string descripcion;
-					int duracion; 
-					string objetivo;
-					while (true) {
-						cout << "---| Ingrese la descripcion de la rutina: ";
-						getline(cin, descripcion);
-						if (descripcion.empty()) {
-							cout << "---| La descripcion no puede estar vacia. |---" << endl;
-							cin.ignore(10000, '\n');
-							continue;
-						}
-						break;
-					}
-
-					while (true) {
-						cout << "---| Ingrese la duracion de la rutina (minutos): ";
-						if (!(cin >> duracion) || duracion <= 0) {
-							cout << "---| Duracion no valida. |---" << endl;
-							cin.clear();
-							cin.ignore(10000, '\n');
-							continue;
-						}
-						cin.ignore(10000, '\n');
-						break;
-					}
-					while (true) {
-						cout << "---| Ingrese el objetivo de la rutina (Fuerza, resistencia, cardio, etc): ";
-						getline(cin, objetivo);
-						if (objetivo.empty()) {
-							cout << "---| El objetivo no puede estar vacio |---" << endl;
-							continue;
-						}
-						break;
-					}
-					// Crear y agregar la rutina
-					Rutina nuevaRutina(*cli, fecha, descripcion, duracion, objetivo);
-					cli->agregarRutina(nuevaRutina);
-
-					cout << "---| Rutina agregada con exito. |---" << endl;
-
-					// Preguntar si desea agregar otra
-					char siono;
-					while (true) {
-						cout << "---| Desea agregar otra rutina? (S:si / N:no): ";
-						cin >> siono;
-						cin.ignore(10000, '\n');
-						if (siono == 's' || siono == 'S') {
-							system("cls");
-							break; // vuelve al while principal
-						}
-						else if (siono == 'n' || siono == 'N') {
-							system("cls");
-							goto salirAgregarRutina;
-						}
-						else {
-							cout << "---| Opcion invalida. |---" << endl;
-						}
-					}
-				}
-			salirAgregarRutina:
-				cout << "---| Presione enter para salir. |---" << endl;
-				cin.get();
-				break;
-			}
-			case 2: {
-				// Historial de rutinas
-				cli->listarRutinas();
-				if (cli->getNumRutinas() == 0) {
-					cout << "---| No hay rutinas para mostrar. |---" << endl;
-					cout << "---| Presione enter para continuar. |---" << endl;
-					cin.get();
-					system("cls");
-					break;
-				}
-				while(true){
-				cout << "---| ¿Desea ver el detalle de alguna rutina (S/N)? (Ingrese salir para volver al menu): ";
-				char resp;
-				if (!(cin >> resp)) {
-					cout<<
-				}
-				cin.ignore(10000, '\n');
-				if () {
-					Rutina* rut = cli->getRutina()->ejerci();
-					cout << "---| Detalles de la rutina #" << num << " |---" << endl;
-					cout << rut->toString() << endl;
-					cout << "---| Presione enter para continuar. |---" << endl;
-					cin.get();
-				}
-				else if (num != 0) {
-					cout << "---| Numero fuera de rango. |---" << endl;
-					cout << "---| Presione enter para continuar. |---" << endl;
-					cin.get();
-				}
-				break;
-				}
-			}
-			case 3: {
-				return;
-			}
-			default: {
-				cout << "---| Opcion invalida. |---" << endl;
-				cin.ignore(10000, '\n');
-			}
-			}
-		} while (opcion != 3);
-	}
-void Control::menuGestionarEjercicios(Cliente* cli) {
-
+		}
+	} while (opcion != 3);
 }
 void Control::menuGestionarCliClasesGrupales(Cliente* cli) {
 

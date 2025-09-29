@@ -25,7 +25,7 @@ private:
 	double IMC; //peso/(estatura*estatura)
 	double proteRecomend; //0.8g de prote x cada kg de peso, si es hombre son entree 1.7g - 2.5g y si es mujer entre 1.6- 1.8
 	int edadMeta;
-	int vasosAgua; //peso/7= cant vasos de 250 ml que tiene que tomar
+	double vasosAgua; //peso/7= cant vasos de 250 ml que tiene que tomar
 	
 public:
 	ReporteMedicion();

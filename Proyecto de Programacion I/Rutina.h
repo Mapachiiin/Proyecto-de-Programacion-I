@@ -4,13 +4,13 @@ using namespace std;
 
 class Instructor;
 class Cliente;
-class Ejercicios;
+class Ejercicio;
 
 class Rutina
 {
 private:
 	Cliente* cliente_;
-	Ejercicios** ejercicios_;
+	Ejercicio** ejercicio_;
 	string descripcion_;
 	int duracion_;
 	int numEjercicios_;
@@ -22,19 +22,20 @@ private:
 	int capEjer_;
 public:
 	Rutina();
-	Rutina(Cliente* cliente, string descripcion, int duracion, int maxEjer, int nEPT, int nEB, int nEP, int nEE);
+	Rutina(Cliente* cli, string descripcion, int duracion, int maxEjer);
 	~Rutina();
 	void setCliente(Cliente* cliente);
 	void setDescripcion(string desc);
 	void setDuracion(int dur);
-	bool agregarEjercicio(Ejercicios* ejer);
+	bool agregarEjercicio(Ejercicio* ejer);
 	void listarEjercicios();
+	bool eliminarEjercicio(int num);
 	void respuesta(int r);
 	int getNumEjercicios();
 	Cliente* getCliente();
 	string getDescripcion();
 	int getDuracion();
-	Ejercicios* getEjercicio();
+	Ejercicio* getEjercicio();
 	string ejerci();
 	string toString();
 };

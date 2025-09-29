@@ -2,41 +2,34 @@
 #include <iostream>
 using namespace std;
 
-class Ejercicios
-{
+class Ejercicios {
 private:
-    int maxEjercicios_;
-    int numPechoTriceps_;
+    string pechoTric_[100];
+    string biceps_[100];
+    string piernas_[100];
+    string espalda_[100];
+
+    int numPechoTric_;
     int numBiceps_;
     int numPiernas_;
     int numEspalda_;
-    int maxEjerPech_;
-    int maxEjerBic_;
-    int maxEjerPier_;
-    int maxEjerEspal_;
-    string* ejerPechTric_;
-    string* ejerBice_;
-    string* ejerPier_;
-    string* ejerEspal_;
 
 public:
-    Ejercicios(int& maxEjer);
-    ~Ejercicios();
-    void agreEjerPecTric(const string& nombre);
-    void agreEjerBice(const string& nombre);
-    void agreEjerPier(const string& nombre);
-    void agreEjerEspal(const string& nombre);
-    void listEjerPecTric();
-    void listEjercBic();
-    void listEjerPier();
-    void listEjerEspal();
-    string getEjerPechoTriceps();
-    string getEjerBiceps();
-    string getEjerPiernas();
-    string getEjerEspalda();
-    int getNumPecTric();
-    int getNumBic();
-    int getNumPier();
-    int getNumEspal();
-    string toString();
+    Ejercicios();
+    void listarPechoTric();
+    void listarBiceps();
+    void listarPiernas();
+    void listarEspalda();
+    string getPechoTric(int devo);
+    string getBiceps(int devo);
+    string getPiernas(int devo);
+    string getEspalda(int devo);
+    void agregarPechoTric(string& nombre);
+    void agregarBiceps(string& nombre);
+    void agregarPiernas(string& nombre);
+    void agregarEspalda(string& nombre);   
+    void eliPechoTric(int eli);
+    void eliBiceps(int eli);
+    void eliPiernas(int eli);
+    void eliEspalda(int eli);
 };

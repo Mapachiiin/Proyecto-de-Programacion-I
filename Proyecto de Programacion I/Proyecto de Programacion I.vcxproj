@@ -126,6 +126,7 @@
     <ClCompile Include="ClaseGrupal.cpp" />
     <ClCompile Include="Cliente.cpp" />
     <ClCompile Include="Control.cpp" />
+    <ClCompile Include="Ejercicio.cpp" />
     <ClCompile Include="Ejercicios.cpp" />
     <ClCompile Include="Instructor.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="ClaseGrupal.h" />
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="Control.h" />
+    <ClInclude Include="Ejercicio.h" />
     <ClInclude Include="Ejercicios.h" />
     <ClInclude Include="Instructor.h" />
     <ClInclude Include="Menu.h" />
