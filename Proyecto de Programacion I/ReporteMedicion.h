@@ -29,7 +29,9 @@ private:
 	
 public:
 	ReporteMedicion();
-	ReporteMedicion(Cliente& cli, string fecha, double peso, double estatura, double grasa, double musculo, int edadMet, double grasaVisc, double cintura, double cadera, double pecho, double muslo);
+	ReporteMedicion(Cliente& cli, string fecha, double peso, double estatura, double grasa, double musculo, int edadMet, double grasaVisc, double cintura, double cadera, double pecho, double muslo, bool hC);
+	double getIMC();
+	bool getAltoRiesgo();
 	void calcuIMC();
 	void clasifiIMC();
 	void calcuProteRecomend();

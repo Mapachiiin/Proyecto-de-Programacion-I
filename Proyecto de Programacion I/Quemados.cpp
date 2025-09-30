@@ -1,5 +1,10 @@
 #include "Quemados.h"
+#include "Instructor.h"
+#include "Sucursal.h"
 #include "Control.h"
+#include "Ejercicio.h"
+#include <iostream>
+using namespace std;
 
 Quemados::Quemados(Control* control_) {
 	this->control_ = control_;
@@ -29,37 +34,127 @@ void Quemados::IngreDatosQuemados() {
 
 	// ==================== CLIENTES ====================
 
+	string ejer1n = "Saltos";
 	Cliente* c1 = new Cliente("Elias", 121383329, 87278865, "eMati@gmail.com", "02/12/2000", 'H', "20/04/2024", 0, inst1);
 	sucursal->agregarCliente(c1);
+	ReporteMedicion* repo1 = new ReporteMedicion(*c1, "15/08/2025", 72.5, 1.80, 14.8, 42.0, 23, 9.5, 82.0, 95.0, 100.0, 58.0, false);
+	c1->agregarReporte(*repo1);
+	Rutina* rutina1 = new Rutina(c1, "descripcion", 60, 10);
+	Ejercicio* ejer1 = new Ejercicio (ejer1n);
+	rutina1->agregarEjercicio(ejer1);
+	c1->asignarRutina(rutina1);
+
+	string ejer2n = "Sentadillas";
 	Cliente* c2 = new Cliente("Sofia", 221383330, 88884444, "sofia@gmail.com", "11/03/1998", 'M', "21/04/2024", 0, inst2);
 	sucursal->agregarCliente(c2);
+	ReporteMedicion* repo2 = new ReporteMedicion(*c2, "15/08/2025", 60.0, 1.65, 20.5, 35.0, 27, 8.0, 70.0, 95.0, 90.0, 55.0, true);
+	c2->agregarReporte(*repo2);
+	Rutina* rutina2 = new Rutina(c2, "Rutina general de tonificación", 50, 8);
+	Ejercicio* ejer2 = new Ejercicio(ejer2n);
+	rutina2->agregarEjercicio(ejer2);
+	c2->asignarRutina(rutina2);
+
+	string ejer3n = "Press banca";
 	Cliente* c3 = new Cliente("Andres", 321383331, 87776666, "andres@gmail.com", "25/07/1995", 'H', "22/04/2024", 0, inst3);
 	sucursal->agregarCliente(c3);
+	ReporteMedicion* repo3 = new ReporteMedicion(*c3, "15/08/2025", 80.0, 1.82, 16.0, 40.0, 28, 10.0, 85.0, 98.0, 105.0, 60.0, true);
+	c3->agregarReporte(*repo3);
+	Rutina* rutina3 = new Rutina(c3, "Rutina de fuerza avanzada", 70, 10);
+	Ejercicio* ejer3 = new Ejercicio(ejer3n);
+	rutina3->agregarEjercicio(ejer3);
+	c3->asignarRutina(rutina3);
+
+	string ejer4n = "Plancha";
 	Cliente* c4 = new Cliente("Valeria", 421383332, 89997777, "valeria@gmail.com", "30/08/1999", 'M', "23/04/2024", 0, inst4);
 	sucursal->agregarCliente(c4);
+	ReporteMedicion* repo4 = new ReporteMedicion(*c4, "15/08/2025", 55.0, 1.62, 19.0, 36.0, 25, 7.5, 68.0, 92.0, 88.0, 53.0, true);
+	c4->agregarReporte(*repo4);
+	Rutina* rutina4 = new Rutina(c4, "Rutina de resistencia", 45, 7);
+	Ejercicio* ejer4 = new Ejercicio(ejer4n);
+	rutina4->agregarEjercicio(ejer4);
+	c4->asignarRutina(rutina4);
+
+	string ejer5n = "Peso muerto";
 	Cliente* c5 = new Cliente("Mateo", 521383333, 86665555, "mateo@gmail.com", "14/01/2001", 'H', "24/04/2024", 0, inst5);
 	sucursal->agregarCliente(c5);
+	ReporteMedicion* repo5 = new ReporteMedicion(*c5, "15/08/2025", 70.0, 1.75, 15.5, 41.0, 22, 9.0, 80.0, 94.0, 98.0, 57.0, true);
+	c5->agregarReporte(*repo5);
+	Rutina* rutina5 = new Rutina(c5, "Rutina de potencia", 60, 9);
+	Ejercicio* ejer5 = new Ejercicio(ejer5n);
+	rutina5->agregarEjercicio(ejer5);
+	c5->asignarRutina(rutina5);
+
+	string ejer6n = "Zancadas";
 	Cliente* c6 = new Cliente("Camila", 621383334, 85554444, "camila@gmail.com", "09/06/1997", 'M', "25/04/2024", 0, inst1);
 	sucursal->agregarCliente(c6);
+	ReporteMedicion* repo6 = new ReporteMedicion(*c6, "15/08/2025", 58.0, 1.68, 21.0, 34.0, 26, 8.5, 72.0, 94.0, 89.0, 54.0, true);
+	c6->agregarReporte(*repo6);
+	Rutina* rutina6 = new Rutina(c6, "Rutina de tonificación", 50, 8);
+	Ejercicio* ejer6 = new Ejercicio(ejer6n);
+	rutina6->agregarEjercicio(ejer6);
+	c6->asignarRutina(rutina6);
+
+	string ejer7n = "Dominadas";
 	Cliente* c7 = new Cliente("Daniel", 721383335, 84443333, "daniel@gmail.com", "18/11/1996", 'H', "26/04/2024", 0, inst2);
 	sucursal->agregarCliente(c7);
+	ReporteMedicion* repo7 = new ReporteMedicion(*c7, "15/08/2025", 78.0, 1.80, 17.0, 39.0, 27, 9.8, 84.0, 97.0, 102.0, 59.0, false);
+	c7->agregarReporte(*repo7);
+	Rutina* rutina7 = new Rutina(c7, "Rutina de fuerza intermedia", 65, 9);
+	Ejercicio* ejer7 = new Ejercicio(ejer7n);
+	rutina7->agregarEjercicio(ejer7);
+	c7->asignarRutina(rutina7);
+
+	string ejer8n = "Abdominales";
 	Cliente* c8 = new Cliente("Isabella", 821383336, 83332222, "isabella@gmail.com", "05/02/2002", 'M', "27/04/2024", 0, inst3);
 	sucursal->agregarCliente(c8);
+	ReporteMedicion* repo8 = new ReporteMedicion(*c8, "15/08/2025", 54.0, 1.60, 18.5, 37.0, 21, 7.0, 66.0, 90.0, 85.0, 52.0, false);
+	c8->agregarReporte(*repo8);
+	Rutina* rutina8 = new Rutina(c8, "Rutina básica", 40, 6);
+	Ejercicio* ejer8 = new Ejercicio(ejer8n);
+	rutina8->agregarEjercicio(ejer8);
+	c8->asignarRutina(rutina8);
+
+	string ejer9n = "Press militar";
 	Cliente* c9 = new Cliente("Gabriel", 921383337, 82221111, "gabriel@gmail.com", "12/04/1994", 'H', "28/04/2024", 0, inst4);
 	sucursal->agregarCliente(c9);
+	ReporteMedicion* repo9 = new ReporteMedicion(*c9, "15/08/2025", 85.0, 1.85, 18.0, 38.0, 30, 11.0, 88.0, 100.0, 108.0, 62.0, false);
+	c9->agregarReporte(*repo9);
+	Rutina* rutina9 = new Rutina(c9, "Rutina avanzada", 75, 10);
+	Ejercicio* ejer9 = new Ejercicio(ejer9n);
+	rutina9->agregarEjercicio(ejer9);
+	c9->asignarRutina(rutina9);
+
+	string ejer10n = "Burpees";
 	Cliente* c10 = new Cliente("Lucia", 1021383338, 81110000, "lucia@gmail.com", "01/10/1993", 'M', "29/04/2024", 0, inst5);
 	sucursal->agregarCliente(c10);
+	ReporteMedicion* repo10 = new ReporteMedicion(*c10, "15/08/2025", 62.0, 1.70, 22.0, 33.0, 29, 9.2, 74.0, 96.0, 92.0, 56.0, true);
+	c10->agregarReporte(*repo10);
+	Rutina* rutina10 = new Rutina(c10, "Rutina de cardio y fuerza", 55, 8);
+	Ejercicio* ejer10 = new Ejercicio(ejer10n);
+	rutina10->agregarEjercicio(ejer10);
+	c10->asignarRutina(rutina10);
 
 	// ==================== CLASES GRUPALES ====================
 
 	ClaseGrupal* clase1 = new ClaseGrupal(1, 0, 30, sucursal, inst1, "10:00am", 1);
 	sucursal->agregarClaseGrupal(clase1);
+	clase1->insCliente(c1);
+	clase1->insCliente(c2);
+	clase1->insCliente(c3);
+	clase1->insCliente(c4);
+	clase1->insCliente(c9);
+	
 	ClaseGrupal* clase2 = new ClaseGrupal(2, 0, 25, sucursal, inst3, "6:00pm", 2);
 	sucursal->agregarClaseGrupal(clase2);
+	clase2->insCliente(c5);
+	clase2->insCliente(c6);
+	clase2->insCliente(c7);
+	clase2->insCliente(c8);
+	
 
 	// ==================== SUCURSAL 2 ====================
 
-	Sucursal* sucursal2 = control_->buscarSucursal("SUC002");
+	Sucursal* sucursal2 = control_->buscarSucursal("SUC003");
 
 	// ==================== INSTRUCTORES ====================
 
@@ -571,4 +666,7 @@ void Quemados::IngreDatosQuemados() {
 	sucursal10->agregarClaseGrupal(clase53);
 	ClaseGrupal* clase54 = new ClaseGrupal(54, 0, 28, sucursal10, inst44, "7:00pm", 5);
 	sucursal10->agregarClaseGrupal(clase54);
+
+	// ==================== FIN DATOS DE PRUEBA ====================
+
 }

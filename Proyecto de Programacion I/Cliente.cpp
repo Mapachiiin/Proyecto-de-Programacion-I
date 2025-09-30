@@ -43,8 +43,6 @@ Cliente::~Cliente() {
 		delete reportes_[i];
 	}
 	delete[] reportes_;
-	delete ruti_;
-	delete instAsig_;
 }
 string Cliente::getNombre(){
 	return name_;
@@ -160,9 +158,6 @@ void Cliente::listarReportes() {
 		
 		cout<< (i + 1) << ". " << reportes_[i]->getFechaMedi() << endl;
 	}
-	cout <<endl<< "---| Presione enter para salir |---";
-	cin.get();
-	system("cls");
 }
 ReporteMedicion* Cliente::getReportePorIndice(int indice) {
 	if (indice < 0 || indice >= numReportes_) {

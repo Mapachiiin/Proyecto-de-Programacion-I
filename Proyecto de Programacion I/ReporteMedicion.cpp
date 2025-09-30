@@ -5,6 +5,8 @@
 
 
 ReporteMedicion::ReporteMedicion() {
+	cli = nullptr;
+	haceEjercicio = false;
 	clasiIMC = "";
 	fechaMedi = "";
 	altoRiesgo = false;
@@ -22,8 +24,7 @@ ReporteMedicion::ReporteMedicion() {
 	edadMeta = 0;
 	vasosAgua = 0; //peso/7= cant vasos de 250 ml que tiene que tomar
 }
-
-ReporteMedicion::ReporteMedicion(Cliente& clie, string fech, double pes, double estat, double gras, double muscul, int edadMet, double grasaVisc, double cintu, double cade, double pech, double mus){
+ReporteMedicion::ReporteMedicion(Cliente& clie, string fech, double pes, double estat, double gras, double muscul, int edadMet, double grasaVisc, double cintu, double cade, double pech, double mus, bool hE){
 	fechaMedi = fech;
 	peso = pes;
 	estatura = estat;
@@ -36,17 +37,32 @@ ReporteMedicion::ReporteMedicion(Cliente& clie, string fech, double pes, double 
 	pecho = pech;
 	muslo = mus;
 	cli = &clie;
+	haceEjercicio = hE;
+	IMC = 0.0;
+	this->calcuIMC();
+	altoRiesgo = false;
+	this->deterAltoRiesgo();
+	proteRecomend = 0.0;
+	this->calcuProteRecomend();
+	vasosAgua = 0.0;
+	this->calcuVasosAgua();
 
 }
 
 string ReporteMedicion::getFechaMedi() {
 	return fechaMedi;
 }
-
+double ReporteMedicion::getIMC() {
+	calcuIMC();
+	return IMC;
+}
+bool ReporteMedicion::getAltoRiesgo() {
+	deterAltoRiesgo();
+	return altoRiesgo;
+}
 void ReporteMedicion::calcuIMC(){
 	IMC = peso/(estatura*estatura);
 }
-
 void ReporteMedicion::clasifiIMC(){
 	calcuIMC();
 	if (IMC < 16.00) {
@@ -97,6 +113,11 @@ void ReporteMedicion::deterAltoRiesgo() {
 	}
 }
 string ReporteMedicion::toString() {
+	calcuIMC();
+	clasifiIMC();
+	calcuProteRecomend();
+	calcuVasosAgua();
+	deterAltoRiesgo();
 	stringstream ss;
 	ss << "Reporte de: " << cli->getNombre() << endl
 		<< "Fecha de medicion: " << fechaMedi << endl

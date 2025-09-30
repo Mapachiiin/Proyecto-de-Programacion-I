@@ -17,7 +17,6 @@ private:
 	Instructor* insAsig_;	
 	Cliente** inscritos_;
 	string horario_;
-	int espeClass_;
 	string especialidad_;
 
 public:
@@ -30,7 +29,6 @@ public:
 	void setHora(string hora);
 	void setSucursal(Sucursal* suc);
 	void setInstructor(Instructor* ins);
-	void setHorario(string hor);
 	void insCliente(Cliente* cli);
 	void eliminarCliente(int cedula);
 	void eliminarClienteNom(string nombre);
@@ -44,5 +42,7 @@ public:
 	string getHorario();
 	string getEspecialidad();
 	string toString();
+	Cliente* getClienteCed(int ced);
+	Cliente* getClientePorIndice(int indice);
 };
 

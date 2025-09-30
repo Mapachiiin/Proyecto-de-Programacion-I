@@ -12,7 +12,6 @@ ClaseGrupal::ClaseGrupal() {
 	sucAsig_ = nullptr;
 	insAsig_ = nullptr;
 	horario_ = "";
-	espeClass_ = 0;
 	inscritos_ = new Cliente*[30];
 	for(int i = 0; i < 30; i++) {
 		inscritos_[i] = nullptr;
@@ -78,40 +77,43 @@ void ClaseGrupal::setSucursal(Sucursal* suc) {
 void ClaseGrupal::setInstructor(Instructor* ins) {
 	insAsig_ = ins;
 }
-void ClaseGrupal::setHorario(string hor) {
-	horario_ = hor;
-}
 void ClaseGrupal::insCliente(Cliente* cli) {
 	if (ocupados_ >= cupoMax_) {
-		cout << "La clase ya no tiene cupos." << endl;
+		cout << "---| La clase ya no tiene cupos. |---" << endl;
 		return;
 	}
 	if (cli->getInscritos() >= 3) {
-		cout << "El cliente ya esta inscrito en su maximo de clases grupales permitidas." << endl;
+		cout << "---| El cliente ya esta inscrito en su maximo de clases grupales permitidas. |---" << endl;
 		return;
 	}
 	for (int i = 0; i < ocupados_; i++) {
 		if (inscritos_[i] != nullptr && inscritos_[i]->getCed() == cli->getCed()) {
-			cout << "El cliente ya esta inscrito en esta clase grupal." << endl;
+			cout << "---| El cliente ya esta inscrito en esta clase grupal. |---" << endl;
 			return;
 		}
 	}
 
+	int nPos = 0;
 	for (int i = 0;i < ocupados_; i++) {
-		if (inscritos_[i] == nullptr) {
-			inscritos_[i] = inscritos_[i + 1];
-			ocupados_--;
+		if (inscritos_[i] != nullptr) {
+			inscritos_[nPos] = inscritos_[i];
+			nPos++;
 		}
 	}
 
-	for (int i = 0; i < cupoMax_; i++) {
-		if (inscritos_[i] == nullptr) {
-			inscritos_[i] = cli;
-			ocupados_++;
-			cli->setInscritos(cli->getInscritos() + 1);
-			break;
-		}
+	for (int i=nPos; i < ocupados_; i++) {
+		inscritos_[i] = nullptr;
 	}
+	ocupados_ = nPos;
+
+	if(ocupados_ < cupoMax_) {
+		inscritos_[ocupados_] = cli;
+		ocupados_++;
+		cli->setInscritos(cli->getInscritos() + 1);
+	}
+
+	cout << "---| Cliente inscrito con exito. |---" << endl;
+
 }
 void ClaseGrupal::listarClientes() {
 	cout << "Clientes inscritos en la clase grupal " << codClase_ << ":" << endl;
@@ -153,22 +155,20 @@ string ClaseGrupal::toString() {
 	stringstream ss;
 	if (insAsig_ != nullptr) {
 		ss << "\n\n\nInstructor asignado: " << insAsig_->getNombre() << endl;
-	} else (insAsig_ == nullptr); {
+	} else {
 		ss << "\n\n\nInstructor asignado: No hay ningun instructor asignado" << endl;
 	}
 	if (sucAsig_ != nullptr) {
 		ss << "\n\n\nSucursal asignada: " << sucAsig_->getCod() << endl;
-	} else (sucAsig_ == nullptr); {
+	} else { 
 		ss << "\n\n\nSucursal asignada: No hay ninguna sucursal asignada" << endl << endl;
 	}
-
-
 
 	ss << "Codigo de la clase: " << codClase_ << endl;
 	ss << "Capacidad actual: " << ocupados_ << endl;
 	ss << "Cupo maximo: " << cupoMax_ << endl;
 	ss << "Horario: " << horario_ << endl;
-	ss << "Especialidad: " << espeClass_ << endl;
+	ss << "Especialidad: " << especialidad_ << endl << endl;
 	return ss.str();
 }
 void ClaseGrupal::eliminarCliente(int cedula) {
@@ -198,6 +198,20 @@ void ClaseGrupal::eliminarClienteNom(string nombre) {
 		}
 	}
 	cout << "Cliente no encontrado en la clase grupal." << endl;
+}
+Cliente* ClaseGrupal::getClienteCed(int ced) {
+	for (int i = 0; i < ocupados_; i++) {
+		if (inscritos_[i] != nullptr && inscritos_[i]->getCed() == ced) {
+			return inscritos_[i];
+		}
+	}
+	return nullptr;
+}
+Cliente* ClaseGrupal::getClientePorIndice(int indice) {
+    if (indice >= 0 && indice < ocupados_) {
+        return inscritos_[indice];
+    }
+    return nullptr;
 }
 ClaseGrupal::~ClaseGrupal() {
 	for(int i = 0; i < ocupados_; i++) {

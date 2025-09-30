@@ -49,19 +49,6 @@ public:
 	void setInscritos(int ins);
 	void setIntructor(Instructor* ins);
 	void asignarRutina(Rutina* ruti);
-	void agregarEjerciciosRutina(int nPT_, int nB, int nP, int esp, int ejPT, int ejB, int ejP, int ejE);
-
-	/*
-	numPechoTriceps_ = 0;
-	numBiceps_ = 0;
-	numPiernas_ = 0;
-	numEspalda_ = 0;
-	ejerPechTric_ = new string[maxEjerPech_];
-	ejerBice_ = new string[maxEjerBic_];
-	ejerPier_ = new string[maxEjerPier_];
-	ejerEspal_ = new string[maxEjerEspal_];
-	*/
-
 	void agregarReporte(const ReporteMedicion& rep);
 	ReporteMedicion* getReportePorIndice(int rep);
 	string toString();

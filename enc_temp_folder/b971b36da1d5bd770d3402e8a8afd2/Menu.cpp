@@ -368,7 +368,6 @@ void Menu::menuListarSucursales() {
 			while (true) {
 				cin.clear();
 				cin.ignore(10000, '\n');
-				system("cls");
 				this->menuGestionarSucursal();
 				break;
 			}

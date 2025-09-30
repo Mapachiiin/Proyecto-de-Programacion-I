@@ -2098,16 +2098,10 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 	int codigoClase;
 	cout << "---| Gestionar clases grupales |---" << endl;
 	sucu->listarClasesGrupales();
-	while(true){
-	cout << "\n---| Ingrese el codigo de la clase grupal a gestionar: ";
+	cout << "Ingrese el codigo de la clase grupal a gestionar: ";
 	cin >> codigoClase;
-	if (!(cin >> codigoClase) || sucu->buscarClaseGrupal(codigoClase) == nullptr) {
-		cout << "\n---| El codigo ingresado es invalido, intentelo de nuevo |---" << endl;
-		cin.ignore(10000, '\n');
-	}
-	break;
-}
-	system("cls");
+	cin.ignore(10000, '\n');
+
 	ClaseGrupal* clase = sucu->buscarClaseGrupal(codigoClase);
 	if (clase == nullptr) {
 		cout << "---| Clase grupal no encontrada. |---" << endl;

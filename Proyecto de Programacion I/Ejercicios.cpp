@@ -88,7 +88,6 @@ void Ejercicios::eliPechoTric(int eli) {
         numPechoTric_--;
     }
 }
-
 void Ejercicios::eliBiceps(int eli) {
     if (eli >= 0 && eli < numBiceps_) {
         for (int j = eli; j < numBiceps_ - 1; j++) {
@@ -97,7 +96,6 @@ void Ejercicios::eliBiceps(int eli) {
         numBiceps_--;
     }
 }
-
 void Ejercicios::eliPiernas(int eli) {
     if (eli >= 0 && eli < numPiernas_) {
         for (int j = eli; j < numPiernas_ - 1; j++) {
@@ -106,7 +104,6 @@ void Ejercicios::eliPiernas(int eli) {
         numPiernas_--;
     }
 }
-
 void Ejercicios::eliEspalda(int eli) {
     if (eli >= 0 && eli < numEspalda_) {
         for (int j = eli; j < numEspalda_ - 1; j++) {

@@ -53,6 +53,7 @@ public:
 	Cliente* buscarCliente(int cedula);
 	Instructor* buscarInstructor(int cedula);
 	ClaseGrupal* buscarClaseGrupal(int cod);
+	ClaseGrupal* getClaseGrupalPorIndice(int indice);
 	void agregarCliente(Cliente* cliente);
 	void agregarInstructor(Instructor* instructor);
 	void agregarClaseGrupal(ClaseGrupal* clase);
@@ -63,6 +64,7 @@ public:
 	void listarClientes();
 	void listarClasesGrupales();
 	void listarClientesDeInstructor(Instructor* inst);
+	void listarClasesGrupalesCliente(Cliente* cli);
 
 	string toString();
 };

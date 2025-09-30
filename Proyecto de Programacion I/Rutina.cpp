@@ -11,6 +11,8 @@ Rutina::Rutina() {
 	descripcion_ = "";
 	duracion_ = 0;
 	ejercicio_ = nullptr;
+	numEjercicios_ = 0;
+	capEjer_ = 0;
 }
 Rutina::Rutina(Cliente* cli,string desc, int dur, int nEjercicios) {
 	cliente_ = cli;
@@ -50,9 +52,6 @@ bool Rutina::agregarEjercicio(Ejercicio* ejer) {
 		}
 	}
 	return false;
-}
-void Rutina::respuesta(int r) {
-	resp_ = r;
 }
 void Rutina::listarEjercicios() {
 	system("cls");
@@ -106,13 +105,12 @@ string Rutina::ejerci() {
 string Rutina::toString() {
 	stringstream ss;
 	ss << cliente_->getNombre() << endl
-		<< "Cedula: " << cliente_->getCed() << endl
-		<< "Rutina dada por el instructor: " << cliente_->getInstructor()->getNombre() << endl
-		<< "Descripción: " << descripcion_ << endl
-		<< "Duración: " << duracion_ << " minutos" << endl
-		<< "Número de ejercicios : " << numEjercicios_ << endl
-		<< "Ejercicios: " << endl
-		<< "-----------------------------------" << endl;
+		<< "---| Cedula: " << cliente_->getCed() << endl
+		<< "---| Rutina dada por el instructor: " << cliente_->getInstructor()->getNombre() << endl
+		<< "---| Descripción: " << descripcion_ << endl
+		<< "---| Duración: " << duracion_ << " minutos" << endl
+		<< "---| Número de ejercicios : " << numEjercicios_ << endl
+		<< "---| Ejercicios |--- " << endl;
 	for (int i = 0; i < capEjer_; ++i) {
 		if (ejercicio_[i] != nullptr) {
 			ss << "Ejercicio " << i + 1 << " :" << endl

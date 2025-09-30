@@ -3,7 +3,9 @@
 #include "Cliente.h"
 #include "ClaseGrupal.h"
 
+class Instructor;
 class Control;
+class Ejercicio;
 
 class Quemados
 {
