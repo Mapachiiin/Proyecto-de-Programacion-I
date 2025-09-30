@@ -1,15 +1,15 @@
 ```mermaid
 graph TD
-  subgraph "UI (Consola)"
+  subgraph UI_Consola [UI - Consola]
     Menu[Menu]
   end
 
-  subgraph "Lógica de Negocio"
+  subgraph Logica [Lógica de Negocio]
     Control[Control]
-    Quemados[Quemados (seed de datos)]
+    Quemados[Quemados]
   end
 
-  subgraph "Dominio"
+  subgraph Dominio [Dominio]
     Sucursal[Sucursal]
     Cliente[Cliente]
     Instructor[Instructor]
@@ -20,7 +20,6 @@ graph TD
     Ejercicio[Ejercicio]
   end
 
-  %% Flujos principales
   Menu --> Control
   Quemados --> Control
 
@@ -41,12 +40,12 @@ graph TD
 ```
 
 Notas:
-- `Menu` interactúa con el usuario por consola y delega la lógica en `Control`.
-- `Quemados` sirve para cargar datos predeterminados y también depende de `Control`.
-- `Control` orquesta la gestión de `Sucursal` y, por tanto, de `Cliente`, `Instructor` y `ClaseGrupal`.
-- `Cliente` mantiene referencia a su `Instructor`, a una `Rutina`, y a un conjunto acotado de `ReporteMedicion`.
-- `ClaseGrupal` puede tener un `Instructor` y estar asociada a una `Sucursal`.
-- `Rutina` se compone de `Ejercicios`/`Ejercicio`.
+- Menu interactúa con el usuario por consola y delega la lógica en Control.
+- Quemados sirve para cargar datos predeterminados y también depende de Control.
+- Control orquesta la gestión de Sucursal y, por tanto, de Cliente, Instructor y ClaseGrupal.
+- Cliente mantiene referencia a su Instructor, a una Rutina, y a un conjunto acotado de ReporteMedicion.
+- ClaseGrupal puede tener un Instructor y estar asociada a una Sucursal.
+- Rutina se compone de Ejercicios/Ejercicio.
 
 ---
 
@@ -55,9 +54,9 @@ Notas:
 ```mermaid
 classDiagram
   class Control {
-    - Sucursal** sucursales_
-    - int numSucursales_
-    - int capSucursales_
+    - sucursales_ : Sucursal**
+    - numSucursales_ : int
+    - capSucursales_ : int
     + Control()
     + ~Control()
     + agregarSucursal(codi: string, tel: int, prov: string, cant: string, corr: string, capCli: int, capIns: int) void
@@ -80,17 +79,17 @@ classDiagram
   }
 
   class Sucursal {
-    - string cod
-    - string provi
-    - string canton
-    - string correo
-    - int telef
-    - int numClientes_
-    - int capClientes_
-    - int numInstructores_
-    - int capInstruc_
-    - int numClasesGrups_
-    - int capClasesGrupales_
+    - cod : string
+    - provi : string
+    - canton : string
+    - correo : string
+    - telef : int
+    - numClientes_ : int
+    - capClientes_ : int
+    - numInstructores_ : int
+    - capInstruc_ : int
+    - numClasesGrups_ : int
+    - capClasesGrupales_ : int
     + getCod() string
     + getProvi() string
     + getCanton() string
@@ -120,18 +119,18 @@ classDiagram
   }
 
   class Cliente {
-    - string name_
-    - int ced_
-    - int telf_
-    - string correo
-    - string fechaNac_
-    - char sexo_
-    - string fechaIns_
-    - int inscritos_
-    - Instructor* instAsig_
-    - Rutina* ruti_
-    - ReporteMedicion* reportes_[10]
-    - int numReportes_
+    - name_ : string
+    - ced_ : int
+    - telf_ : int
+    - correo : string
+    - fechaNac_ : string
+    - sexo_ : char
+    - fechaIns_ : string
+    - inscritos_ : int
+    - instAsig_ : Instructor*
+    - ruti_ : Rutina*
+    - reportes_ : ReporteMedicion*[]
+    - numReportes_ : int
     + getCorreo() string
     + getFechaNac() string
     + getSexo() char
@@ -150,20 +149,20 @@ classDiagram
     + setInscritos(ins: int) void
     + setIntructor(ins: Instructor*) void
     + asignarRutina(ruti: Rutina*) void
-    + agregarReporte(rep: ReporteMedicion const&) void
+    + agregarReporte(rep: ReporteMedicion) void
     + listarReportes() void
     + getReportePorIndice(indice: int) ReporteMedicion*
     + toString() string
   }
 
   class Instructor {
-    - int numCed_
-    - string nombre_
-    - int telef_
-    - string correo
-    - string fechaNac
-    - string espeIns[*]
-    - int numEspecialidades
+    - numCed_ : int
+    - nombre_ : string
+    - telef_ : int
+    - correo : string
+    - fechaNac : string
+    - espeIns : string[]
+    - numEspecialidades : int
     + setNumCed(nC: int) void
     + setNombre(nom: string) void
     + setTelef(tel: int) void
@@ -176,31 +175,30 @@ classDiagram
     + getFechaNac() string
     + getNumEspecialidades() int
     + getEspecialidadPrinci() string
-    + tieneEspecialidad(esp: string&) bool
+    + tieneEspecialidad(esp: string) bool
     + tieneEspecialidadInt(esp: int) bool
     + toString() string
   }
 
   class ClaseGrupal {
-    - int codClase_
-    - int cupoMax_
-    - int ocupados_
-    - string horario_
-    - Instructor* insAsig_
-    - Sucursal* sucAsig_
+    - codClase_ : int
+    - cupoMax_ : int
+    - ocupados_ : int
+    - horario_ : string
+    - insAsig_ : Instructor*
+    - sucAsig_ : Sucursal*
     + toString() string
   }
 
   class Quemados {
-    - Control* control_
+    - control_ : Control*
     + Quemados(con: Control*)
     + IngreDatosQuemados() void
   }
 
   class Menu {
-    - Control* control_
+    - control_ : Control*
     + quemados() void
-    + menuAgregarSucursal() void
   }
 
   class Rutina
@@ -210,21 +208,19 @@ classDiagram
     + toString() string
   }
 
-  %% Relaciones
-  Control "1" --> "*" Sucursal
-  Sucursal "1" --> "*" Cliente
-  Sucursal "1" --> "*" Instructor
-  Sucursal "1" --> "*" ClaseGrupal
-  Cliente "0..1" --> "1" Instructor
-  Cliente "0..1" --> "1" Rutina
-  Cliente "0..10" --> "1" ReporteMedicion
-  ClaseGrupal "0..1" --> "1" Instructor
-  ClaseGrupal "0..1" --> "1" Sucursal
+  Control --> Sucursal
+  Sucursal --> Cliente
+  Sucursal --> Instructor
+  Sucursal --> ClaseGrupal
+  Cliente --> Instructor
+  Cliente --> Rutina
+  Cliente --> ReporteMedicion
+  ClaseGrupal --> Instructor
+  ClaseGrupal --> Sucursal
   Menu --> Control
   Quemados --> Control
-  Rutina --> "0..*" Ejercicio
+  Rutina --> Ejercicio
   Rutina --> Ejercicios
-  ReporteMedicion --> Cliente
 ```
 
 ---
