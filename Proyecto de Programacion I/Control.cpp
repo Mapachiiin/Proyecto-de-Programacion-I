@@ -31,10 +31,12 @@ Control::~Control() {
 void Control::gestionarSucursal(string codigo) {
 	Sucursal* sucursal = buscarSucursal(codigo);
 	if (sucursal != nullptr) {
-		cout << "Gestionando sucursal con codigo: " << codigo << endl;
-
 		int resp = 0;
 		do {
+			system("cls");
+			cout << "Gestionando sucursal con codigo: " << codigo << endl;
+
+
 			cout << "\n---| Menu de Gestion |---" << endl;
 			cout << "\n1. Modificar codigo" << endl;
 			cout << "\n2. Modificar correo electronico" << endl;
@@ -48,75 +50,90 @@ void Control::gestionarSucursal(string codigo) {
 			cin.ignore(10000, '\n');
 			system("cls");
 
-			int tel = 0, nC = 0, cC = 0, ced = 0, telf = 0, ins = 0;
-			string corr = "", codi = "", nom = "", fN = "", fI = "", hor = "";
-			char sexo = ' ';
+			int tel = 0;
+			string corr = "", codi = "";
 
 			switch (resp) {
 			case 1: {
 				while (true) {
-					cout << "---| Ingrese el nuevo codigo: ";
+					cout << "---| Ingrese el codigo de la sucursal (Max 10 caracteres): ";
 					getline(cin, codi);
-					if (!(cin >> codi)) {
-						cout << "---| Codigo invalido, intentelo de nuevo |---" << endl;
+					bool espa = false;
+					for (int i = 0;i < codi.size();i++) {
+						if (codi[i] == ' ') {
+							cout << "---| El codigo no puede tener ningun espacio |---" << endl;
+							espa = true;
+							break;
+						}
+					}
+					if (espa == true) {
 						continue;
 					}
 					if (codi.empty()) {
-						cout << "---| El codigo no puede estar vacio. |---" << endl;
-						continue; 
-					}
-					if (codi[0] == ' ') {
-						cout << "---| El codigo no puede empezar con un espacio. |---" << endl;
+						cout << "---| El codigo no puede estar vacio |---" << endl;
 						continue;
 					}
-
-					sucursal->setCod(codi);
-					cout << "---| Codigo actualizado con exito. |---" << endl;
+					else if (codi.length() > 10) {
+						cout << "---| El codigo no puede tener mas de 10 caracteres |---" << endl;
+						continue;
+					}
+					else if (this->buscarSucursal(codi)) {
+						cout << "---| El codigo ya existe. Por favor, ingrese un codigo diferente. |-" << endl;
+						continue;
+					}
 					break;
 				}
-				system("cls");
 				break;
 			}
 			case 2: {
 				while (true) {
-					cout << "---| Ingrese el nuevo correo electronico: ";
+					cout << "---| Ingrese el correo electronico de la sucursal (ejemplo@gym.pl.com): ";
 					getline(cin, corr);
-
-					if (corr[0] == ' ') {
-						cout << "---| El correo no puede empezar con un espacio. |---" << endl;
-						continue;
-					}
-
+					int com = corr.size() - 1;
 					if (corr.empty()) {
-						cout << "---| El correo no puede estar vacio. |---" << endl;
+						cout << "---| El correo no puede estar vacio |---" << endl;
 						continue;
 					}
-
-					if (corr.find('@') == string::npos || corr.rfind('.com') == corr.size()-4) {
-						cout << "---| Correo invalido. Debe contener '@' y '.com' |---" << endl;
+					int c = 0;
+					for (int i = 0;i < corr.size();i++) {
+						if (corr[i] == ' ') {
+							c++;
+						}
+					}
+					if (c != 0) {
+						cout << "---| El correo no puede contener espacios |---" << endl;
 						continue;
 					}
-
-					sucursal->setCorreo(corr);
-					cout << "---| Correo actualizado con exito. |---" << endl;
+					if (corr.find('@') == string::npos) {
+						cout << "---| El correo debe contener '@' |---" << endl;
+						continue;
+					}
+					if (corr.rfind("@gym.pl.com") != corr.size() - 11) {
+						cout << "---| El correo debe terminar en @gym.pl.com |---" << endl;
+						continue;
+					}
 					break;
 				}
 				break;
 			}
-
-			case 3: { 
+			case 3: {
 				while (true) {
-					cout << "---| Ingrese el nuevo telefono: ";
-					if (!(cin >> tel)&&(tel>10000000&&tel<99999999)) {
-						cout << "---| Telefono invalido, debe ser numerico y contener 8 digitos. |---" << endl;
+					cout << "---| Ingrese el telefono de la sucursal (8 digitos): ";
+					tel = 0;
+					if (!(cin >> tel)) {
 						cin.clear();
 						cin.ignore(10000, '\n');
+						cout << "---| Debe ingresar un numero valido. |---" << endl;
 						continue;
 					}
-
-					sucursal->setTelef(tel);
-					cout << "---| Telefono actualizado con exito. |---" << endl;
 					cin.ignore(10000, '\n');
+					if (tel < 10000000 || tel > 99999999) {
+						cout << "---| Debe ingresar un numero valido (8 digitos) |---" << endl;
+						cin.clear();
+						cin.ignore(10000, '\n');	
+						continue;
+					}
+					cin.ignore(10000, '\n');	
 					break;
 				}
 				break;
@@ -132,12 +149,15 @@ void Control::gestionarSucursal(string codigo) {
 				break;
 			case 7:
 			{
+				system("cls");
 				cout << "---| Saliendo del menu de gestion. |---" << endl;
 				break;
 			}
 			default:
 			{
-				cout << "-| Opcion no valida. Por favor, intente de nuevo. |-" << endl;
+				cout << "---| Opcion no valida. Por favor, intente de nuevo. |---" << endl;
+				cin.get();
+				cin.clear();
 				cin.ignore(10000, '\n');
 				continue;
 			}
@@ -150,6 +170,11 @@ void Control::gestionarSucursal(string codigo) {
 	}
 }
 void Control::agregarSucursal(string codi, int tel, string prov, string cant, string corr, int capCli, int capIns) {
+	if(numSucursales_==30){
+		cout << "---| No se pueden agregar mas sucursales, capacidad maxima alcanzada. |---" << endl;
+		return;
+	}
+
 	for (int i = 0; i < capSucursales_; ++i) {
 		if (sucursales_[i] == nullptr) {
 			sucursales_[i] = new Sucursal(codi, tel, prov, cant, corr, capCli, capIns);
@@ -215,7 +240,7 @@ void Control::menuGestionarEjercicios() {
 	do {
 		system("cls");
 		cout << "---| Gestion del Catalogo de Ejercicios |---" << endl << endl;
-		cout << "\n1. Ver ejercicios existentes" << endl;
+		cout << "1. Ver ejercicios existentes" << endl;
 		cout << "\n2. Agregar ejercicio" << endl;
 		cout << "\n3. Eliminar ejercicio" << endl;
 		cout << "\n4. Salir" << endl << endl;
@@ -225,137 +250,294 @@ void Control::menuGestionarEjercicios() {
 
 		switch (opcion) {
 		case 1: {
-			int cate;
-			cout << "---| Seleccione una categoria |---" << endl << endl;
-			cout << "\n1. Pecho y triceps" << endl;
-			cout << "\n2. Biceps" << endl;
-			cout << "\n3. Piernas" << endl;
-			cout << "\n4. Espalda" << endl << endl;
-			cout << "---| Ingrese una opcion: ";
-			cin >> cate;
-			cin.ignore(10000, '\n');
-
-			switch (cate) {
-			case 1: {
-				catalogo->listarPechoTric();
-				break;
-			}
-			case 2: {
-				catalogo->listarBiceps();
-				break;
-			}
-			case 3: {
-				catalogo->listarPiernas();
-				break;
-			}
-			case 4: {
-				catalogo->listarEspalda();
-				break;
-			}
-			default: {
-				cout << "---| Categoria invalida |---" << endl;
+			bool salir = false;
+			while (!salir) {
+				system("cls");
+				int cate;
+				cout << "---| Menu de visualizacion de ejercicios existentes |---" << endl << endl;
+				cout << "---| Seleccione una categoria |---" << endl << endl;
+				cout << "1. Pecho y triceps" << endl;
+				cout << "\n2. Biceps" << endl;
+				cout << "\n3. Piernas" << endl;
+				cout << "\n4. Espalda" << endl;
+				cout << "\n5. Salir" << endl << endl;
+				cout << "---| Ingrese una opcion: ";
+				cin >> cate;
 				cin.ignore(10000, '\n');
-				break;
+				system("cls");
 
+				switch (cate) {
+				case 1: {
+					catalogo->listarPechoTric();
+					system("pause");
+					system("cls");
+					continue;
+				}
+				case 2: {
+					catalogo->listarBiceps();
+					system("pause");
+					system("cls");
+					continue;
+				}
+				case 3: {
+					catalogo->listarPiernas();
+					system("pause");
+					system("cls");
+					continue;
+				}
+				case 4: {
+					catalogo->listarEspalda();
+					system("pause");
+					system("cls");
+					continue;
+				}
+				case 5: {
+					salir = true;
+					break;
+				  }
+
+				default: {
+					cout << "---| Categoria invalida |---" << endl;
+					cin.clear();
+					cin.ignore(10000, '\n');
+					continue;
+				}
+				}
 			}
-				   system("cls");
-				   break;
-			}
+			break;
+		}
 		case 2: {
-			string nombre;
-			int cate;
-			cout << "---| Seleccione una categoria |---" << endl << endl;
-			cout << "\n1. Pecho y triceps" << endl;
-			cout << "\n2. Biceps" << endl;
-			cout << "\n3. Piernas" << endl;
-			cout << "\n4. Espalda" << endl << endl;
-			cout << "---| Ingrese una opcion: ";
-			cin >> cate;
-			cin.ignore(10000, '\n');
-
-			cout << "Ingrese el nombre del nuevo ejercicio: ";
-			getline(cin, nombre);
-
-			switch (cate) {
-			case 1: {
-				catalogo->agregarPechoTric(nombre);
-				break;
-			}
-			case 2: {
-				catalogo->agregarBiceps(nombre);
-				break;
-			}
-			case 3: {
-				catalogo->agregarPiernas(nombre);
-				break;
-			}
-			case 4: {
-				catalogo->agregarEspalda(nombre);
-				break;
-			}
-			default: {
-				cout << "---| Categoria invalida |---" << endl;
+			while (true) {
+				system("cls");
+				string nombre;
+				int cate;
+				cout << "---| Menu agregar ejercicios |---" << endl << endl;
+				cout << "---| Seleccione una categoria |---" << endl << endl;
+				cout << "1. Pecho y triceps" << endl;
+				cout << "\n2. Biceps" << endl;
+				cout << "\n3. Piernas" << endl;
+				cout << "\n4. Espalda" << endl << endl;
+				cout << "---| Ingrese una opcion: ";
+				cin >> cate;
 				cin.ignore(10000, '\n');
+				system("cls");
+				if(cate <1 || cate >4) {
+					cout << "---| Categoria invalida |---" << endl;
+					cin.clear();
+					cin.ignore(10000, '\n');
+					continue;
+				}
+				while (true) {
+					cout << "---| Ingrese el nombre del nuevo ejercicio: ";
+					if (!(getline(cin, nombre))) {
+						cout << "---| Error al ingresar el nombre. Intente de nuevo. |---" << endl;
+						continue;
+					}
+					if (nombre.empty()) {
+						cout << "---| El nombre no puede estar vacio. |---" << endl;
+						continue;
+					}
+					if (nombre[0] == ' ') {
+						cout << "---| El nombre no puede empezar con un espacio. |---" << endl;
+						continue;
+					}
+					break;
+				}
+
+				switch (cate) {
+				case 1: {
+					catalogo->agregarPechoTric(nombre);
+					break;
+				}
+				case 2: {
+					catalogo->agregarBiceps(nombre);
+					break;
+				}
+				case 3: {
+					catalogo->agregarPiernas(nombre);
+					break;
+				}
+				case 4: {
+					catalogo->agregarEspalda(nombre);
+					break;
+				}
+				default: {
+					cout << "---| Categoria invalida |---" << endl;
+					cin.clear();
+					cin.ignore(10000, '\n');
+					continue;
+				}
+				}
+				cout << "---| Ejercicio agregado con exito |---" << endl;;
+				cin.get();
+				system("cls");
 				break;
 			}
-			}
-			cout << "---| Ejercicio agregado con exito |---" << endl;;
-			cin.get();
-			system("cls");
 			break;
 		}
 		case 3: {
-			int cate, num;
-			cout << "---| Seleccione una categoria |---" << endl << endl;
-			cout << "\n1. Pecho y triceps" << endl;
-			cout << "\n2. Biceps" << endl;
-			cout << "\n3. Piernas" << endl;
-			cout << "\n4. Espalda" << endl << endl;
-			cout << "---| Ingrese una opcion: ";
-			cin >> cate;
-			cin.ignore(10000, '\n');
-
-			switch (cate) {
-			case 1:
-				catalogo->listarPechoTric();
-				cout << "---| Ingrese numero a eliminar: "; cin >> num;
-				catalogo->eliPechoTric(num - 1);
-				break;
-			case 2:
-				catalogo->listarBiceps();
-				cout << "---| Ingrese numero a eliminar: "; cin >> num;
-				catalogo->eliBiceps(num - 1);
-				break;
-			case 3:
-				catalogo->listarPiernas();
-				cout << "---| Ingrese numero a eliminar: "; cin >> num;
-				catalogo->eliPiernas(num - 1);
-				break;
-			case 4:
-				catalogo->listarEspalda();
-				cout << "---| Ingrese numero a eliminar: "; cin >> num;
-				catalogo->eliEspalda(num - 1);
-				break;
-			default: {
-				cout << "---| Categoria invalida |---" << endl;
+			bool salir = false;
+			while (!salir) {
+				system("cls");
+				int cate, num;
+				cout << "---| Menu de eliminacion de ejercicios |---" << endl << endl;
+				cout << "---| Seleccione una categoria |---" << endl << endl;
+				cout << "1. Pecho y triceps" << endl;
+				cout << "\n2. Biceps" << endl;
+				cout << "\n3. Piernas" << endl;
+				cout << "\n4. Espalda" << endl;
+				cout << "\n5. Salir" << endl << endl;
+				cout << "---| Ingrese una opcion: ";
+				cin >> cate;
 				cin.ignore(10000, '\n');
-				break;
+
+				switch (cate) {
+				case 1: {
+					system("cls");
+					if(catalogo->getNumPechoTric()==0) {
+							cout << "---| No hay ejercicios en esta categoria. |---" << endl;
+							system("pause");
+							system("cls");
+							break;
+						}
+					while (true) {
+						
+						catalogo->listarPechoTric();
+						cout << "---| Ingrese numero a eliminar: ";
+						if (!(cin >> num)) {
+							cout << "---| Debe ingresar un numero valido. |---" << endl;
+							cin.clear();
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						if (num<1 || num>catalogo->getNumPechoTric()) {
+							cout << "---| Numero invalido. Intente de nuevo. |---" << endl;
+							cin.clear();
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						catalogo->eliPechoTric(num - 1);
+						cout << "\n---| Ejercicio eliminado |---\n";
+						system("pause");
+						system("cls");
+						break;
+					}
+					break;
+				}
+				case 2: {
+					if(catalogo->getNumBiceps()==0) {
+							cout << "---| No hay ejercicios en esta categoria. |---" << endl;
+							system("pause");
+							system("cls");
+							break;
+					}
+					while (true) {
+						catalogo->listarBiceps();
+						cout << "---| Ingrese numero a eliminar: ";
+						if (!(cin >> num)) {
+							cout << "---| Debe ingresar un numero valido. |---" << endl;
+							cin.clear();
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						if (num<1 || num>catalogo->getNumBiceps()) {
+							cout << "---| Numero invalido. Intente de nuevo. |---" << endl;
+							cin.clear();
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						catalogo->eliBiceps(num - 1);
+						cout << "\n---| Ejercicio eliminado |---\n";
+						system("pause");
+						system("cls");
+						break;
+					}
+					break;
+				}
+				case 3: {
+					if(catalogo->getNumPiernas()==0) {
+							cout << "---| No hay ejercicios en esta categoria. |---" << endl;
+							system("pause");
+							system("cls");
+							break;
+					}
+					while (true) {
+						catalogo->listarPiernas();
+						cout << "---| Ingrese numero a eliminar: ";
+						if (!(cin >> num)) {
+							cout << "---| Debe ingresar un numero valido. |---" << endl;
+							cin.clear();
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						if (num<1 || num>catalogo->getNumPiernas()) {
+							cout << "---| Numero invalido. Intente de nuevo. |---" << endl;
+							cin.clear();
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						catalogo->eliPiernas(num - 1);
+						cout << "\n---| Ejercicio eliminado |---\n";
+						system("pause");
+						system("cls");
+						break;
+					}
+					break;
+				}
+				case 4: {
+					if(catalogo->getNumEspalda()==0) {
+							cout << "---| No hay ejercicios en esta categoria. |---" << endl;
+							system("pause");
+							system("cls");
+							break;
+					}
+					while (true) {
+						catalogo->listarEspalda();
+						cout << "---| Ingrese numero a eliminar: ";
+						if (!(cin >> num)) {
+							cout << "---| Debe ingresar un numero valido. |---" << endl;
+							cin.clear();
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						if (num<1 || num>catalogo->getNumEspalda()) {
+							cout << "---| Numero invalido. Intente de nuevo. |---" << endl;
+							cin.clear();
+							cin.ignore(10000, '\n');
+							continue;
+						}
+						catalogo->eliEspalda(num - 1);
+						cout << "\n---| Ejercicio eliminado |---\n";
+						system("pause");
+						system("cls");
+						break;
+					}
+					break;
+				}
+				case 5: {
+					salir = true;
+					break;
+				}
+				default: {
+					cout << "---| Categoria invalida |---" << endl;
+					cin.clear();
+					cin.ignore(10000, '\n');
+					break;
+				}
+				}
 			}
-			}
-			cout << "---| Ejercicio eliminado |---\n";
-			system("cls");
 			break;
 		}
 		case 4:
+			delete catalogo;
+			catalogo = nullptr;
+			system("cls");
 			return;
 		default:
-			system("cls");
-			cout << "---| Opcion invalida |---\n";
-			cin.ignore(10000, '\n');
-
+			cout << "---| Como llegaste aqui? Opcion invalida. Intente de nuevo. |---" << endl;
+			break;
 		}
-		} 
-	}while (opcion != 4);
+	} while (opcion != 4);
 }
 
 //-------------------Clientes-------------------
@@ -378,10 +560,10 @@ void Control::menuGestionarClientes(Sucursal* sucu) {
 		switch (resp) {
 		case 1:
 		{
-			cout << "---| Listado de clientes |--- " << endl << endl;
+			cout << "---| Listado de clientes |---" << endl << endl;
 			sucu->listarClientes();
 
-			cout << "\n\n---| Presione enter para salir. |---" << endl;
+			cout << "\n---| Presione enter para salir. |---" << endl;
 			cin.get();
 			system("cls");
 			break;
@@ -406,25 +588,27 @@ void Control::menuGestionarClientes(Sucursal* sucu) {
 		}
 		case 5:
 		{
-			cout << "\n\n---| Saliendo del menu de gestion de clientes. Presione enter. |---" << endl;
-			cin.ignore();
-			system("cls");
+			cin.clear();
+			cin.ignore(10000, 'n');
 			return;
 		}
 		default:
-			system("cls");
-			break;
+		{
+			cout << "---| Opcion no valida. Por favor, intente de nuevo. |---" << endl;
+			cin.get();
+			cin.clear();
+			cin.ignore(10000, '\n');
+			continue;
+		}
 		}
 	} while (resp != 5);
 }
 void Control::agregarCliente(Sucursal* sucu) {
-	bool repite1 = true;
 	int telf, ced;
 	string nom, fN, fI, corr;
 	char sexo;
-	while (repite1) {
+	while (true) {
 		cout << "---| Agregar cliente |--- " << endl << endl;
-
 
 		if (sucu->getNumInstructores() == 0) {
 			cout << "-| No hay instructores disponibles en la sucursal. Por lo que no se puede agregar ningun cliente. |-" << endl;
@@ -433,71 +617,55 @@ void Control::agregarCliente(Sucursal* sucu) {
 
 		while (true) {
 			cout << "---| Ingrese el nombre del cliente: ";
-			getline(cin, nom);
+			if (!(getline(cin, nom))) {
+				cout << "---| Nombre invalido, intente de nuevo |---" << endl;
+				continue;
+			}
 			if (nom.empty()) { //he descubierto mas cosas de codigo con este proyecto que otra vara jaja
 				cout << "---| El nombre no puede estar vacio. |---" << endl;
-				cin.ignore(10000, '\n');
 				continue;
 			}
 			if (nom[0] == ' ') {
 				cout << "---| El nombre no puede empezar con un espacio. |---" << endl;
-				cin.ignore(10000, '\n');
 				continue;
 			}
-
-
-			if (!(cin>>nom)) {
-				cout << "---| El nombre no es valido. Intentelo de nuevo |---" << endl;
-				cin.ignore(10000, '\n');
-				continue;
-			}
-		
 			break;
 		}
 		while (true) {
 			cout << "---| Ingrese la cedula del cliente: ";
-			cin >> ced;
-			if (!ced) {
+			if (!(cin>>ced)) {
 				cout << "---| Debe ingresar un numero valido. |---" << endl;
 				cin.clear();
 				cin.ignore(10000, '\n');
 				continue;
 			}
-			if (nom.empty()) {
-				cout << "---| La cedula no puede estar vacia. |---" << endl;
-				continue;
-			}
-			if (nom[0] == ' ') {
-				cout << "---| La cedula no puede empezar con un espacio. |---" << endl;
+			if (ced<=0) {
+				cout << "---| La cedula no puede ser 0 o ser negativa |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
 				continue;
 			}
 			if (sucu->buscarCliente(ced) != nullptr) {
 				cout << "---| Esta cedula ya existe en la sucursal |---" << endl;
-				cin.ignore();
 				continue;
 			}
+			cin.ignore(10000, '\n');
 			break;
 		}
 		while (true) {
 			cout << "---| Ingrese el telefono del cliente: ";
-			cin >> telf;
-			if (nom.empty()) {
-				cout << "---| El telefono no puede estar vacio. |---" << endl;
-				cin.ignore(10000, '\n');
-				continue;
-			}
-			if (nom[0] == ' ') {
-				cout << "---| El telefono no puede empezar con un espacio. |---" << endl;
-				cin.ignore(10000, '\n');
-				continue;
-			}
-			if (!telf && (telf < 10000000 || telf>99999999)) {
+
+			if (!(cin >> telf)) {
 				cout << endl << "---| Debe ingresar un numero valido. |---" << endl;
+				cin.clear();
 				cin.ignore(10000, '\n');
 				continue;
+			} 
+			if (telf < 10000000 || telf > 99999999) {
+				cout << endl << "---| Debe ingresar un numero de 8 digitos. |---" << endl;
+				continue;
 			}
-
-
+			cin.ignore(10000, '\n');
 			break;
 		}
 		while (true) {
@@ -505,7 +673,21 @@ void Control::agregarCliente(Sucursal* sucu) {
 			getline(cin, corr);
 			if (corr.find('@') == string::npos) {
 				cout << "---| El correo no es valido. |---" << endl;
-				cin.ignore(10000, '\n');
+				continue;
+			}
+			int c = 0;
+			for (int i = 0;i < corr.size();i++) {
+				if (corr[i] == ' ') {
+					c++;
+
+				}
+			}
+			if (c != 0) {
+				cout << "---| El correo no puede contener espacios |---" << endl;
+				continue;
+			}
+			if (corr.size()<4 || corr.rfind(".com") != corr.size() - 4) {
+				cout << "---| El correo debe terminar en .com |---" << endl;
 				continue;
 			}
 			break;
@@ -518,35 +700,35 @@ void Control::agregarCliente(Sucursal* sucu) {
 			}
 			else {
 				cout << "---| Fecha no valida. |---" << endl;
-				cin.ignore(10000, '\n');
 				continue;
 			}
 
 		}
 		while (true) {
 			cout << "---| Ingrese el sexo del cliente (M: Masculino / F: Femenino): ";
-			if (cin >> sexo && (sexo == 'm' || sexo == 'M' || sexo == 'f' || sexo == 'F')) break;
+			if (!(cin >> sexo)) {
+				cout << "---| Debe ingresar M o F |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+				continue;
+			}
+			if (sexo == 'm' || sexo == 'M' || sexo == 'f' || sexo == 'F') {
+				cin.ignore(10000, '\n');
+				break;
+			}
 			cout << "---| Debe ingresar M o F |---" << endl;
+			cin.clear();
 			cin.ignore(10000, '\n');
 		}
 		while (true) {
-			cin.ignore();
-			cin.clear();
 			cout << "---| Ingrese la fecha de inscripcion del cliente (Dia/Mes/Annio): ";
 			getline(cin, fI);
 			if (this->esFechaValida(fI)) {
 				break;
 			}
-			else {
-				cout << "---| Fecha no valida. |---" << endl;
-				cin.ignore(10000, '\n');
-				continue;
-			}
+			cout << "---| Fecha no valida. |---" << endl;
 		}
-
-		bool sigue1 = true;
-		do {
-			sigue1 = true;
+		while(true) {
 			cout << endl << "---| Que instructor desea asignarle al cliente? |---" << endl << endl;
 			sucu->listarInstructores();
 			cout << endl;
@@ -556,40 +738,47 @@ void Control::agregarCliente(Sucursal* sucu) {
 				cout << "---| Debe ingresar un numero valido. |---" << endl;
 				cin.clear();
 				cin.ignore(10000, '\n');
+				system("cls");
 				continue;
 			}
-			if (sucu->buscarInstructor(cedulaIns) != nullptr) {
-				Instructor* instructorAsignado = sucu->buscarInstructor(cedulaIns);
-				Cliente* nuevoCliente = new Cliente(nom, ced, telf, corr, fN, sexo, fI, 0, instructorAsignado);
+			Instructor* iA = sucu->buscarInstructor(cedulaIns);
+			if (iA != nullptr) {
+				Cliente* nuevoCliente = new Cliente(nom, ced, telf, corr, fN, sexo, fI, 0, iA);
 				sucu->agregarCliente(nuevoCliente);
-				sigue1 = true;
+				break;
 			}
-			else {
 				cout << "---| Instructor no encontrado. Por favor intente de nuevo. |---" << endl;
-			}
-		} while (sigue1 != true);
+		}
 
 		cout << "Cliente agregado con exito." << endl << endl;
 
+		int repiteInt=0;
 		while (true) {
-			int repiteInt;
-			cout << "-| Desea agregar otro cliente? (1: Si, 2: No): ";
+			
+			cout << "---| Desea agregar otro cliente? (1: Si, 2: No): ";
 			if (cin >> repiteInt) {
 				if (repiteInt == 1) {
 					system("cls");
-					repite1 = true;
 					break;
 				}
 				else if (repiteInt == 2) {
 					system("cls");
-					repite1 = false;
 					break;
 				}
 				else {
 					cout << "-| Opcion invalida. Por favor, intente de nuevo. |-" << endl;
+					cin.clear();
 					cin.ignore(10000, '\n');
 				}
 			}
+		}
+		if (repiteInt == 1) {
+			system("cls");
+			break;
+		}
+		else if (repiteInt == 2) {
+			system("cls");
+			break;
 		}
 	}
 }
@@ -652,19 +841,18 @@ void Control::eliminarCliente(Sucursal* sucu) {
 		cout << "\n\n---| Realmente desea eliminar al cliente " << sucu->buscarCliente(ced)->getNombre() << "? (S / N) : ";
 		cout << "\033[0m";
 		cin >> res;
-		cin.ignore();
+		cin.ignore(10000, '\n');
 
 		if (res == 's' || res == 'S') {
-			codExis = true;
+			cout << "\n\n---| cliente " << sucu->buscarCliente(ced)->getNombre() << " eliminado con exito. |---\n\n" << endl;
+			sucu->eliminarCliente(ced);
 		}
 		else {
 			system("cls");
 			cout << "\n\n---| Operacion cancelada. Puede ingresar otra cedula. |---" << endl;
 		}
 	}
-	
-	cout << "\n\n---| cliente " << sucu->buscarCliente(ced)->getNombre()<< " eliminado con exito. |---\n\n" << endl;
-	sucu->eliminarCliente(ced);
+
 	do{
 	cout << "\n\n---| Desea eliminar otro cliente? (S/N): ";
 	cin >> res;
@@ -686,12 +874,11 @@ void Control::gestionarCliente(Sucursal* sucu) {
 	if (sucu->getNumClientes() == 0) {
 		cout << "-| No hay clientes registrados. |-" << endl << endl;
 		cout << "-| Presione Enter para volver al menu principal..." << endl;
-		cin.ignore();
+		cin.get();
 		system("cls");
 		return;
 	}
 
-	int repe = 0;
 	do {
 		string codigo;
 		int ced = 0;
@@ -714,14 +901,12 @@ void Control::gestionarCliente(Sucursal* sucu) {
 				}
 				catch (invalid_argument&) {
 					system("cls");
-					cin.ignore(10000, '\n');
 					cout << "---| La cedula ingresada debe ser totalmente numerica. Intente de nuevo. |---" << endl;
 					codExis = false;
 					continue;
 				}
 				catch (out_of_range&) {
 					system("cls");
-					cin.ignore(10000, '\n');
 					cout << "---| La cedula ingresada es demasiado larga. Intente de nuevo. |---" << endl;
 					codExis = false;
 					continue;
@@ -732,7 +917,6 @@ void Control::gestionarCliente(Sucursal* sucu) {
 			if (sucu->buscarCliente(ced) == nullptr) {
 				system("cls");
 				cout << "---| La cedula ingresada no existe. Por favor, aprete enter para volverlo a intentar. |---";
-				cin.ignore(10000, '\n');
 				cin.get();
 				system("cls");
 				codExis = false;
@@ -743,29 +927,24 @@ void Control::gestionarCliente(Sucursal* sucu) {
 			}
 		}
 		string entrada;
-		while (true) {
 			cout << endl << "---| Desea gestionar al cliente " << sucu->buscarCliente(ced)->getNombre() << "? (1: Si, 2: No): ";
 			getline(cin, entrada);
 			if (entrada == "1") {
 				system("cls");
 				this->gestionarClienteSi(sucu, ced);
 				system("cls");
+				cout << "---| Presione Enter para volver al menu de gestion...|---" << endl;
+				cin.ignore();
+				cin.get();
+				system("cls");
 				return;
 			}
 			if (entrada == "2") {
 				system("cls");
-				return;
+				continue;
 			}
 			cout << "---| Respuesta invalida. Intente de nuevo. |---\n";
-			cin.ignore(10000, '\n');
-		}
 	} while (true);
-
-	cout << "---| Presione Enter para volver al menu de gestion...|---" << endl;
-	cin.ignore();
-	cin.get();
-	system("cls");
-
 }
 void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
 	Cliente* cliente = sucu->buscarCliente(ced);
@@ -781,7 +960,7 @@ void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
 		cout << "\n5. Salir" << endl << endl;
 		cout << "\n---| Ingrese la opcion: " << endl;
 		cin >> opcion;
-		cin.ignore();
+		cin.ignore(10000, '\n');
 		system("cls");
 
 		switch (opcion) {
@@ -803,7 +982,8 @@ void Control::gestionarClienteSi(Sucursal* sucu, int ced) {
 		case 5:
 			return;
 		default:
-			cout << "---| Opción inválida. |---" << endl;
+			cout << "---| Opcion invalida. |---" << endl;
+			cin.clear();
 			cin.ignore(10000, '\n');
 		}
 	} while (opcion != 5);
@@ -817,7 +997,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 		cout << "\n3. Salir" << endl << endl;
 		cout << "\n---| Ingrese la opcion: " << endl;
 		cin >> opcion;
-		cin.ignore();
+		cin.ignore(10000, '\n');
 		system("cls");
 		string fecha;
 
@@ -839,8 +1019,7 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 						break;
 					}
 					else {
-						cout << "---| Fecha no valida. |---" << endl << endl;
-						cin.ignore(10000, '\n');
+						cout << "---| Fecha invalida. |---" << endl << endl;
 						continue;
 					}
 
@@ -848,110 +1027,132 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 				while (true) {
 					cout << "---| Ingrese el peso (kg): ";
 					if (!(cin >> peso) || peso <= 0) {
-						cout << "---| Peso no valido. |---" << endl << endl;
+						cout << "---| Peso invalido. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 					}
 					else {
+						
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| Ingrese la estatura (m): ";
 					if (!(cin >> estatura) || estatura <= 0) {
-						cout << "---| Estatura no valida. |---" << endl << endl;
+						cout << "---| Estatura invalida. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 					}
 					else {
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| Ingrese el porcentaje de grasa corporal (%): ";
 					if (!(cin >> grasa) || grasa < 0) {
-						cout << "---| Porcentaje de grasa corporal no valida. |---" << endl << endl;
+						cout << "---| Porcentaje de grasa corporal invalido. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 					}
 					else {
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| Ingrese el porcentaje de musculo (%): ";
 					if (!(cin >> musculo) || musculo < 0) {
-						cout << "---| Porcentaje de musculo no valido. |---" << endl << endl;
+						cout << "---| Porcentaje de musculo invalido. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 					}
 					else {
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| Ingrese la edad metabolica: ";
 					if (!(cin >> edadMet) || edadMet < 0) {
-						cout << "---| Edad metabolica no valida. |---" << endl << endl;
+						cout << "---| Edad metabolica invalida. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 
 					}
 					else {
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| Ingrese la grasa visceral (%): ";
 					if (!(cin >> grasaVisc) || grasaVisc < 0) {
-						cout << "---| Porcentaje de grasa visceral no valido. |---" << endl << endl;
+						cout << "---| Porcentaje de grasa visceral invalido. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 					}
 					else {
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| Ingrese la medida de cintura (cm): ";
 					if (!(cin >> cintura) || cintura < 0) {
-						cout << "---| Medida de la cintura no valida. |---" << endl << endl;
+						cout << "---| Medida de la cintura invalida. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 					}
 					else {
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| Ingrese la medida de cadera (cm): ";
 					if (!(cin >> cadera) || cadera < 0) {
-						cout << "---| Medida de la cadera no valida. |---" << endl << endl;
+						cout << "---| Medida de la cadera invalida. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 
 					}
 					else {
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| Ingrese la medida de pecho (cm): ";
 					if (!(cin >> pecho) || pecho < 0) {
-						cout << "---| Medida del pecho no valido. |---" << endl << endl;
+						cout << "---| Medida del pecho invalida. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 					}
 					else {
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| Ingrese la medida de muslo (cm): ";
 					if (!(cin >> muslo) || muslo < 0) {
-						cout << "---| Medida del muslo no valido. |---" << endl;
+						cout << "---| Medida del muslo invalida. |---" << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 					}
 					else {
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
 				while (true) {
 					cout << "---| El cliente hace ejercicio regularmente? (S: si / N: no): ";
-					bool he;
+					char he;
 					if (!(cin >> he) && (he != 's' && he != 'S' && he != 'n' && he != 'N')) {
 						cout << "---| Respuesta invalida. |---" << endl << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 						continue;
 					}
@@ -962,10 +1163,10 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 						else {
 							hE = false;
 						}
+						cin.ignore(10000, '\n');
 						break;
 					}
 				}
-				cin.ignore();
 
 				ReporteMedicion rep(*cli, fecha, peso, estatura, grasa, musculo, edadMet, grasaVisc, cintura, cadera, pecho, muslo, hE);
 				cli->agregarReporte(rep);
@@ -976,10 +1177,12 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 					cout << "---| Desea agregar otra medicion? (S:si /N:no): ";cin >> siono;
 					if (siono != 'n' && siono != 'N' && siono != 's' && siono != 'S') {
 						cout << "---| Opcion invalida |---" << endl;
+						cin.clear();
 						cin.ignore(10000, '\n');
 						system("cls");
 						continue;
 					}
+					cin.ignore(10000, '\n');
 					break;
 				}
 				if (siono == 'n' || siono == 'N') {
@@ -1002,16 +1205,20 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 			cli->listarReportes();
 			int num;
 			while (true) {
-				cout << "---| ¿Desea ver el detalle de alguna medicion? (Ingrese salir para volver al menu): ";
+				cout << "---| Desea ver el detalle de alguna medicion? (Ingrese salir para volver al menu): ";
 				string nu;
-				getline(cin, nu);
+				if (!(getline(cin, nu))) {
+					cout << "---| Respuesta invalida, intentelo de nuevo |---" << endl;
+					continue;
+				}
 				if (nu == "salir" || nu == "Salir" || nu == "SAlir" || nu == "SALir" || nu == "SALIr" || nu == "SALIR") {
 					return;
 				} 
-				if (!(cin >> nu)) {
+				if(nu.empty()) {
 					cout << "---| Respuesta invalida, intentelo de nuevo |---" << endl;
 					continue;
-				} if (nu[0] == ' ') {
+				}
+				if (nu[0] == ' ') {
 					cout << "---| Respuesta invalida, intentelo de nuevo |---" << endl;
 					continue;
 				} try {
@@ -1028,17 +1235,14 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 				break;
 			}
 
-			cin.ignore();
 			if (num > 0 && num <= cli->getNumReportes()) {
 				ReporteMedicion* rep = cli->getReportePorIndice(num - 1);
 				cout << "---| Detalles de la medicion #" << num << " |---" << endl;
 				cout << rep->toString() << endl;
 				cout << "---| Presione enter para continuar. |---" << endl;
 				cin.get();
-			}
-			else if (num != 0) {
+			} else if (num != 0) {
 				cout << "---| Numero fuera de rango. |---" << endl;
-				cin.ignore(10000, '\n');
 				cout << "---| Presione enter para continuar. |---" << endl;
 				cin.get();
 			}
@@ -1047,18 +1251,19 @@ void Control::menuGestionarMediciones(Cliente* cli) {
 		}
 		case 3:
 		{
+			cin.ignore(10000, '\n');
 			return;
 		}
 		default:
 		{
-			cout << "---| Opción inválida. |---" << endl;
+			cout << "---| Opcion invalida. |---" << endl;
 			cin.ignore(10000, '\n');
 		}
 		}
 	} while (opcion != 3);
 }
 void Control::menuGestionarRutinas(Cliente* cli, Sucursal* sucu) {
-	Ejercicios catalogo;
+	Ejercicios* catalogo = new Ejercicios();
 	int opcion = 0;
 	do {
 		system("cls");
@@ -1102,12 +1307,12 @@ void Control::menuGestionarRutinas(Cliente* cli, Sucursal* sucu) {
 			int resp = 0;
 			do {
 				system("cls");
-				cout << "---| Tipos de ejercicios |---\n\n";
-				cout << "1. Pecho y triceps\n";
-				cout << "2. Biceps\n";
-				cout << "3. Piernas\n";
-				cout << "4. Espalda\n";
-				cout << "5. Terminar\n\n";
+				cout << "---| Tipos de ejercicios |---" << endl << endl;
+				cout << "1. Pecho y triceps" << endl;
+				cout << "\n2. Biceps" << endl;
+				cout << "\n3. Piernas" << endl;
+				cout << "\n4. Espalda" << endl;
+				cout << "\n5. Terminar" << endl << endl;
 				cout << "---| Ingrese que tipo de ejercicio desea agregar: ";
 				cin >> resp;
 				cin.ignore(10000, '\n');
@@ -1116,48 +1321,117 @@ void Control::menuGestionarRutinas(Cliente* cli, Sucursal* sucu) {
 				string nombre;
 
 				switch (resp) {
-				case 1:
-					system("cls");
-					cout << "---| Ejercicios de pecho y triceps |---\n";
-					catalogo.listarPechoTric();
-					cout << "Seleccione numero: ";
-					cin >> esco;
-					cin.ignore(10000, '\n');
-					nombre = catalogo.getPechoTric(esco - 1);
+				case 1: {
+					while (true) {
+						system("cls");
+						cout << "---| Ejercicios de pecho y triceps |---\n";
+						catalogo->listarPechoTric();
+						cout << "Seleccione numero: ";
+						if (!(cin >> esco)) {
+							cout << "---| Opcion invalida |---\n";
+							cin.clear();
+							cin.ignore(10000, '\n');
+							system("cls");
+							continue;
+						}
+						if (esco < 1 || esco > catalogo->getNumPechoTric()) {
+							cout << "---| Opcion invalida |---\n";
+							cin.clear();
+							cin.ignore(10000, '\n');
+							system("cls");
+							continue;
+						}
+						cin.ignore(10000, '\n');
+						nombre = catalogo->getPechoTric(esco - 1);
+						break;
+					}
 					break;
-				case 2:
-					system("cls");
-					cout << "---| Ejercicios de biceps |---\n";
-					catalogo.listarBiceps();
-					cout << "Seleccione numero: ";
-					cin >> esco;
-					cin.ignore(10000, '\n');
-					nombre = catalogo.getBiceps(esco - 1);
+				}
+				case 2: {
+					while (true) {
+						system("cls");
+						cout << "---| Ejercicios de biceps |---\n";
+						catalogo->listarBiceps();
+						cout << "Seleccione numero: ";
+						if (!(cin >> esco)) {
+							cout << "---| Opcion invalida |---\n";
+							cin.clear();
+							cin.ignore(10000, '\n');
+							system("cls");
+							continue;
+						}
+						if (esco < 1 || esco > catalogo->getNumBiceps()) {
+							cout << "---| Opcion invalida |---\n";
+							cin.clear();
+							cin.ignore(10000, '\n');
+							system("cls");
+							continue;
+						}
+						cin.ignore(10000, '\n');
+						nombre = catalogo->getBiceps(esco - 1);
+						break;
+					}
 					break;
-				case 3:
-					system("cls");
-					cout << "---| Ejercicios de pierna |---\n";
-					catalogo.listarPiernas();
-					cout << "Seleccione numero: ";
-					cin >> esco;
-					cin.ignore(10000, '\n');
-					nombre = catalogo.getPiernas(esco - 1);
+				}
+				case 3: {
+					while (true) {
+						system("cls");
+						cout << "---| Ejercicios de pierna |---\n";
+						catalogo->listarPiernas();
+						cout << "Seleccione numero: ";
+						if (!(cin >> esco)) {
+							cout << "---| Opcion invalida |---\n";
+							cin.clear();
+							cin.ignore(10000, '\n');
+							system("cls");
+							continue;
+						}
+						if (esco < 1 || esco > catalogo->getNumPiernas()) {
+							cout << "---| Opcion invalida |---\n";
+							cin.clear();
+							cin.ignore(10000, '\n');
+							system("cls");
+							continue;
+						}
+						cin.ignore(10000, '\n');
+						nombre = catalogo->getPiernas(esco - 1);
+						break;
+					}
 					break;
-				case 4:
-					system("cls");
-					cout << "---| Ejercicios de espalda |---\n";
-					catalogo.listarEspalda();
-					cout << "Seleccione numero: ";
-					cin >> esco;
-					cin.ignore(10000, '\n');
-					nombre = catalogo.getEspalda(esco - 1);
+				}
+				case 4: {
+					while (true) {
+						system("cls");
+						cout << "---| Ejercicios de espalda |---\n";
+						catalogo->listarEspalda();
+						cout << "Seleccione numero: ";
+						if (!(cin >> esco)) {
+							cout << "---| Opcion invalida |---\n";
+							cin.clear();
+							cin.ignore(10000, '\n');
+							system("cls");
+							continue;
+						}
+						if (esco < 1 || esco > catalogo->getNumEspalda()) {
+							cout << "---| Opcion invalida |---\n";
+							cin.clear();
+							cin.ignore(10000, '\n');
+							system("cls");
+							continue;
+						}
+						cin.ignore(10000, '\n');
+						nombre = catalogo->getEspalda(esco - 1);
+						break;
+					}
 					break;
+				}
 				case 5:
 					break;
-				default:
+				default: {
 					cout << "---| Opcion invalida |---\n";
 					cin.ignore(10000, '\n');
 					continue;
+				}
 				}
 
 				if (!nombre.empty()) {
@@ -1176,11 +1450,11 @@ void Control::menuGestionarRutinas(Cliente* cli, Sucursal* sucu) {
 		case 2: {
 			if (cli->getRutina() == nullptr) {
 				system("cls");
-				cout << "---| El cliente no tiene rutina asignada. |---"<<endl<<endl;
-				system("cls");
+				cout << "---| El cliente no tiene rutina asignada. |---" << endl << endl;
+				system("pause");
 			}
 			else {
-				cout<<cli->getRutina()->toString();
+				cout << cli->getRutina()->toString();
 				cout << endl << "---| Presione enter para salir |---" << endl;
 				cin.get();
 				cin.ignore(10000, '\n');
@@ -1190,10 +1464,13 @@ void Control::menuGestionarRutinas(Cliente* cli, Sucursal* sucu) {
 			break;
 		}
 		case 3:
+			delete catalogo;
+			catalogo = nullptr;
 			system("cls");
 			return;
 		default:
 			cout << "---| Opcion invalida. |---\n";
+			cin.clear();
 			cin.ignore(10000, '\n');
 			system("cls");
 		}
@@ -1215,9 +1492,9 @@ void Control::menuGestionarCliClasesGrupales(Cliente* cli, Sucursal* sucu) {
 		cout << "\n---| Ingrese la opcion: ";
 		
 		cin >> opcion;
-		cin.clear();
 		cin.ignore(10000, '\n');
 		system("cls");
+
 		switch (opcion) {
 		case 1:
 		{
@@ -1235,7 +1512,7 @@ void Control::menuGestionarCliClasesGrupales(Cliente* cli, Sucursal* sucu) {
 
 			for (int j = 0; j < sucu->getNumClasesGrups(); j++) {
 				ClaseGrupal* clase = sucu->getClaseGrupalPorIndice(j);
-				for (int k = 0; k < clase->getOcupados(); k++) {
+				if (clase->getClienteCed(cli->getCed())!=nullptr) {
 					Cliente* cliente = sucu->buscarCliente(cli->getCed());
 					if (cliente && cliente->getCed() == cli->getCed()) {
 						cout << "Clase #" << clase->getCodClase() << endl;
@@ -1418,13 +1695,8 @@ void Control::menuGestionarInstructores(Sucursal* sucu) {
 	cout << "\n5. Salir" << endl << endl;
 	cout << "\n---| Ingrese la opcion que desea realizar: ";
 	cin >> resp;
-	cin.clear();
-	cin.ignore();
+	cin.ignore(10000, '\n');
 	system("cls");
-
-	int tel = 0, nC = 0, cC = 0, ced = 0, telf = 0, ins = 0;
-	string corr = "", codi = "", nom = "", fN = "", fI = "", hor = "";
-	char sexo = ' ';
 
 	switch (resp) {
 	case 1:
@@ -1459,15 +1731,15 @@ void Control::menuGestionarInstructores(Sucursal* sucu) {
 		this->eliminarInstructor(sucu);
 		break;
 }
-	case 5:
-	{
-		cout << "\n\n---| Saliendo del menu de gestion de instructores. Presione enter. |---" << endl;
-		cin.ignore();
+	case 5:{
 		system("cls");
 		return;
 	}
 	default:
 	{
+		cout << "---| Opcion invalida. |---" << endl;
+		cin.clear();
+		cin.ignore(10000, '\n');
 		break;
 	}
 	}
@@ -1482,11 +1754,19 @@ void Control::agregarInstructor(Sucursal* sucu) {
 
 		while(true){
 		cout << "---| Ingrese el nombre del instructor: ";
-		getline(cin, nom);
+		if(!(getline(cin, nom))){
+			cout << "---| Nombre invalido. Intentelo de nuevo. |---" << endl;
+			continue;
+		}
 		if (nom.empty()) {
 			cout << "---| El nombre no puede estar vacio. |---" << endl;
 			continue;
 		}
+		if(nom[0] == ' '){
+			cout << "---| El nombre no puede iniciar con espacio. |---" << endl;
+			continue;
+		}
+
 		break;
 }
 		while (true) {
@@ -1502,7 +1782,6 @@ void Control::agregarInstructor(Sucursal* sucu) {
 		}
 		while (true) {
 			cout << "---| Ingrese el telefono del instructor (8 digitos): ";
-			cin.ignore();
 			telf = 0;
 			if (!(cin >> telf)) {
 				cin.clear();
@@ -1512,15 +1791,17 @@ void Control::agregarInstructor(Sucursal* sucu) {
 			}
 			else if (telf < 10000000 || telf > 99999999) {
 				cout << "---| Debe ingresar un numero valido (8 digitos) |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
 				continue;
 			}
+			cin.ignore(10000, '\n');
 			break;
 		}
 		while (true) {
 			int c = 0;
 			cout << "---| Ingrese el correo electronico del instructor (ejemplo@gmail.com): ";
 			getline(cin, corr);
-			int com = corr.size() - 1;
 			if (corr.empty()) {
 				cout << "---| El correo no puede estar vacio |---" << endl;
 				continue;
@@ -1535,7 +1816,6 @@ void Control::agregarInstructor(Sucursal* sucu) {
 				cout << "---| El correo no puede contener espacios |---" << endl;
 				continue;
 			}
-			;
 			if (corr.find('@') == string::npos) {
 				cout << "---| El correo debe contener '@' |---" << endl; 
 				continue;
@@ -1584,12 +1864,12 @@ void Control::agregarInstructor(Sucursal* sucu) {
 			cout << "---| Ingrese el numero de la especialidad: ";
 			cin >> especialidadPrincipal;
 			cin.clear();
-			cin.ignore();
+			cin.ignore(10000, '\n');
 			if (especialidadPrincipal >= 1 && especialidadPrincipal <= 8) {
 				break;
 			}
 			else {
-				cout << "---| Opción inválida. |---" << endl;
+				cout << "---| Opcion invalida. |---" << endl;
 				cin.clear();
 				cin.ignore(10000, '\n');
 			}
@@ -1599,7 +1879,7 @@ void Control::agregarInstructor(Sucursal* sucu) {
 		sucu->agregarInstructor(nuevoInstructor);
 
 		while (true) {
-			cout << "---| ¿Desea agregar otra especialidad? (1: Sí, 2: No): ";
+			cout << "---| Desea agregar otra especialidad? (1: Si, 2: No): ";
 			int otra;
 			if (cin >> otra && (otra == 1 || otra == 2)) {
 				cin.ignore(10000, '\n');
@@ -1621,8 +1901,9 @@ void Control::agregarInstructor(Sucursal* sucu) {
 				}
 				else {
 					cout << "---| Opcion invalida. |---" << endl;
+					cin.clear();
+					cin.ignore(10000, '\n');
 				}
-				cin.ignore(10000, '\n');
 			}
 			else {
 				cout << "---| Opcion invalida. |---" << endl;
@@ -1648,6 +1929,8 @@ void Control::agregarInstructor(Sucursal* sucu) {
 				}
 				else {
 					cout << "---| Opcion invalida. Por favor, intente de nuevo. |---" << endl;
+					cin.clear();
+					cin.ignore(10000, '\n');
 				}
 			}
 		}
@@ -1655,14 +1938,11 @@ void Control::agregarInstructor(Sucursal* sucu) {
 }
 void Control::gestionarInstructor(Sucursal* sucu) {
 	if (sucu->getNumInstructores() == 0) {
-		cout << "-| No hay instructores registrados. |-" << endl << endl;
-		cout << "-| Presione Enter para volver al menu principal..." << endl;
-		cin.ignore();
+		cout << "---| No hay instructores registrados. |---" << endl << endl;
+		system("pause");
 		system("cls");
 		return;
 	}
-
-	int repe = 0;
 	do {
 		string codigo;
 		int ced = 0;
@@ -1673,8 +1953,11 @@ void Control::gestionarInstructor(Sucursal* sucu) {
 			sucu->listarInstructores();
 			cout << endl;
 			cout << "---| Ingrese la cedula del instructor a gestionar (Ingrese salir para volver al menu anterior): ";
-			getline(cin, codigo);
 
+			if(!(getline(cin, codigo))){
+				cout << "---| Respuesta invalida. Intente de nuevo. |---" << endl;
+				continue;
+			}
 			if (codigo == "salir" || codigo == "Salir" || codigo == "SALIR") {
 				system("cls");
 				return;
@@ -1699,7 +1982,7 @@ void Control::gestionarInstructor(Sucursal* sucu) {
 
 			if (sucu->buscarInstructor(ced) == nullptr) {
 				system("cls");
-				cout << "---| La cedula ingresada no existe. Por favor, aprete enter para volverlo a intentar. |---";
+				cout << "---| La cedula ingresada no existe. Por favor, presione enter para volverlo a intentar. |---";
 				cin.get();
 				system("cls");
 				codExis = false;
@@ -1713,7 +1996,10 @@ void Control::gestionarInstructor(Sucursal* sucu) {
 		string entrada;
 		while (true) {
 			cout << endl << "---| Desea gestionar al instructor "<< sucu->buscarInstructor(ced)->getNombre()<< "? (1: Si, 2: No): ";
-			getline(cin, entrada);
+			if(!(getline(cin, entrada))){
+				cout << "---| Respuesta invalida. Intente de nuevo. |---\n";
+				continue;
+			}
 
 			if (entrada == "1") {
 				system("cls");
@@ -1728,11 +2014,6 @@ void Control::gestionarInstructor(Sucursal* sucu) {
 			cout << "---| Respuesta invalida. Intente de nuevo. |---\n";
 		}
 	} while (true);
-
-	cout << "---| Presione Enter para volver al menu de gestion...|---" << endl;
-	cin.ignore();
-	cin.get();
-	system("cls");
 }
 void Control::gestionarInstructorSi(Sucursal* sucu, int ced) {
 	Instructor* instructor = sucu->buscarInstructor(ced);
@@ -1740,41 +2021,40 @@ void Control::gestionarInstructorSi(Sucursal* sucu, int ced) {
 
 	int opcion;
 	do {
-		cout << "---| Gesti0n del/la instructor(a) " << instructor->getNombre() << " |---" << endl;
-		cout << "\n1. Ver detalles del instructor" << endl;
+		system("cls");
+		cout << "---| Gestion del/la instructor(a) " << instructor->getNombre() << " |---" << endl<<endl;
+		cout << "1. Ver detalles del instructor" << endl;
 		cout << "\n2. Listar clientes vinculados" << endl;
 		cout << "\n3. Gestionar clientes vinculados" << endl;
 		cout << "\n4. Salir" << endl << endl;
-		cout << "\n---| Ingrese la opcion: ";
+		cout << "---| Ingrese la opcion: ";
 		cin >> opcion;
-		cin.ignore();
+		cin.ignore(10000, '\n');
 		system("cls");
 
 		switch (opcion) {
 		case 1:
 			cout << instructor->toString();
-			cout << "---| Ingrese enter para salir |---" << endl;
+			cout << "---| Presione enter para salir |---" << endl;
 			cin.get();
-			system("cls");
 			break;
 
 		case 2:
 			sucu->listarClientesDeInstructor(instructor);
-			cout << "---| Ingrese enter para salir |---" << endl;
+			cout << "---| Presione enter para salir |---" << endl;
 			cin.get();
-			system("cls");
 			break;
 
 		case 3:
 			this->menuGestionarCliInst(instructor, sucu);
-			system("cls");
 			break;
 
 		case 4:
+
 			return;
 
 		default:
-			cout << "---| Opción inválida. |---" << endl;
+			cout << "---| Opcion invalida. |---" << endl;
 		}
 	} while (opcion != 4);
 }
@@ -1821,7 +2101,7 @@ void Control::menuGestionarCliInst(Instructor* ins, Sucursal* sucu) {
 			continue;
 		}
 		if (cli->getInstructor() != ins) {
-			cout << "---| Ese cliente no está vinculado a este instructor. |---" << endl;
+			cout << "---| Ese cliente no esta vinculado a este instructor. |---" << endl;
 			cin.get();
 			continue;
 		}
@@ -1831,9 +2111,9 @@ void Control::menuGestionarCliInst(Instructor* ins, Sucursal* sucu) {
 }
 void Control::eliminarInstructor(Sucursal* sucu) {
 	if (sucu->getNumInstructores() == 0) {
-		cout << "-| No hay instructores registrados. |-" << endl << endl;
-		cout << "-| Presione Enter para volver al menu principal..." << endl;
-		cin.ignore();
+		cout << "---| No hay instructores registrados. |---" << endl << endl;
+		cout << "---| Presione Enter para volver al menu principal |---" << endl;
+		cin.get();
 		system("cls");
 		return;
 	}
@@ -1850,7 +2130,10 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 			sucu->listarInstructores();
 			cout << endl;
 			cout << "---| Ingrese la cedula del instructor a eliminar (O ingrese salir para volver): ";
-			getline(cin, codigo);
+			if(!(getline(cin, codigo))){
+				cout << "---| Respuesta invalida. Intente de nuevo. |---" << endl;
+				continue;
+			}
 			if (codigo == "salir" || codigo == "SALIR" || codigo == "Salir"||codigo=="SAlir"||codigo=="SALir"||codigo=="SALIr") {
 				system("cls");
 				return;
@@ -1887,23 +2170,25 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 			cedulaValida = true;
 		}
 		if (confirmado) {
-			cout << "\n\n---| Instructor " << sucu->buscarInstructor(ced)->getNombre()
-				<< " eliminado con exito. |---\n\n";
+			cout << "\n\n---| Instructor " << sucu->buscarInstructor(ced)->getNombre()<< " eliminado con exito. |---\n\n";
 			sucu->eliminarInstructor(ced);
 		}
 
 		if (sucu->getNumInstructores() == 0) {
 			cout << "---| No hay mas instructores registrados. |---" << endl;
 			cout << "---| Presione Enter para volver al menu principal |---" << endl;
-			cin.ignore();
+			cin.get();
 			system("cls");
 			return;
 		}
 
 		do {
 			cout << "\n\n---| Desea eliminar otro instructor? (S/N): ";
-			cin >> res;
-			cin.ignore(10000, '\n');
+			if(!(cin >> res)) {
+				cout << "---| Respuesta invalida. Intente de nuevo. |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+			}
 		} while (res != 'S' && res != 's' && res != 'N' && res != 'n');
 
 	} while (res == 'S' || res == 's');
@@ -1914,6 +2199,7 @@ void Control::eliminarInstructor(Sucursal* sucu) {
 void Control::menuGestionarClasesGrupales(Sucursal* sucu) {
 		int resp = 0;
 		do {
+			system("cls");
 			cout << "---| Menu de gestion de clases grupales de la sucursal " << sucu->getCod() << " |---\n" << endl;
 			cout << "1. Listar clases grupales" << endl;
 			cout << "2. Agregar clase grupal" << endl;
@@ -1931,27 +2217,21 @@ void Control::menuGestionarClasesGrupales(Sucursal* sucu) {
 				sucu->listarClasesGrupales();
 				cout << "\n\n---| Presione enter para salir. |---" << endl;
 				cin.get();
-				system("cls");
 				break;
 			}
 			case 2: {
 				this->agregarClaseGrupal(sucu);
-				system("cls");
 				break;
 			}
 			case 3: {
 				this->gestionarClaseGrupalSi(sucu);
-				system("cls");
 				break;
 			}
 			case 4: {
 				this->eliminarClaseGrupal(sucu);
-				system("cls");
 				break;
 			}
 			case 5: {
-				cout << "\n\n---| Saliendo del menu de gestion de clases grupales. Presione enter. |---" << endl;
-				cin.get();
 				system("cls");
 				return;
 			}
@@ -2029,7 +2309,7 @@ void Control::agregarClaseGrupal(Sucursal* sucu) {
 			string cedulaStr;
 			int cedulaIns;
 
-			cout << "---| Ingrese la cedula del instructor (o 'salir' para cancelar): ";
+			cout << "---| Ingrese la cedula del instructor (O ingrese 'salir' para cancelar): ";
 			getline(cin, cedulaStr);
 
 			if (cedulaStr == "salir" || cedulaStr == "Salir" || cedulaStr == "SAlir" || cedulaStr == "SALir" || cedulaStr == "SALIr" || cedulaStr == "SALIR") {
@@ -2096,26 +2376,25 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 	}
 
 	int codigoClase;
-	cout << "---| Gestionar clases grupales |---" << endl;
-	sucu->listarClasesGrupales();
-	while(true){
-	cout << "\n---| Ingrese el codigo de la clase grupal a gestionar: ";
-	cin >> codigoClase;
-	if (!(cin >> codigoClase) || sucu->buscarClaseGrupal(codigoClase) == nullptr) {
-		cout << "\n---| El codigo ingresado es invalido, intentelo de nuevo |---" << endl;
-		cin.ignore(10000, '\n');
-	}
-	break;
-}
-	system("cls");
-	ClaseGrupal* clase = sucu->buscarClaseGrupal(codigoClase);
-	if (clase == nullptr) {
-		cout << "---| Clase grupal no encontrada. |---" << endl;
-		cout << "\n---| Presione enter para salir. |---" << endl;
-		cin.get();
+	while (true) {
 		system("cls");
-		return;
-	}
+		cout << "---| Gestionar clases grupales |---" << endl;
+		sucu->listarClasesGrupales();
+			cout << "\n---| Ingrese el codigo de la clase grupal a gestionar: ";
+			if (!(cin >> codigoClase) || sucu->buscarClaseGrupal(codigoClase) == nullptr) {
+				cout << "\n---| El codigo ingresado es invalido, intentelo de nuevo |---" << endl;
+				cin.clear();
+				cin.ignore(10000, '\n');
+				continue;
+			}
+		ClaseGrupal* clase = sucu->buscarClaseGrupal(codigoClase);
+		if (clase == nullptr) {
+			cout << "---| Clase grupal no encontrada. Intente de nuevo |---" << endl;
+			cin.clear();
+			cin.ignore(10000, '\n');
+			system("cls");
+			continue;
+		}
 
 	int opcion = 0;
 	do {
@@ -2141,7 +2420,7 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 		}
 		case 2: {
 			if (sucu->getNumClientes() == 0) {
-				cout << "---| No hay instructores disponibles en la sucursal. |---" << endl;
+				cout << "---| No hay clientes disponibles en la sucursal. |---" << endl;
 				break;
 			}
 			while (true) {
@@ -2149,7 +2428,10 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 				string cedula;
 				int cedCli;
 				cout << "Ingrese la cedula del cliente a agregar (O ingrese salir para volver al menu): ";
-				getline(cin, cedula);
+				if (!(getline(cin, cedula))) {
+					cout << "---| Respuesta invalida. Intente de nuevo. |---" << endl;
+					continue;
+				}
 				if (cedula == "salir" || cedula == "Salir" || cedula == "SAlir" || cedula == "SALir" || cedula == "SALIr" || cedula == "SALIR") {
 					break;
 				}
@@ -2159,12 +2441,6 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 				}
 				else if (cedula[0] == ' ') {
 					cout << "---| La cedula no puede empezar con un espacio |---" << endl;
-					continue;
-				}
-				else if (!(cin >> cedula)) {
-					cout << "---| Debe ingresar un numero valido. |---" << endl;
-					cin.clear();
-					cin.ignore();
 					continue;
 				}
 				else {
@@ -2180,7 +2456,6 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 						continue;
 					}
 				}
-				cin.ignore(10000, '\n');
 				Cliente* nuevoCliente = sucu->buscarCliente(cedCli);
 				if (nuevoCliente != nullptr) {
 					clase->insCliente(nuevoCliente);
@@ -2195,7 +2470,7 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 
 					cout << "---| Desea agregar otro cliente a la clase grupal? (S:si/N:no): ";cin >> resp;
 					if (resp != 's' && resp != 'S' && resp != 'n' && resp != 'N') {
-						cout << "---| Respues invalida, intentelo de nuevo |---" << endl;
+						cout << "---| Respuesta invalida, intentelo de nuevo |---" << endl;
 						continue;
 					}
 					break;
@@ -2231,7 +2506,14 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 		case 4: {
 			string nuevaHora;
 			cout << "---| Ingrese la nueva hora (XX:XXam o XX:XXpm): ";
-			getline(cin, nuevaHora);
+			if(!(getline(cin, nuevaHora))){
+				cout << "---| Respuesta invalida. Intente de nuevo. |---" << endl;
+				continue;
+			}
+			if(!this->esHoraValida(nuevaHora)){
+				cout << "---| Hora no valida. Intente de nuevo. |---" << endl;
+				continue;
+		}
 			clase->setHora(nuevaHora);
 			cout << "---| Hora actualizada con exito. |---" << endl;
 			break;
@@ -2246,26 +2528,20 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 				string cedula;
 				int cedIns;
 				cout << "\n---| Ingrese la cedula del nuevo instructor (O ingrese salir para volver al menu): ";
-				getline(cin, cedula);
+				if(!(getline(cin, cedula))){
+					cout << "---| Respuesta invalida. Intente de nuevo. |---" << endl;
+					continue;
+				}
 				if (cedula == "salir" || cedula == "Salir" || cedula == "SAlir" || cedula == "SALir" || cedula == "SALIr" || cedula == "SALIR") {
 					break;
 				}
 				else if (cedula.empty()) {
 					cout << "---| La cedula no puede estar vacia |---" << endl;
-					cin.ignore(10000, '\n');
 					system("cls");
 					continue;
 				}
 				else if (cedula[0] == ' ') {
 					cout << "---| La cedula no puede empezar con un espacio |---" << endl;
-					cin.ignore(10000, '\n');
-					system("cls");
-					continue;
-				}
-				else if (!(cin >> cedula)) {
-					cout << "---| Debe ingresar un numero valido. |---" << endl;
-					cin.clear();
-					cin.ignore(10000, '\n');
 					system("cls");
 					continue;
 				}
@@ -2282,7 +2558,6 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 						continue;
 					}
 				}
-				cin.ignore(10000, '\n');
 				Instructor* nuevoInstructor = sucu->buscarInstructor(cedIns);
 				if (nuevoInstructor != nullptr) {
 					clase->setInstructor(nuevoInstructor);
@@ -2297,13 +2572,14 @@ void Control::gestionarClaseGrupalSi(Sucursal* sucu) {
 			break;
 		}
 		case 6:
-			cout << "---| Volviendo al menu anterior... |---" << endl;
+			cout << "---| Volviendo al menu anterior |---" << endl;
 			break;
 		default:
 			cout << "---| Opcion invalida. Intente de nuevo. |---" << endl;
 			break;
 		}
 	} while (opcion != 6);
+	}
 }
 void Control::eliminarClaseGrupal(Sucursal* sucu) {
 	if (sucu->getNumClasesGrups() == 0) {
@@ -2327,10 +2603,21 @@ void Control::eliminarClaseGrupal(Sucursal* sucu) {
 			sucu->listarClasesGrupales();
 			cout << endl;
 			cout << "\n---| Ingrese el codigo de la clase grupal a eliminar (O ingrese salir para volver): ";
-			getline(cin, codigoStr);
+			if(!(getline(cin, codigoStr))){
+				cout << "---| Respuesta invalida. Intente de nuevo. |---" << endl;
+				continue;
+			}
 			if (codigoStr == "salir" || codigoStr == "Salir" || codigoStr == "SAlir" || codigoStr == "SALir" || codigoStr == "SALIr" || codigoStr == "SALIR") {
 				system("cls");
 				return;
+			}
+			if(codigoStr.empty()){
+				cout << "---| El codigo no puede estar vacio. Intente de nuevo. |---" << endl;
+				continue;
+			}
+			if(codigoStr[0]==' '){
+				cout << "---| El codigo no puede empezar con un espacio. Intente de nuevo. |---" << endl;
+				continue;
 			}
 			try {
 				codigoClase = stoi(codigoStr);
@@ -2358,11 +2645,11 @@ void Control::eliminarClaseGrupal(Sucursal* sucu) {
 			if (res == 'S' || res == 's') {
 				confirmado = true;
 			}
-			else {
+			else  {
 				cout << "\n\n---| Operacion cancelada. Puede ingresar otro codigo. |---" << endl;
-				system("pause");
+				codigoValido = true;
+				cin.get();
 			}
-			codigoValido = true;
 		}
 		if (confirmado) {
 			system("cls");
@@ -2371,7 +2658,7 @@ void Control::eliminarClaseGrupal(Sucursal* sucu) {
 		if (sucu->getNumClasesGrups() == 0) {
 			cout << "---| No hay mas clases grupales registradas. |---" << endl;
 			cout << "---| Presione Enter para volver al menu principal |---" << endl;
-			cin.ignore();
+			cin.get();
 			system("cls");
 			return;
 		}

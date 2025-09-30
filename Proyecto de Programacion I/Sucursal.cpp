@@ -15,7 +15,7 @@ Sucursal::Sucursal() {
 	capInstruc_= 0;
 	insSucur_= nullptr;
 	numInstructores_= 0;
-	capClasesGrups_= 8;
+	capClasesGrupales_ = 8;
 	ClassGrupSucur_= nullptr;
 	numClasesGrups_= 0;
 }
@@ -39,11 +39,9 @@ Sucursal::Sucursal(string codi, int tel, string prov, string cant, string corr, 
 		insSucur_[i] = nullptr;
 	}
 	numInstructores_ = 0;
-
-	
-	capClasesGrups_ = 8;
-	ClassGrupSucur_ = new ClaseGrupal * [capClasesGrups_];
-	for(int i = 0; i < capClasesGrups_; i++) {
+	capClasesGrupales_ = 8;
+	ClassGrupSucur_ = new ClaseGrupal * [capClasesGrupales_];
+	for(int i = 0; i < capClasesGrupales_; i++) {
 		ClassGrupSucur_[i] = nullptr;
 	}
 	numClasesGrups_ = 0;
@@ -52,7 +50,7 @@ Sucursal::Sucursal(string codi, int tel, string prov, string cant, string corr, 
 }
 Sucursal::~Sucursal(){
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < capClasesGrupales_; i++) {
 		if (ClassGrupSucur_[i] != nullptr) {
 			delete ClassGrupSucur_[i];
 			ClassGrupSucur_[i] = nullptr;
@@ -117,7 +115,7 @@ void Sucursal::agregarClaseGrupal(ClaseGrupal* clase){
 		}
 	}
 
-	if (numClasesGrups_ < capClasesGrups_) {
+	if (numClasesGrups_ < capClasesGrupales_) {
 		ClassGrupSucur_[numClasesGrups_] = clase;
 		numClasesGrups_++;
 		return;
@@ -164,7 +162,7 @@ void Sucursal::eliminarInstructor(int cedula) {
 				cliSucur_[j]->setIntructor(nuevoInstructor);
 				cout << "\n---| El instructor del cliente " << cliSucur_[j]->getNombre() << " ha sido cambiado al instructor  " << nuevoInstructor->getNombre() <<" con cedula " <<nuevoInstructor->getCed()<<" |---" << endl;
 			}else {
-				cout << "\n---| No hay otro instructor disponible para reasignar al cliente "<< cliSucur_[j]->getNombre() <<" con cedula " <<cliSucur_[j]->getNombre()<< ". No se puede eliminar el instructor. |---" << endl;
+				cout << "\n---| No hay otro instructor disponible para reasignar al cliente "<< cliSucur_[j]->getNombre() <<" con cedula " <<cliSucur_[j]->getCed()<< ". No se puede eliminar el instructor. |---" << endl;
 				return;
 			}
 		}
@@ -192,6 +190,7 @@ void Sucursal::eliminarClaseGrupal(int codClase) {
 					cin.ignore(10000, '\n');
 					continue;
 					}
+					break;
 				}
 				if (resp == 'n' || resp == 'N') {
 					cout << "\n---| No se elimino la clase grupal con codigo " << codClase << " de la sucursal " << cod << " |---" << endl;
@@ -201,11 +200,6 @@ void Sucursal::eliminarClaseGrupal(int codClase) {
 					cout << "\n---| Eliminando todos los clientes inscritos en la clase grupal con codigo " << codClase << " |---" << endl;
 					ClassGrupSucur_[i]->eliminarTodosClientes();
 				}
-				else {
-					cout << "\n---| Respuesta invalida. No se elimino la clase grupal con codigo " << codClase << " de la sucursal " << cod << " |---" << endl;
-					return;
-				}
-
 			}
 			delete ClassGrupSucur_[i];
 			ClassGrupSucur_[i] = ClassGrupSucur_[numClasesGrups_ - 1];
@@ -220,7 +214,6 @@ void Sucursal::listarClientes() {
 	if (numClientes_ == 0) {
 		cout << "---| No hay clientes en la sucursal " << cod <<" |---" << endl;
 		cout << "---| Presione enter para volver al menu |---" << endl;
-		cin.get();
 		cin.ignore(10000, '\n');
 		system("cls");
 		return;
@@ -236,7 +229,6 @@ void Sucursal::listarInstructores(){
 	if (numInstructores_ == 0) {
 		cout << "---| No hay instructores en la sucursal " << cod << " |---" << endl;
 		cout << "---| Presione enter para volver al menu |---" << endl;
-		cin.get();
 		cin.ignore(10000, '\n');
 		system("cls");
 		return;
@@ -252,7 +244,6 @@ void Sucursal::listarClasesGrupales() {
 	if (numClasesGrups_ == 0) {
 		cout << "---| No hay clases grupales en la sucursal " << cod <<" |---"<< endl;
 		cout << "---| Presione enter para volver al menu |---" << endl;
-		cin.get();
 		cin.ignore(10000, '\n');
 		system("cls");
 		return;
@@ -315,8 +306,8 @@ int Sucursal::getCapInstructores() {
 int Sucursal::getNumClasesGrups() {
 	return numClasesGrups_;	
 }
-int Sucursal::getCapClasesGrups() {
-	return capClasesGrups_;	
+int Sucursal::getCapClasesGrupales() {
+	return capClasesGrupales_;	
 }
 string Sucursal::getCod() {
 	return cod;	
@@ -338,7 +329,7 @@ Instructor* Sucursal::buscarInstructor(int ced) {
 	return nullptr;
 }
 ClaseGrupal* Sucursal::buscarClaseGrupal(int cod) {
-	for (int i = 0;i < 8;i++) {
+	for (int i = 0;i < capClasesGrupales_;i++) {
 		if (ClassGrupSucur_[i] != nullptr && ClassGrupSucur_[i]->getCodClase() == cod) {
 			return ClassGrupSucur_[i];
 		}
@@ -389,7 +380,7 @@ string Sucursal::toString() {
 		<< "---| Telefono: " << telef << endl
 		<< "---| Numero de Clientes: " << numClientes_ << "/" << capClientes_ << endl
 		<< "---| Numero de Instructores: " << numInstructores_ << "/" << capInstruc_ << endl
-		<< "---| Numero de Clases Grupales: " << numClasesGrups_ << "/" << capClasesGrups_ << endl;
+		<< "---| Numero de Clases Grupales: " << numClasesGrups_ << "/" <<capClasesGrupales_<< endl;
 	return ss.str();
 }
 

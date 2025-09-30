@@ -16,6 +16,10 @@ private:
 
 public:
     Ejercicios();
+    int getNumPechoTric();
+    int getNumBiceps();
+    int getNumPiernas(); 
+    int getNumEspalda(); 
     void listarPechoTric();
     void listarBiceps();
     void listarPiernas();

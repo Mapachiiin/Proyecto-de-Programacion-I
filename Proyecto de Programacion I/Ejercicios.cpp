@@ -21,6 +21,19 @@ Ejercicios::Ejercicios() {
 
 }
 
+int Ejercicios::getNumPechoTric() {
+    return numPechoTric_;
+}
+int Ejercicios::getNumBiceps() {
+    return numBiceps_;
+}
+int Ejercicios::getNumPiernas() {
+    return numPiernas_;
+}
+int Ejercicios::getNumEspalda() {
+    return numEspalda_;
+}
+
 void Ejercicios::listarPechoTric() {
     for (int i = 0; i < numPechoTric_; i++) {
         cout << i + 1 << ". " << pechoTric_[i] << endl;

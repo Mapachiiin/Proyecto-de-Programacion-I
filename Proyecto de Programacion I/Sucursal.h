@@ -24,9 +24,7 @@ private:
 
 	ClaseGrupal** ClassGrupSucur_;
 	int numClasesGrups_;
-	int capClasesGrups_;
-	
-
+	int capClasesGrupales_;
 public:
 	Sucursal();
 	Sucursal(string, int, string, string, string, int, int);
@@ -48,7 +46,7 @@ public:
 	int getNumInstructores();
 	int getCapInstructores();
 	int getNumClasesGrups();
-	int getCapClasesGrups();
+	int getCapClasesGrupales();
 	string getCod();
 	Cliente* buscarCliente(int cedula);
 	Instructor* buscarInstructor(int cedula);

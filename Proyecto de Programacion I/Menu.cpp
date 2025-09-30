@@ -36,7 +36,8 @@ void Menu::mostrarMenu() {
 		cout << "\n\n2. Eliminar Sucursal" << endl;
 		cout << "\n\n3. Listar Sucursales" << endl;
 		cout << "\n\n4. Gestionar Sucursal" << endl;
-		cout << "\n\n5. Cerrar programa" << endl << endl;
+		cout << "\n\n5. Gestionar ejercicios" << endl;
+		cout << "\n\n6. Cerrar programa" << endl << endl;
 		cout << "\n\n---| Ingrese la opcion que desea realizar: ";
 
 		cin >> resp;
@@ -57,6 +58,9 @@ void Menu::mostrarMenu() {
 			this->menuGestionarSucursal();
 			break;
 		case 5:
+			control_->menuGestionarEjercicios();
+			break;
+		case 6:
 			cout << "---| Cerrando el programa. Hasta luego! |-" << endl;
 			exit(0);
 		default:
@@ -67,7 +71,7 @@ void Menu::mostrarMenu() {
 			continue;
 		}
 
-	} while (resp != 5);
+	} while (resp != 6);
 }
 
 void Menu::menuAgregarSucursal() {
@@ -109,7 +113,6 @@ void Menu::menuAgregarSucursal() {
 		}
 		while (true) {
 			cout << "---| Ingrese el telefono de la sucursal (8 digitos): ";
-			cin.ignore();
 			tel = 0;
 			cin >> tel;
 			if (!cin.good()) {
@@ -194,7 +197,6 @@ void Menu::menuAgregarSucursal() {
 					continue;
 				}
 			}
-			;
 			if (corr.find('@') == string::npos) {
 				cout << "---| El correo debe contener '@' |---" << endl; //Si .find no encuentra el arroba, devuelve string::npos(asi lo aprendi jaja) por lo que igualarlo seria lo mejor
 				continue;
@@ -378,7 +380,7 @@ void Menu::menuListarSucursales() {
 		break;
 	}
 
-	cout << endl << "-| Presione Enter para volver al menu principal..." << endl;
+	cout << endl << "---| Presione Enter para volver al menu principal |---" << endl;
 	cin.get();
 	system("cls");
 	return;

@@ -68,25 +68,25 @@ void ReporteMedicion::clasifiIMC(){
 	if (IMC < 16.00) {
 		clasiIMC = "Delgadez severa";
 	}
-	else if (IMC >= 16.01 && IMC < 16.99) {
+	else if (IMC >= 16.01 && IMC <= 16.99) {
 		clasiIMC = "Delgadez moderada";
 	}
-	else if (IMC >= 17.00 && IMC < 18.49) {
+	else if (IMC >= 17.00 && IMC <= 18.49) {
 		clasiIMC = "Delgadez leve";
 	}
-	else if (IMC >= 18.50 && IMC < 24.99) {
+	else if (IMC >= 18.50 && IMC <= 24.99) {
 		clasiIMC = "Normal";
 	}
-	else if (IMC >= 25.00 && IMC < 29.99) {
+	else if (IMC >= 25.00 && IMC <= 29.99) {
 		clasiIMC = "Pre-obesidad";
 	}
-	else if (IMC >= 30.00 && IMC < 34.99) {
+	else if (IMC >= 30.00 && IMC <= 34.99) {
 		clasiIMC = "Obesidad leve";
 	}
-	else if (IMC >= 35.00 && IMC < 39.99) {
+	else if (IMC >= 35.00 && IMC <= 39.99) {
 		clasiIMC = "Obesidad media";
 	}
-	else if (IMC>=40.00){
+	else if (IMC >= 40.00) {
 		clasiIMC = "Obesidad morbida";
 	}
 	else{
@@ -113,6 +113,9 @@ void ReporteMedicion::deterAltoRiesgo() {
 	}
 }
 string ReporteMedicion::toString() {
+	if(cli == nullptr){
+		return "---| No hay cliente para crear un reporte |---";
+	}
 	calcuIMC();
 	clasifiIMC();
 	calcuProteRecomend();
