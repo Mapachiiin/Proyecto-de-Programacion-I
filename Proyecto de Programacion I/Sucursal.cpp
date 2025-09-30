@@ -425,49 +425,49 @@ void Sucursal::listarClientesPorIMC() {
 	}
 
 	if (cDelgSevera >= 1) {
-		cout << "---| Delgadez severa (" << cDelgSevera << " clientes) |---" << endl << endl;
+		cout << "---| Delgadez severa (" << cDelgSevera << " clientes) |---" << endl;
 		for (int i = 0; i < cDelgSevera; i++) {
 			cout << "---| " << delgSevera[i]->getNombre() << endl;
 		}
 	}
 	if (cDelgModerada >= 1) {
-	cout << "---| Delgadez moderada (" << cDelgModerada << " clientes) |---" << endl;
+	cout << "\n---| Delgadez moderada (" << cDelgModerada << " clientes) |---" << endl;
 	for (int i = 0; i < cDelgModerada; i++) {
 		cout << "---| " << delgModerada[i]->getNombre() << endl;
 	}
 }
 	if (cDelgLeve >= 1) {
-		cout << "---| Delgadez leve (" << cDelgLeve << " clientes) |---" << endl;
+		cout << "\n---| Delgadez leve (" << cDelgLeve << " clientes) |---" << endl;
 		for (int i = 0; i < cDelgLeve; i++) {
 			cout << "---| " << delgLeve[i]->getNombre() << endl;
 		}
 	}
 	if (cNormal >= 1) {
-		cout << "---| Normal (" << cNormal << " clientes) |---" << endl;
+		cout << "\n---| Normal (" << cNormal << " clientes) |---" << endl;
 		for (int i = 0; i < cNormal; i++) {
 			cout << "---| " << normal[i]->getNombre() << endl;
 		}
 	}
 	if (cPreObesidad >= 1){
-	cout << "---| Pre-obesidad (" << cPreObesidad << " clientes) |---" << endl;
+	cout << "\n---| Pre-obesidad (" << cPreObesidad << " clientes) |---" << endl;
 	for (int i = 0; i < cPreObesidad; i++) {
 		cout << "---| " << preObesidad[i]->getNombre() << endl;
 	}
 	}
 	if (cObesLeve >= 1) {
-		cout << "---| Obesidad leve (" << cObesLeve << " clientes) |---" << endl;
+		cout << "\n---| Obesidad leve (" << cObesLeve << " clientes) |---" << endl;
 		for (int i = 0; i < cObesLeve; i++) {
 			cout << "---| " << obesLeve[i]->getNombre() << endl;
 		}
 	}
 	if (cObesMedia >= 1) {
-		cout << "---| Obesidad media (" << cObesMedia << " clientes) |---" << endl;
+		cout << "\n---| Obesidad media (" << cObesMedia << " clientes) |---" << endl;
 		for (int i = 0; i < cObesMedia; i++) {
 			cout << "---| " << obesMedia[i]->getNombre() << endl;
 		}
 	}
 	if (cObesMorbida >= 1) {
-		cout << "---| Obesidad morbida (" << cObesMorbida << " clientes) |---" << endl;
+		cout << "\n---| Obesidad morbida (" << cObesMorbida << " clientes) |---" << endl;
 		for (int i = 0; i < cObesMorbida; i++) {
 			cout << "---| " << obesMorbida[i]->getNombre() << endl;
 		}
