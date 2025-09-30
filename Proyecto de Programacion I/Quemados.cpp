@@ -37,7 +37,7 @@ void Quemados::IngreDatosQuemados() {
 	string ejer1n = "Saltos";
 	Cliente* c1 = new Cliente("Elias", 121383329, 87278865, "eMati@gmail.com", "02/12/2000", 'H', "20/04/2024", 0, inst1);
 	sucursal->agregarCliente(c1);
-	ReporteMedicion* repo1 = new ReporteMedicion(*c1, "15/08/2025", 72.5, 1.80, 14.8, 42.0, 23, 9.5, 82.0, 95.0, 100.0, 58.0, false);
+	ReporteMedicion* repo1 = new ReporteMedicion(*c1, "15/08/2025", 50.0, 1.80, 14.8, 42.0, 23, 9.5, 82.0, 95.0, 100.0, 58.0, false);
 	c1->agregarReporte(*repo1);
 	Rutina* rutina1 = new Rutina(c1, "descripcion", 60, 10);
 	Ejercicio* ejer1 = new Ejercicio (ejer1n);
@@ -47,7 +47,7 @@ void Quemados::IngreDatosQuemados() {
 	string ejer2n = "Sentadillas";
 	Cliente* c2 = new Cliente("Sofia", 221383330, 88884444, "sofia@gmail.com", "11/03/1998", 'M', "21/04/2024", 0, inst2);
 	sucursal->agregarCliente(c2);
-	ReporteMedicion* repo2 = new ReporteMedicion(*c2, "15/08/2025", 60.0, 1.65, 20.5, 35.0, 27, 8.0, 70.0, 95.0, 90.0, 55.0, true);
+	ReporteMedicion* repo2 = new ReporteMedicion(*c2, "15/08/2025", 60.0, 1.80, 20.5, 35.0, 27, 8.0, 70.0, 95.0, 90.0, 55.0, true);
 	c2->agregarReporte(*repo2);
 	Rutina* rutina2 = new Rutina(c2, "Rutina general de tonificación", 50, 8);
 	Ejercicio* ejer2 = new Ejercicio(ejer2n);
@@ -57,7 +57,7 @@ void Quemados::IngreDatosQuemados() {
 	string ejer3n = "Press banca";
 	Cliente* c3 = new Cliente("Andres", 321383331, 87776666, "andres@gmail.com", "25/07/1995", 'H', "22/04/2024", 0, inst3);
 	sucursal->agregarCliente(c3);
-	ReporteMedicion* repo3 = new ReporteMedicion(*c3, "15/08/2025", 80.0, 1.82, 16.0, 40.0, 28, 10.0, 85.0, 98.0, 105.0, 60.0, true);
+	ReporteMedicion* repo3 = new ReporteMedicion(*c3, "15/08/2025", 120.0, 1.82, 16.0, 40.0, 28, 10.0, 85.0, 98.0, 105.0, 60.0, true);
 	c3->agregarReporte(*repo3);
 	Rutina* rutina3 = new Rutina(c3, "Rutina de fuerza avanzada", 70, 10);
 	Ejercicio* ejer3 = new Ejercicio(ejer3n);
@@ -67,7 +67,7 @@ void Quemados::IngreDatosQuemados() {
 	string ejer4n = "Plancha";
 	Cliente* c4 = new Cliente("Valeria", 421383332, 89997777, "valeria@gmail.com", "30/08/1999", 'M', "23/04/2024", 0, inst4);
 	sucursal->agregarCliente(c4);
-	ReporteMedicion* repo4 = new ReporteMedicion(*c4, "15/08/2025", 55.0, 1.62, 19.0, 36.0, 25, 7.5, 68.0, 92.0, 88.0, 53.0, true);
+	ReporteMedicion* repo4 = new ReporteMedicion(*c4, "15/08/2025", 80.0, 1.62, 19.0, 36.0, 25, 7.5, 68.0, 92.0, 88.0, 53.0, true);
 	c4->agregarReporte(*repo4);
 	Rutina* rutina4 = new Rutina(c4, "Rutina de resistencia", 45, 7);
 	Ejercicio* ejer4 = new Ejercicio(ejer4n);
@@ -77,7 +77,7 @@ void Quemados::IngreDatosQuemados() {
 	string ejer5n = "Peso muerto";
 	Cliente* c5 = new Cliente("Mateo", 521383333, 86665555, "mateo@gmail.com", "14/01/2001", 'H', "24/04/2024", 0, inst5);
 	sucursal->agregarCliente(c5);
-	ReporteMedicion* repo5 = new ReporteMedicion(*c5, "15/08/2025", 70.0, 1.75, 15.5, 41.0, 22, 9.0, 80.0, 94.0, 98.0, 57.0, true);
+	ReporteMedicion* repo5 = new ReporteMedicion(*c5, "15/08/2025", 55.5, 1.75, 15.5, 41.0, 22, 9.0, 80.0, 94.0, 98.0, 57.0, true);
 	c5->agregarReporte(*repo5);
 	Rutina* rutina5 = new Rutina(c5, "Rutina de potencia", 60, 9);
 	Ejercicio* ejer5 = new Ejercicio(ejer5n);
@@ -87,7 +87,7 @@ void Quemados::IngreDatosQuemados() {
 	string ejer6n = "Zancadas";
 	Cliente* c6 = new Cliente("Camila", 621383334, 85554444, "camila@gmail.com", "09/06/1997", 'M', "25/04/2024", 0, inst1);
 	sucursal->agregarCliente(c6);
-	ReporteMedicion* repo6 = new ReporteMedicion(*c6, "15/08/2025", 58.0, 1.68, 21.0, 34.0, 26, 8.5, 72.0, 94.0, 89.0, 54.0, true);
+	ReporteMedicion* repo6 = new ReporteMedicion(*c6, "15/08/2025", 49.8, 1.70, 21.0, 34.0, 26, 8.5, 72.0, 94.0, 89.0, 54.0, true);
 	c6->agregarReporte(*repo6);
 	Rutina* rutina6 = new Rutina(c6, "Rutina de tonificación", 50, 8);
 	Ejercicio* ejer6 = new Ejercicio(ejer6n);
@@ -117,7 +117,7 @@ void Quemados::IngreDatosQuemados() {
 	string ejer9n = "Press militar";
 	Cliente* c9 = new Cliente("Gabriel", 921383337, 82221111, "gabriel@gmail.com", "12/04/1994", 'H', "28/04/2024", 0, inst4);
 	sucursal->agregarCliente(c9);
-	ReporteMedicion* repo9 = new ReporteMedicion(*c9, "15/08/2025", 85.0, 1.85, 18.0, 38.0, 30, 11.0, 88.0, 100.0, 108.0, 62.0, false);
+	ReporteMedicion* repo9 = new ReporteMedicion(*c9, "15/08/2025", 100.0, 1.85, 18.0, 38.0, 30, 11.0, 88.0, 100.0, 108.0, 62.0, false);
 	c9->agregarReporte(*repo9);
 	Rutina* rutina9 = new Rutina(c9, "Rutina avanzada", 75, 10);
 	Ejercicio* ejer9 = new Ejercicio(ejer9n);
@@ -127,7 +127,7 @@ void Quemados::IngreDatosQuemados() {
 	string ejer10n = "Burpees";
 	Cliente* c10 = new Cliente("Lucia", 1021383338, 81110000, "lucia@gmail.com", "01/10/1993", 'M', "29/04/2024", 0, inst5);
 	sucursal->agregarCliente(c10);
-	ReporteMedicion* repo10 = new ReporteMedicion(*c10, "15/08/2025", 62.0, 1.70, 22.0, 33.0, 29, 9.2, 74.0, 96.0, 92.0, 56.0, true);
+	ReporteMedicion* repo10 = new ReporteMedicion(*c10, "15/08/2025", 90.0, 1.70, 22.0, 33.0, 29, 9.2, 74.0, 96.0, 92.0, 56.0, true);
 	c10->agregarReporte(*repo10);
 	Rutina* rutina10 = new Rutina(c10, "Rutina de cardio y fuerza", 55, 8);
 	Ejercicio* ejer10 = new Ejercicio(ejer10n);
