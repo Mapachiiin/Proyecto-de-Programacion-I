@@ -63,6 +63,7 @@ public:
 	void listarClasesGrupales();
 	void listarClientesDeInstructor(Instructor* inst);
 	void listarClasesGrupalesCliente(Cliente* cli);
+	void listarClientesPorIMC();	
 
 	string toString();
 };

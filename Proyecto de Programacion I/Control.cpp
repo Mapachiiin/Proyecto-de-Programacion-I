@@ -546,11 +546,12 @@ void Control::menuGestionarClientes(Sucursal* sucu) {
 	int resp = 0;
 	do {
 		cout << "---| Menu de gestion de clientes de la sucursal " << sucu->getCod() << " |---\n" << endl;
-		cout << "\n1. Listar clientes " << endl;
-		cout << "\n2. Agregar cliente" << endl;
-		cout << "\n3. Gestionar cliente" << endl;
-		cout << "\n4. Eliminar cliente" << endl << endl;
-		cout << "\n5. Salir" << endl << endl;
+		cout << "1. Clasificacion de clientes por IMC" << endl;
+		cout << "\n2. Listar clientes " << endl;
+		cout << "\n3. Agregar cliente" << endl;
+		cout << "\n4. Gestionar cliente" << endl;
+		cout << "\n5. Eliminar cliente" << endl;
+		cout << "\n6. Salir" << endl << endl;
 		cout << "\n---| Ingrese la opcion que desea realizar: ";
 		cin >> resp;
 		cin.clear();
@@ -558,7 +559,12 @@ void Control::menuGestionarClientes(Sucursal* sucu) {
 		system("cls");
 
 		switch (resp) {
-		case 1:
+		case 1:{
+			sucu->listarClientesPorIMC();
+			system("cls");
+			break;
+		}
+		case 2:
 		{
 			cout << "---| Listado de clientes |---" << endl << endl;
 			sucu->listarClientes();
@@ -568,25 +574,25 @@ void Control::menuGestionarClientes(Sucursal* sucu) {
 			system("cls");
 			break;
 		}
-		case 2:
+		case 3:
 		{
 			this->agregarCliente(sucu);
 			system("cls");
 			break;
 		}
-		case 3:
+		case 4:
 		{
 			this->gestionarCliente(sucu);
 			system("cls");
 			break;
 		}
-		case 4:
+		case 5:
 		{
 			this->eliminarCliente(sucu);
 			system("cls");
 			break;
 		}
-		case 5:
+		case 6:
 		{
 			cin.clear();
 			cin.ignore(10000, 'n');
@@ -601,7 +607,7 @@ void Control::menuGestionarClientes(Sucursal* sucu) {
 			continue;
 		}
 		}
-	} while (resp != 5);
+	} while (resp != 6);
 }
 void Control::agregarCliente(Sucursal* sucu) {
 	int telf, ced;

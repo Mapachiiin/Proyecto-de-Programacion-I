@@ -93,6 +93,10 @@ void ReporteMedicion::clasifiIMC(){
 		clasiIMC = "Error en el calculo";
 	}
 }
+string ReporteMedicion::getClasiIMC() {
+	clasifiIMC();
+	return clasiIMC;
+}
 void ReporteMedicion::calcuProteRecomend() {
 	if(haceEjercicio&&cli->getSexo()=='M')
 		proteRecomend = 2.1 * peso;

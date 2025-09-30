@@ -154,7 +154,7 @@ void Quemados::IngreDatosQuemados() {
 
 	// ==================== SUCURSAL 2 ====================
 
-	Sucursal* sucursal2 = control_->buscarSucursal("SUC003");
+	Sucursal* sucursal2 = control_->buscarSucursal("SUC002");
 
 	// ==================== INSTRUCTORES ====================
 

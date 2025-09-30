@@ -371,6 +371,112 @@ void Sucursal::listarClasesGrupalesCliente(Cliente* cli) {
 		}
 	}
 }
+void Sucursal::listarClientesPorIMC() {
+	if (numClientes_ == 0) {
+		cout << "---| No hay clientes en la sucursal " << cod << " |---" << endl;
+		cout << "---| Presione enter para volver al menu |---" << endl;
+		cin.ignore(10000, '\n');
+		return;
+	}
+
+	cout << "---| Lista de clientes clasificados por su IMC en la sucursal " << cod << " |---" << endl;
+	cout << "---| Si no hay clientes en alguna de las clasificaciones, simplemente no se mostraran. |---" << endl << endl;
+
+	Cliente* delgSevera[100];   int cDelgSevera = 0;
+	Cliente* delgModerada[100]; int cDelgModerada = 0;
+	Cliente* delgLeve[100];     int cDelgLeve = 0;
+	Cliente* normal[100];       int cNormal = 0;
+	Cliente* preObesidad[100];  int cPreObesidad = 0;
+	Cliente* obesLeve[100];     int cObesLeve = 0;
+	Cliente* obesMedia[100];    int cObesMedia = 0;
+	Cliente* obesMorbida[100];  int cObesMorbida = 0;
+
+	for (int i = 0; i < numClientes_; i++) {
+		if (cliSucur_[i]->getNumReportes() == 0) {
+			continue;
+		}
+		int num = cliSucur_[i]->getNumReportes() - 1;
+		string clasificacion = cliSucur_[i]->getReportePorIndice(num)->getClasiIMC();
+
+		if (clasificacion == "Delgadez severa") {
+			delgSevera[cDelgSevera++] = cliSucur_[i];
+		}
+		else if (clasificacion == "Delgadez moderada") {
+			delgModerada[cDelgModerada++] = cliSucur_[i];
+		}
+		else if (clasificacion == "Delgadez leve") {
+			delgLeve[cDelgLeve++] = cliSucur_[i];
+		}
+		else if (clasificacion == "Normal") {
+			normal[cNormal++] = cliSucur_[i];
+		}
+		else if (clasificacion == "Pre-obesidad") {
+			preObesidad[cPreObesidad++] = cliSucur_[i];
+		}
+		else if (clasificacion == "Obesidad leve") {
+			obesLeve[cObesLeve++] = cliSucur_[i];
+		}
+		else if (clasificacion == "Obesidad media") {
+			obesMedia[cObesMedia++] = cliSucur_[i];
+		}
+		else if (clasificacion == "Obesidad morbida") {
+			obesMorbida[cObesMorbida++] = cliSucur_[i];
+		}
+	}
+
+	if (cDelgSevera >= 1) {
+		cout << "---| Delgadez severa (" << cDelgSevera << " clientes) |---" << endl << endl;
+		for (int i = 0; i < cDelgSevera; i++) {
+			cout << "---| " << delgSevera[i]->getNombre() << endl;
+		}
+	}
+	if (cDelgModerada >= 1) {
+	cout << "---| Delgadez moderada (" << cDelgModerada << " clientes) |---" << endl;
+	for (int i = 0; i < cDelgModerada; i++) {
+		cout << "---| " << delgModerada[i]->getNombre() << endl;
+	}
+}
+	if (cDelgLeve >= 1) {
+		cout << "---| Delgadez leve (" << cDelgLeve << " clientes) |---" << endl;
+		for (int i = 0; i < cDelgLeve; i++) {
+			cout << "---| " << delgLeve[i]->getNombre() << endl;
+		}
+	}
+	if (cNormal >= 1) {
+		cout << "---| Normal (" << cNormal << " clientes) |---" << endl;
+		for (int i = 0; i < cNormal; i++) {
+			cout << "---| " << normal[i]->getNombre() << endl;
+		}
+	}
+	if (cPreObesidad >= 1){
+	cout << "---| Pre-obesidad (" << cPreObesidad << " clientes) |---" << endl;
+	for (int i = 0; i < cPreObesidad; i++) {
+		cout << "---| " << preObesidad[i]->getNombre() << endl;
+	}
+	}
+	if (cObesLeve >= 1) {
+		cout << "---| Obesidad leve (" << cObesLeve << " clientes) |---" << endl;
+		for (int i = 0; i < cObesLeve; i++) {
+			cout << "---| " << obesLeve[i]->getNombre() << endl;
+		}
+	}
+	if (cObesMedia >= 1) {
+		cout << "---| Obesidad media (" << cObesMedia << " clientes) |---" << endl;
+		for (int i = 0; i < cObesMedia; i++) {
+			cout << "---| " << obesMedia[i]->getNombre() << endl;
+		}
+	}
+	if (cObesMorbida >= 1) {
+		cout << "---| Obesidad morbida (" << cObesMorbida << " clientes) |---" << endl;
+		for (int i = 0; i < cObesMorbida; i++) {
+			cout << "---| " << obesMorbida[i]->getNombre() << endl;
+		}
+	}
+	cout << "\n---| Presione enter para volver al menu |---" << endl;
+	cin.get();
+	system("cls");
+}
+
 string Sucursal::toString() {
 	stringstream ss;
 	ss << "---| Sucursal Codigo " << cod <<" |---" << endl
