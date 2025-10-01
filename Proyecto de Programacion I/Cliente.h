@@ -47,7 +47,7 @@ public:
 	void setSexo(char mf);
 	void setFechaIns(string fI);
 	void setInscritos(int ins);
-	void setIntructor(Instructor* ins);
+	void setInstructor(Instructor* ins);
 	void asignarRutina(Rutina* ruti);
 	void agregarReporte(const ReporteMedicion& rep);
 	ReporteMedicion* getReportePorIndice(int rep);

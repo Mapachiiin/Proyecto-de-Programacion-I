@@ -23,7 +23,7 @@ public:
 	void setNombre(string nom);
 	void setTelef(int tel);
 	void setCorreo(string corr);	
-	void setFechaNac(int fN);
+	void setFechaNac(string fN);
 	int getCed();
 	string getNombre();
 	int getTelef();

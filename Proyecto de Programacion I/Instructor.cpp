@@ -85,7 +85,7 @@ void Instructor::setTelef(int tel){
 void Instructor::setCorreo(string corr) {
 	correo=corr;
 }
-void Instructor::setFechaNac(int fN){
+void Instructor::setFechaNac(string fN){
 	fechaNac=fN;
 }
 int Instructor::getCed(){
@@ -107,7 +107,9 @@ int Instructor::getNumEspecialidades(){
 	return numEspecialidades;
 }
 string Instructor::getEspecialidadPrinci() {
-	return espeIns[0];
+	if(numEspecialidades >0 ) {
+		return espeIns[0];
+	}
 }
 bool Instructor::tieneEspecialidad(string& esp) {
 	for (int i = 0; i < numEspecialidades; i++) {

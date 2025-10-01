@@ -159,7 +159,7 @@ void Sucursal::eliminarInstructor(int cedula) {
 		if (cliSucur_[j] != nullptr && cliSucur_[j]->getInstructor() != nullptr &&
 			cliSucur_[j]->getInstructor()->getCed() == cedula) {
 			if (nuevoInstructor != nullptr) {
-				cliSucur_[j]->setIntructor(nuevoInstructor);
+				cliSucur_[j]->setInstructor(nuevoInstructor);
 				cout << "\n---| El instructor del cliente " << cliSucur_[j]->getNombre() << " ha sido cambiado al instructor  " << nuevoInstructor->getNombre() <<" con cedula " <<nuevoInstructor->getCed()<<" |---" << endl;
 			}else {
 				cout << "\n---| No hay otro instructor disponible para reasignar al cliente "<< cliSucur_[j]->getNombre() <<" con cedula " <<cliSucur_[j]->getCed()<< ". No se puede eliminar el instructor. |---" << endl;

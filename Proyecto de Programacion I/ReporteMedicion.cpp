@@ -98,12 +98,14 @@ string ReporteMedicion::getClasiIMC() {
 	return clasiIMC;
 }
 void ReporteMedicion::calcuProteRecomend() {
-	if(haceEjercicio&&cli->getSexo()=='M')
+	if (cli!=nullptr){
+	if (haceEjercicio && cli->getSexo() == 'M')
 		proteRecomend = 2.1 * peso;
-	else if(haceEjercicio&&cli->getSexo()=='F')
+	else if (haceEjercicio && cli->getSexo() == 'F')
 		proteRecomend = 1.7 * peso;
 	else
-	proteRecomend = 0.8 * peso;
+		proteRecomend = 0.8 * peso;
+}
 }
 void ReporteMedicion::calcuVasosAgua(){
 	vasosAgua = peso / 7;
@@ -144,8 +146,12 @@ string ReporteMedicion::toString() {
 		<< "Proteina recomendada diaria: " << proteRecomend << " g" << endl
 		<< "Cantidad de agua recomendados al dia: " << vasosAgua << " vasos de 250 ml" << endl
 		<< "Es un paciente de alto riesgo?: " << (altoRiesgo ? "Si" : "No") << endl;
+	if (cli->getInstructor() != nullptr){
 		ss<< "Instructor asignado: " << cli->getInstructor()->getNombre() << endl
 		<< "Numero de contacto del instructor: " << cli->getInstructor()->getTelef() << endl
 		<< "Correo del instructor: " << cli->getInstructor()->getCorreo() << endl;
+	} else {
+		ss << "Instructor asignado: No hay ningun instructor asignado" << endl;
+	}
 	return ss.str();
 }

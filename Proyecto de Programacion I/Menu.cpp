@@ -186,7 +186,6 @@ void Menu::menuAgregarSucursal() {
 		while (true) {
 			cout << "---| Ingrese el correo electronico de la sucursal (ejemplo@gym.pl.com): ";
 			getline(cin, corr);
-			int com = corr.size() - 1;
 			if (corr.empty()) {
 				cout << "---| El correo no puede estar vacio |---" << endl;
 				continue;
@@ -201,7 +200,7 @@ void Menu::menuAgregarSucursal() {
 				cout << "---| El correo debe contener '@' |---" << endl; //Si .find no encuentra el arroba, devuelve string::npos(asi lo aprendi jaja) por lo que igualarlo seria lo mejor
 				continue;
 			}
-			if (corr.rfind("@gym.pl.com") != corr.size() - 11) {
+			if (corr.size()<11 || corr.rfind("@gym.pl.com") != corr.size() - 11) {
 				cout << "---| El correo debe terminar en @gym.pl.com |---" << endl; //.rfind empieza a buscar la posicion donde empieza lo que busca 
 				//(en este caso @gym.pl.com el cual tiene 11 digitos, por lo que restarle los 11 digitos al tamannio total deberia dar el caracter inicial, ya que tambien
 				//por otra parte el .size devuelve un numero del 1 al no se cuantos y el string que es un vector, empieza igual que cualquier vector en 0. :D

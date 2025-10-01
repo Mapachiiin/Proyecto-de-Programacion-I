@@ -43,6 +43,10 @@ Cliente::~Cliente() {
 		delete reportes_[i];
 	}
 	delete[] reportes_;
+	if (ruti_) {
+		delete ruti_;
+		ruti_ = nullptr;
+	}
 }
 string Cliente::getNombre(){
 	return name_;
@@ -102,7 +106,7 @@ void Cliente::setFechaIns(string fI){
 void Cliente::setInscritos(int ins){
 	this->inscritos_=ins;
 }
-void Cliente::setIntructor(Instructor* ins){
+void Cliente::setInstructor(Instructor* ins){
 	this->instAsig_ = ins;
 }
 void Cliente::asignarRutina(Rutina* ruti) {

@@ -18,8 +18,10 @@ Control::Control() {
 	
 }
 Control::~Control() {
-	for (int i = 0; i < capSucursales_&&sucursales_[i]!=nullptr; ++i) {
+	for (int i = 0; i < capSucursales_; ++i) {
+		if (sucursales_[i]){
 		delete sucursales_[i];
+		}
 	}
 	delete[] sucursales_;
 	numSucursales_ = 0;
@@ -81,6 +83,7 @@ void Control::gestionarSucursal(string codigo) {
 						cout << "---| El codigo ya existe. Por favor, ingrese un codigo diferente. |-" << endl;
 						continue;
 					}
+					sucursal->setCod(codi);
 					break;
 				}
 				break;
@@ -112,6 +115,7 @@ void Control::gestionarSucursal(string codigo) {
 						cout << "---| El correo debe terminar en @gym.pl.com |---" << endl;
 						continue;
 					}
+					sucursal->setCorreo(corr);
 					break;
 				}
 				break;
@@ -134,6 +138,7 @@ void Control::gestionarSucursal(string codigo) {
 						continue;
 					}
 					cin.ignore(10000, '\n');	
+					sucursal->setTelef(tel);
 					break;
 				}
 				break;
@@ -269,25 +274,25 @@ void Control::menuGestionarEjercicios() {
 				switch (cate) {
 				case 1: {
 					catalogo->listarPechoTric();
-					system("pause");
+					cin.get();
 					system("cls");
 					continue;
 				}
 				case 2: {
 					catalogo->listarBiceps();
-					system("pause");
+					cin.get();
 					system("cls");
 					continue;
 				}
 				case 3: {
 					catalogo->listarPiernas();
-					system("pause");
+					cin.get();
 					system("cls");
 					continue;
 				}
 				case 4: {
 					catalogo->listarEspalda();
-					system("pause");
+					cin.get();
 					system("cls");
 					continue;
 				}
@@ -396,7 +401,7 @@ void Control::menuGestionarEjercicios() {
 					system("cls");
 					if(catalogo->getNumPechoTric()==0) {
 							cout << "---| No hay ejercicios en esta categoria. |---" << endl;
-							system("pause");
+							cin.get();
 							system("cls");
 							break;
 						}
@@ -418,7 +423,7 @@ void Control::menuGestionarEjercicios() {
 						}
 						catalogo->eliPechoTric(num - 1);
 						cout << "\n---| Ejercicio eliminado |---\n";
-						system("pause");
+						cin.get();
 						system("cls");
 						break;
 					}
@@ -427,7 +432,7 @@ void Control::menuGestionarEjercicios() {
 				case 2: {
 					if(catalogo->getNumBiceps()==0) {
 							cout << "---| No hay ejercicios en esta categoria. |---" << endl;
-							system("pause");
+							cin.get();
 							system("cls");
 							break;
 					}
@@ -448,7 +453,7 @@ void Control::menuGestionarEjercicios() {
 						}
 						catalogo->eliBiceps(num - 1);
 						cout << "\n---| Ejercicio eliminado |---\n";
-						system("pause");
+						cin.get();
 						system("cls");
 						break;
 					}
@@ -457,7 +462,7 @@ void Control::menuGestionarEjercicios() {
 				case 3: {
 					if(catalogo->getNumPiernas()==0) {
 							cout << "---| No hay ejercicios en esta categoria. |---" << endl;
-							system("pause");
+							cin.get();
 							system("cls");
 							break;
 					}
@@ -478,7 +483,7 @@ void Control::menuGestionarEjercicios() {
 						}
 						catalogo->eliPiernas(num - 1);
 						cout << "\n---| Ejercicio eliminado |---\n";
-						system("pause");
+						cin.get();
 						system("cls");
 						break;
 					}
@@ -487,7 +492,7 @@ void Control::menuGestionarEjercicios() {
 				case 4: {
 					if(catalogo->getNumEspalda()==0) {
 							cout << "---| No hay ejercicios en esta categoria. |---" << endl;
-							system("pause");
+							cin.get();
 							system("cls");
 							break;
 					}
@@ -508,7 +513,7 @@ void Control::menuGestionarEjercicios() {
 						}
 						catalogo->eliEspalda(num - 1);
 						cout << "\n---| Ejercicio eliminado |---\n";
-						system("pause");
+						cin.get();
 						system("cls");
 						break;
 					}
@@ -1444,20 +1449,20 @@ void Control::menuGestionarRutinas(Cliente* cli, Sucursal* sucu) {
 					Ejercicio* nuevo = new Ejercicio(nombre);
 					nuevaRutina->agregarEjercicio(nuevo);
 					cout << "---| Se agrego: " << nombre << " |---\n";
-					system("pause");
+					cin.get();
 				}
 
 			} while (resp != 5);
 
 			cout << "---| Rutina creada con exito. |---\n";
-			system("pause");
+			cin.get();
 			break;
 		}
 		case 2: {
 			if (cli->getRutina() == nullptr) {
 				system("cls");
 				cout << "---| El cliente no tiene rutina asignada. |---" << endl << endl;
-				system("pause");
+				cin.get();
 			}
 			else {
 				cout << cli->getRutina()->toString();
@@ -1945,7 +1950,7 @@ void Control::agregarInstructor(Sucursal* sucu) {
 void Control::gestionarInstructor(Sucursal* sucu) {
 	if (sucu->getNumInstructores() == 0) {
 		cout << "---| No hay instructores registrados. |---" << endl << endl;
-		system("pause");
+		cin.get();
 		system("cls");
 		return;
 	}
