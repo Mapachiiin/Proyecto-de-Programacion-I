@@ -241,10 +241,9 @@ void Sucursal::listarInstructores(){
 	}
 }
 void Sucursal::listarInstructoresPorEspe(string& esp) {
-	string tmp = esp;
 	bool alguno = false;
 	for (int i = 0; i < numInstructores_; ++i) {
-		if (insSucur_[i] && insSucur_[i]->tieneEspecialidad(tmp)) {
+		if (insSucur_[i] && insSucur_[i]->tieneEspecialidad(esp)) {
 			cout << "- " << insSucur_[i]->getNombre()
 				<< " | Ced: " << insSucur_[i]->getCed()
 				<< " | Tel: " << insSucur_[i]->getTelef()
@@ -254,15 +253,12 @@ void Sucursal::listarInstructoresPorEspe(string& esp) {
 	}
 	if (alguno){
 	cout << "---| Presione enter para volver al menu. |---" << endl;
+	} else {
+		cout << "---| No hay instructores con esa especialidad |---" << endl;
+	}
+	cin.ignore(10000, '\n');
 	cin.get();
 	system("cls");
-	}
-
-	if (!alguno) {
-		cout << "---| No hay instructores con esa especialidad |---" << endl;
-		cin.get();
-		system("cls");
-	}
 }
 void Sucursal::listarClasesGrupales() {
 	if (numClasesGrups_ == 0) {

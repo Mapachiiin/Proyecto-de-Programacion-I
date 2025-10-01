@@ -1729,7 +1729,6 @@ void Control::menuGestionarInstructores(Sucursal* sucu) {
 	}
 	case 2: {
 		this->menuListarInstructoresPorEspe(sucu);
-		system("cls");
 		break;
 	}
 	case 3:
