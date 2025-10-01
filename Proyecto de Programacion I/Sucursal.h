@@ -59,6 +59,7 @@ public:
 	void eliminarInstructor(int cedula);
 	void eliminarClaseGrupal(int codClase);
 	void listarInstructores();
+	void listarInstructoresPorEspe(string& espe);
 	void listarClientes();
 	void listarClasesGrupales();
 	void listarClientesDeInstructor(Instructor* inst);

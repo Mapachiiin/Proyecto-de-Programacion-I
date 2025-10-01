@@ -107,9 +107,10 @@ int Instructor::getNumEspecialidades(){
 	return numEspecialidades;
 }
 string Instructor::getEspecialidadPrinci() {
-	if(numEspecialidades >0 ) {
+	if(numEspecialidades > 0) {
 		return espeIns[0];
 	}
+	return "No tiene especialidades";
 }
 bool Instructor::tieneEspecialidad(string& esp) {
 	for (int i = 0; i < numEspecialidades; i++) {

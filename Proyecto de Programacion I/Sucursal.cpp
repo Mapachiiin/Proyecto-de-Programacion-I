@@ -240,6 +240,30 @@ void Sucursal::listarInstructores(){
 		}
 	}
 }
+void Sucursal::listarInstructoresPorEspe(string& esp) {
+	string tmp = esp;
+	bool alguno = false;
+	for (int i = 0; i < numInstructores_; ++i) {
+		if (insSucur_[i] && insSucur_[i]->tieneEspecialidad(tmp)) {
+			cout << "- " << insSucur_[i]->getNombre()
+				<< " | Ced: " << insSucur_[i]->getCed()
+				<< " | Tel: " << insSucur_[i]->getTelef()
+				<< " | Correo: " << insSucur_[i]->getCorreo() << endl;
+			alguno = true;
+		}
+	}
+	if (alguno){
+	cout << "---| Presione enter para volver al menu. |---" << endl;
+	cin.get();
+	system("cls");
+	}
+
+	if (!alguno) {
+		cout << "---| No hay instructores con esa especialidad |---" << endl;
+		cin.get();
+		system("cls");
+	}
+}
 void Sucursal::listarClasesGrupales() {
 	if (numClasesGrups_ == 0) {
 		cout << "---| No hay clases grupales en la sucursal " << cod <<" |---"<< endl;

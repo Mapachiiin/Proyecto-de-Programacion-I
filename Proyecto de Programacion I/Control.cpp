@@ -92,7 +92,6 @@ void Control::gestionarSucursal(string codigo) {
 				while (true) {
 					cout << "---| Ingrese el correo electronico de la sucursal (ejemplo@gym.pl.com): ";
 					getline(cin, corr);
-					int com = corr.size() - 1;
 					if (corr.empty()) {
 						cout << "---| El correo no puede estar vacio |---" << endl;
 						continue;
@@ -111,7 +110,7 @@ void Control::gestionarSucursal(string codigo) {
 						cout << "---| El correo debe contener '@' |---" << endl;
 						continue;
 					}
-					if (corr.rfind("@gym.pl.com") != corr.size() - 11) {
+					if (corr.size() < 11 || corr.rfind("@gym.pl.com") != corr.size() - 11) {
 						cout << "---| El correo debe terminar en @gym.pl.com |---" << endl;
 						continue;
 					}
@@ -829,7 +828,7 @@ void Control::eliminarCliente(Sucursal* sucu) {
 					codExis = false;
 					continue;
 				}
-				catch (out_of_range& e) {
+				catch (out_of_range&) {
 					system("cls");
 					cout << "---| La cedula ingresada es demasiado larga. Intente de nuevo. |---" << endl;
 					codExis = false;
@@ -1700,10 +1699,11 @@ void Control::menuGestionarInstructores(Sucursal* sucu) {
 	do{
 	cout << "---| Menu de gestion de instructores de la sucursal " << sucu->getCod() << " |---\n" << endl;
 	cout << "\n1. Listar instructores " << endl;
-	cout << "\n2. Agregar instructor" << endl;
-	cout << "\n3. Gestionar instructor" << endl;
-	cout << "\n4. Eliminar instructor" << endl;
-	cout << "\n5. Salir" << endl << endl;
+	cout << "\n2. Listar instructores por especialidad" << endl;
+	cout << "\n3. Agregar instructor" << endl;
+	cout << "\n4. Gestionar instructor" << endl;
+	cout << "\n5. Eliminar instructor" << endl;
+	cout << "\n6. Salir" << endl << endl;
 	cout << "\n---| Ingrese la opcion que desea realizar: ";
 	cin >> resp;
 	cin.ignore(10000, '\n');
@@ -1727,22 +1727,27 @@ void Control::menuGestionarInstructores(Sucursal* sucu) {
 		system("cls");
 		break;
 	}
-	case 2:
-	{
-		this->agregarInstructor(sucu);
+	case 2: {
+		this->menuListarInstructoresPorEspe(sucu);
+		system("cls");
 		break;
 	}
 	case 3:
 	{
+		this->agregarInstructor(sucu);
+		break;
+	}
+	case 4:
+	{
 		this->gestionarInstructor(sucu);
 		break;
 }
-	case 4:
+	case 5:
 	{
 		this->eliminarInstructor(sucu);
 		break;
 }
-	case 5:{
+	case 6:{
 		system("cls");
 		return;
 	}
@@ -2118,6 +2123,76 @@ void Control::menuGestionarCliInst(Instructor* ins, Sucursal* sucu) {
 		}
 		system("cls");
 		this->gestionarClienteSi(sucu, ced);
+	}
+}
+void Control::menuListarInstructoresPorEspe(Sucursal* sucu) {
+	int especialidad = 0;
+	while (true) {
+		system("cls");
+		cout << "---| Ingrese la especialidad principal del instructor: |---" << endl;
+		cout << "1. CrossFit" << endl;
+		cout << "2. HIIT" << endl;
+		cout << "3. TRX" << endl;
+		cout << "4. Pesas" << endl;
+		cout << "5. Spinning" << endl;
+		cout << "6. Cardio" << endl;
+		cout << "7. Yoga" << endl;
+		cout << "8. Zumba" << endl;
+		cout << "---| Ingrese el numero de la especialidad: ";
+		if(!(cin >> especialidad)){
+			cout << "---| Opcion invalida. |---" << endl;
+			cin.clear();
+			cin.ignore(10000, '\n');
+			continue;
+		}
+		if (especialidad >= 1 && especialidad <= 8) {
+			break;
+		}
+		else {
+			cout << "---| Opcion invalida. |---" << endl;
+			cin.clear();
+			cin.ignore(10000, '\n');
+		}
+	}
+	string nombreEspe = " ";
+	switch (especialidad) {
+		case 1:
+			nombreEspe = "CrossFit";
+			sucu->listarInstructoresPorEspe(nombreEspe);
+			break;
+		case 2:
+			nombreEspe = "HIIT";
+			sucu->listarInstructoresPorEspe(nombreEspe);
+			break;
+		case 3:
+			nombreEspe = "TRX";
+			sucu->listarInstructoresPorEspe(nombreEspe);			
+			break;
+		case 4:
+			nombreEspe = "Pesas";
+			sucu->listarInstructoresPorEspe(nombreEspe);
+			break;
+		case 5:
+			nombreEspe = "Spinning";
+			sucu->listarInstructoresPorEspe(nombreEspe);
+			break;
+		case 6:
+			nombreEspe = "Cardio";
+			sucu->listarInstructoresPorEspe(nombreEspe);
+			break;
+		case 7:
+			nombreEspe = "Yoga";
+			sucu->listarInstructoresPorEspe(nombreEspe);
+			break;
+		case 8:
+			nombreEspe = "Zumba";
+			sucu->listarInstructoresPorEspe(nombreEspe);
+			break;
+	default:
+		cout << "---| Opcion invalida. |---" << endl;
+		cin.clear();
+		cin.ignore(10000, '\n');
+		break;
 	}
 }
 void Control::eliminarInstructor(Sucursal* sucu) {

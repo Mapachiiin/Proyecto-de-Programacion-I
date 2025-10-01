@@ -50,5 +50,6 @@ public:
 	void menuGestionarCliClasesGrupales(Cliente* cli, Sucursal* sucu);
 	void menuGestionarCliInst(Instructor* ins, Sucursal* sucu);
 	void gestionarInstructorSi(Sucursal* sucu, int ced);
+	void menuListarInstructoresPorEspe(Sucursal* sucu);
 };
 
